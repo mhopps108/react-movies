@@ -21,7 +21,7 @@ const useDataApi = (initialUrl, initialData) => {
     };
 
     fetchData();
-
+    
   }, [url]);
 
   return [{ data, isLoading, isError }, setUrl];

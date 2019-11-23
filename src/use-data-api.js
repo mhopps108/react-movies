@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import axios from 'axios';
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 const useDataApi = (initialUrl, initialData) => {
   const [data, setData] = useState(initialData);
@@ -21,7 +21,6 @@ const useDataApi = (initialUrl, initialData) => {
     };
 
     fetchData();
-    
   }, [url]);
 
   return [{ data, isLoading, isError }, setUrl];

@@ -2,19 +2,44 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { MovieList } from "./MovieList";
 import "./styles.css";
-import bootstrap from "bootstrap"; // eslint-disable-line no-unused-vars
-import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 
-import 'antd/dist/antd.css';
-import { Spin, Icon } from 'antd';
+import tmdbData from "./tmdb-data";
+//import MultiSelect from "./genreMultiSelect";
+import MultiSelect from "./useAntMultiSelect";
+
+import "antd/dist/antd.css";
+import { Spin, Icon, DatePicker } from "antd";
+const { MonthPicker } = DatePicker;
 
 const isLoading = false;
 const antIcon = <Icon type="loading" style={{ fontSize: 24 }} spin />;
 
+//<MonthPicker className="mx-auto w-50" />
+
+const Button = stuff => {
+  return (
+    <button
+      onClick={() => {
+        console.log(stuff);
+      }}
+    >
+      Click
+    </button>
+  );
+};
+
 function App() {
   return (
     <div className="App">
-      { isLoading && <Spin indicator={antIcon} /> }
+      <MultiSelect initOptions={tmdbData.genres} placeholder="Genres" />
+
+      <MultiSelect
+        initOptions={tmdbData.certifications.US}
+        placeholder="Cert"
+      />
+      <Button stuff={{ keys: "this" }} />
+      {console.log(tmdbData)}
+      {isLoading && <Spin indicator={antIcon} />}
       <MovieList />
     </div>
   );

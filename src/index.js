@@ -4,7 +4,6 @@ import { MovieList } from "./MovieList";
 import "./styles.css";
 
 import tmdbData from "./tmdb-data";
-//import MultiSelect from "./genreMultiSelect";
 import MultiSelect from "./useAntMultiSelect";
 
 import "antd/dist/antd.css";

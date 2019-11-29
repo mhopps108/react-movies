@@ -7,10 +7,10 @@
 }
 
 .card {
-  max-width: 300px;
+  /* max-width: 300px; */
 }
 
 .card-body {
-  max-height: 100px;
+  /* max-height: 100px; */
   /* min-height: 80px; */
 }

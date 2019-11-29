@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "antd/dist/antd.css";
 import { Select } from "antd";
-import tmdbData from "./tmdb-data";
 
 //const OPTIONS = tmdbData.genres; //.map(item => item.name);
 
@@ -17,20 +16,20 @@ function MultiSelect({ initOptions, placeholder }) {
   }, [selected, options]);
 
   return (
-    <Select
-      mode="multiple"
-      placeholder={placeholder}
-      value={selected}
-      onChange={item => setSelected(item)}
-      style={{ width: "50%" }}
-      showArrow
-    >
-      {filtered.map(item => (
-        <Select.Option key={item.id} value={item.name}>
-          {item.name}
-        </Select.Option>
-      ))}
-    </Select>
+      <Select
+        mode="multiple"
+        placeholder={placeholder}
+        value={selected}
+        onChange={item => setSelected(item)}
+        style={{ width: "50%" }}
+        showArrow
+      >
+        {filtered.map(item => (
+          <Select.Option key={item.id} value={item.name}>
+            {item.name}
+          </Select.Option>
+        ))}
+      </Select>
   );
 }
 

@@ -1,4 +1,5 @@
 import React from "react";
+import { Card, Row, Col } from "antd";
 import { useDataApi } from "./use-data-api.js";
 
 /*
@@ -14,23 +15,20 @@ function MovieListItem({ movie }) {
 
   // try card-deck
   return (
-    <div className="col-sm-6 col-lg-4 px-2 pb-3">
-      <div className="card">
-        <div className="card-header p-1 text-center">
-          <p className="card-title m-0">{title}</p>
-        </div>
-        <div className="card-body p-1 d-flex">
-          <div className="flex-shrink-0 h-100">
-            <img className="h-100" src={imgUrl} alt={title} />
-          </div>
-          <div className="w-100 p-0 d-flex">
-            <span className="card-text w-25">{year}</span>
-            <span className="card-text w-25">{id}</span>
-            <span className="card-text w-25">{vote_average}</span>
-          </div>
-        </div>
-      </div>
-    </div>
+    <Col style={{ padding: "10px" }}>
+      <Card title={title}>
+        <Row>
+          <Col span={8}>
+            <img src={imgUrl} alt={title} />
+          </Col>
+          <Col span={16}>
+            <Col className="card-text w-25">{year}</Col>
+            <Col className="card-text w-25">{id}</Col>
+            <Col className="card-text w-25">{vote_average}</Col>
+          </Col>
+        </Row>
+      </Card>
+    </Col>
   );
 }
 
@@ -39,12 +37,27 @@ const movieLists = {
     name: "Now Playing",
     url:
       "https://api.themoviedb.org/3/movie/now_playing?page=1&language=en-US&api_key=0d15450f36e2e4eaec96d1e905c43fad"
+  },
+  homeReleases: {
+    name: "homeReleases",
+    url:
+      "https://api.themoviedb.org/3/discover/movie?" +
+      "api_key=0d15450f36e2e4eaec96d1e905c43fad" +
+      "&language=en-US" +
+      "&region=US" +
+      "&include_adult=false" +
+      "&with_original_language=en" +
+      "&page=1" +
+      "&sort_by=release_date.asc" +
+      "&release_date.gte=2019-11-24" +
+      "&release_date.lte=2019-11-30" +
+      "&with_release_type=4%7C5"
   }
 };
 
 function MovieList() {
   const [{ data, isLoading, isError }, doFetch] = useDataApi(
-    movieLists.nowPlaying.url,
+    movieLists.homeReleases.url,
     { results: [] }
   );
 
@@ -55,12 +68,12 @@ function MovieList() {
         {isLoading ? (
           <div>Loading ...</div>
         ) : (
-          <div className="container">
-            <div className="row">
+          <div style={{ background: "#696969", padding: "30px" }}>
+            <Row>
               {data.results.map(movie => (
                 <MovieListItem key={movie.id} movie={movie} />
               ))}
-            </div>
+            </Row>
           </div>
         )}
       </div>

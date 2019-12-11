@@ -16,20 +16,20 @@ function MultiSelect({ initOptions, placeholder }) {
   }, [selected, options]);
 
   return (
-      <Select
-        mode="multiple"
-        placeholder={placeholder}
-        value={selected}
-        onChange={item => setSelected(item)}
-        style={{ width: "50%" }}
-        showArrow
-      >
-        {filtered.map(item => (
-          <Select.Option key={item.id} value={item.name}>
-            {item.name}
-          </Select.Option>
-        ))}
-      </Select>
+    <Select
+      mode="multiple"
+      placeholder={placeholder}
+      value={selected}
+      onChange={item => setSelected(item)}
+      style={{ width: "50%" }}
+      showArrow
+    >
+      {filtered.map(item => (
+        <Select.Option key={item.id} value={item.name}>
+          {item.name}
+        </Select.Option>
+      ))}
+    </Select>
   );
 }
 

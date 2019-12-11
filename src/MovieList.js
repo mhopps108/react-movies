@@ -1,6 +1,7 @@
 import React from "react";
 import { Card, Row, Col } from "antd";
 import { useDataApi } from "./use-data-api.js";
+import { movieLists, homeReleasesUrl } from "./tmdb-api";
 
 /*
 MM dd     Title     btn
@@ -13,7 +14,6 @@ function MovieListItem({ movie }) {
   const imgUrl = `https://image.tmdb.org/t/p/w92/${poster_path}`;
   const year = release_date.substring(0, 4);
 
-  // try card-deck
   return (
     <Col style={{ padding: "10px" }}>
       <Card title={title}>
@@ -32,37 +32,13 @@ function MovieListItem({ movie }) {
   );
 }
 
-const movieLists = {
-  nowPlaying: {
-    name: "Now Playing",
-    url:
-      "https://api.themoviedb.org/3/movie/now_playing?page=1&language=en-US&api_key=0d15450f36e2e4eaec96d1e905c43fad"
-  },
-  homeReleases: {
-    name: "homeReleases",
-    url:
-      "https://api.themoviedb.org/3/discover/movie?" +
-      "api_key=0d15450f36e2e4eaec96d1e905c43fad" +
-      "&language=en-US" +
-      "&region=US" +
-      "&include_adult=false" +
-      "&with_original_language=en" +
-      "&page=1" +
-      "&sort_by=release_date.asc" +
-      "&release_date.gte=2019-12-09" +
-      "&release_date.lte=2019-12-15" +
-      "&with_release_type=4"
-  }
-};
-
 function MovieList() {
-  const [{ data, isLoading, isError }, doFetch] = useDataApi(
-    movieLists.homeReleases.url,
-    { results: [] }
-  );
-  
-  console.log('data')
-  console.log(data)
+  const [{ data, isLoading, isError }, doFetch] = useDataApi(homeReleasesUrl, {
+    results: []
+  });
+
+  console.log("data");
+  console.log(data);
 
   return (
     <div className="movie-list-wrapper mx-auto">

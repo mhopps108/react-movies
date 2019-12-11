@@ -22,9 +22,9 @@ function MovieListItem({ movie }) {
             <img src={imgUrl} alt={title} />
           </Col>
           <Col span={16}>
-            <Col className="card-text w-25">{year}</Col>
-            <Col className="card-text w-25">{id}</Col>
-            <Col className="card-text w-25">{vote_average}</Col>
+            <Col className="card-text w-25">Release: {release_date}</Col>
+            <Col className="card-text w-25">tmdbid: {id}</Col>
+            <Col className="card-text w-25">Vote: {vote_average}/10</Col>
           </Col>
         </Row>
       </Card>
@@ -49,9 +49,9 @@ const movieLists = {
       "&with_original_language=en" +
       "&page=1" +
       "&sort_by=release_date.asc" +
-      "&release_date.gte=2019-11-24" +
-      "&release_date.lte=2019-11-30" +
-      "&with_release_type=4%7C5"
+      "&release_date.gte=2019-12-09" +
+      "&release_date.lte=2019-12-15" +
+      "&with_release_type=4"
   }
 };
 
@@ -60,10 +60,13 @@ function MovieList() {
     movieLists.homeReleases.url,
     { results: [] }
   );
+  
+  console.log('data')
+  console.log(data)
 
   return (
     <div className="movie-list-wrapper mx-auto">
-      <h1 className="text-center">Now Playing</h1>
+      <h1 className="text-center">Now Playing ({data.results.length})</h1>
       <div>
         {isLoading ? (
           <div>Loading ...</div>

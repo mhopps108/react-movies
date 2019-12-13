@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Card, Row, Col } from "antd";
 import SingleSelect from "./useAntSelect";
-import { buildDiscoveryUrl, movieLists, homeReleasesUrl } from "./tmdb-api";
+import { buildDiscoveryUrl, movieLists } from "./tmdb-api";
 import { useDataApi } from "./use-data-api.js";
 
 /*
@@ -49,23 +49,28 @@ function MovieList() {
     { name: "Dec", id: "11" }
   ];
   const [month, setMonth] = useState(new Date().getMonth());
-  const url = homeReleasesUrl();
+  const url = buildDiscoveryUrl(month);
   const [{ data, isLoading, isError }, doFetch] = useDataApi(url, {
     results: []
   });
 
   useEffect(() => {
-    // doFetch(url);
-  }, [month]);
+    console.log(`Month: ${month}`);
+    doFetch(buildDiscoveryUrl(month));
+  }, [month, doFetch]);
 
-  // console.log("data");
-  // console.log(data);
+  console.log("data");
+  console.log(data);
 
   return (
     <div className="movie-list-wrapper mx-auto">
       <h1 className="text-center">Now Playing ({data.results.length})</h1>
 
-      <SingleSelect initOptions={MONTHS} setSelected={setMonth} />
+      <SingleSelect
+        initOptions={MONTHS}
+        setSelected={setMonth}
+        startVal={MONTHS[month].name}
+      />
 
       <div>
         {isLoading ? (

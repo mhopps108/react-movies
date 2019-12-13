@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 
 import "./styles.css";
 
-import buildDiscoveryUrl from "./tmdb-api";
+import { buildDiscoveryUrl } from "./tmdb-api";
 import tmdbData from "./tmdb-data";
 import MultiSelect from "./useAntMultiSelect";
 import { MovieList } from "./MovieList";
@@ -17,7 +17,7 @@ const antIcon = <Icon type="loading" style={{ fontSize: 24 }} spin />;
 //<MonthPicker className="mx-auto w-50" />
 
 function App() {
-  const u = buildDiscoveryUrl();
+  // const u = buildDiscoveryUrl();
   // console.log(`${buildDiscoveryUrl()}`);
   return (
     <div className="App">

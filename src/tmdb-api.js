@@ -42,4 +42,44 @@ function homeReleasesUrl() {
   return url;
 }
 
-export { movieLists, homeReleasesUrl };
+// function buildDiscoveryUrl(
+//   page = 1,
+//   sortBy = "release_date.asc",
+//   startMonth = new Date().getMonth,
+//   releaseType = 0
+// ) {
+export default function buildDiscoveryUrl() {
+  // const page = 1;
+  // const sortBy = "release_date.asc";
+  // const startMonth = 11;
+  // let releaseType = 4;
+  // let startMonth = 11;
+  // const now = new Date();
+  // const startDate = new Date().setMonth(startMonth);
+  // const endDate = new Date().setDate(now.getDate() + 31);
+
+  const startDate = "2019-12-12";
+  const endDate = "2019-12-19";
+  const AKPEIY = "0d15450f36e2e4eaec96d1e905c43fad";
+  // console.log(`StartDate: ${startDate}`);
+  return (
+    "https://api.themoviedb.org/3/discover/movie?" +
+    `api_key=${AKPEIY}` +
+    "&language=en-US" +
+    "&region=US" +
+    "&include_adult=false" +
+    "&with_original_language=en" +
+    `&page=1` +
+    "&sort_by=release_date.asc" +
+    `&release_date.gte=${startDate}` +
+    `&release_date.lte=${endDate}` +
+    `&with_release_type=4`
+    // `&page=${page}` +
+    // `&sort_by=${sortBy}` +
+    // `&release_date.gte=${startDate}` +
+    // `&release_date.lte=${endDate}` +
+    // `&with_release_type=${releaseType}`
+  );
+}
+
+// export { movieLists, homeReleasesUrl, buildDiscoveryUrl };

@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Card, Row, Col } from "antd";
+import SingleSelect from "./useAntSelect";
+import { buildDiscoveryUrl, movieLists, homeReleasesUrl } from "./tmdb-api";
 import { useDataApi } from "./use-data-api.js";
-import { movieLists, homeReleasesUrl } from "./tmdb-api";
 
 /*
 MM dd     Title     btn
@@ -33,16 +34,39 @@ function MovieListItem({ movie }) {
 }
 
 function MovieList() {
-  const [{ data, isLoading, isError }, doFetch] = useDataApi(homeReleasesUrl, {
+  const MONTHS = [
+    { name: "Jan", id: "0" },
+    { name: "Feb", id: "1" },
+    { name: "Mar", id: "2" },
+    { name: "Apr", id: "3" },
+    { name: "May", id: "4" },
+    { name: "Jun", id: "5" },
+    { name: "Jul", id: "6" },
+    { name: "Aug", id: "7" },
+    { name: "Sep", id: "8" },
+    { name: "Oct", id: "9" },
+    { name: "Nov", id: "10" },
+    { name: "Dec", id: "11" }
+  ];
+  const [month, setMonth] = useState(new Date().getMonth());
+  const url = homeReleasesUrl();
+  const [{ data, isLoading, isError }, doFetch] = useDataApi(url, {
     results: []
   });
 
-  console.log("data");
-  console.log(data);
+  useEffect(() => {
+    // doFetch(url);
+  }, [month]);
+
+  // console.log("data");
+  // console.log(data);
 
   return (
     <div className="movie-list-wrapper mx-auto">
       <h1 className="text-center">Now Playing ({data.results.length})</h1>
+
+      <SingleSelect initOptions={MONTHS} setSelected={setMonth} />
+
       <div>
         {isLoading ? (
           <div>Loading ...</div>

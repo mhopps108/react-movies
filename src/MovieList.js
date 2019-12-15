@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Card, Row, Col, DatePicker } from "antd";
-import { Drawer, Button, Radio } from "antd";
+import { Drawer, Button, Radio, Calendar } from "antd";
 import SingleSelect from "./useAntSelect";
 import { discoveryUrlByWeek, buildDiscoveryUrl, movieLists } from "./tmdb-api";
 import { useDataApi } from "./use-data-api.js";
@@ -24,6 +24,10 @@ function MovieList() {
 
   // console.log("data");
   // console.log(data);
+
+  function onPanelChange(value, mode) {
+    console.log(value, mode);
+  }
 
   const dateRangeStr = () => {
     const s =
@@ -56,11 +60,13 @@ function MovieList() {
         closable={false}
         onClose={visable => setVisible(!visable)}
         visible={visible}
+        height={"450"}
       >
-        <WeekPicker
-          format={"MMM Do YY"}
-          onChange={date => setDate(moment(date))}
-        />
+        <div
+          style={{ width: 300, border: "1px solid #d9d9d9", borderRadius: 4 }}
+        >
+          <Calendar fullscreen={false} onPanelChange={onPanelChange} />
+        </div>
       </Drawer>
 
       <div>

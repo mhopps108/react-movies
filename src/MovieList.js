@@ -45,7 +45,6 @@ function MovieList() {
         format={"MMM Do YY"}
         onChange={date => setDate(moment(date))}
         // style={{ width: "300px" }}
-        value={dateRangeStr()}
       />
       <h4>Date: {dateRangeStr()}</h4>
       <Button type="primary" onClick={() => setVisible(true)}>

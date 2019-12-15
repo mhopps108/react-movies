@@ -1,4 +1,35 @@
+import moment from "moment";
+
 const AKPEIY = "0d15450f36e2e4eaec96d1e905c43fad";
+
+function discoveryUrlByWeek(startDate) {
+  console.log(`startDate-first: ${startDate}`);
+  const page = 1;
+  const releaseType = 4;
+  if (startDate === undefined) {
+    startDate = moment().startOf("week");
+  }
+  startDate = moment(startDate).startOf("week");
+
+  const endDate = moment(startDate).endOf("week");
+  console.log(
+    `Dates: ${startDate.format("YYYY-MM-DD")} - ${endDate.format("YYYY-MM-DD")}`
+  );
+
+  const url =
+    "https://api.themoviedb.org/3/discover/movie?" +
+    `api_key=${AKPEIY}` +
+    "&language=en-US" +
+    "&region=US" +
+    "&include_adult=false" +
+    "&with_original_language=en" +
+    `&page=${page}` +
+    "&sort_by=release_date.asc" +
+    `&release_date.gte=${startDate.format("YYYY-MM-DD")}` +
+    `&release_date.lte=${endDate.format("YYYY-MM-DD")}` +
+    `&with_release_type=${releaseType}`;
+  return url;
+}
 
 const movieLists = {
   nowPlaying: {
@@ -53,4 +84,4 @@ function buildDiscoveryUrl(startMonth) {
   return url;
 }
 
-export { movieLists, buildDiscoveryUrl };
+export { discoveryUrlByWeek, movieLists, buildDiscoveryUrl };

@@ -1,76 +1,68 @@
 import React, { useState, useEffect } from "react";
-import { Card, Row, Col } from "antd";
+import { Card, Row, Col, DatePicker } from "antd";
+import { Drawer, Button, Radio } from "antd";
 import SingleSelect from "./useAntSelect";
-import { buildDiscoveryUrl, movieLists } from "./tmdb-api";
+import { discoveryUrlByWeek, buildDiscoveryUrl, movieLists } from "./tmdb-api";
 import { useDataApi } from "./use-data-api.js";
-
-/*
-MM dd     Title     btn
-Year  Runtime  Cert
-Ratings Imdb tmdb?
-Genres(3)
-*/
-function MovieListItem({ movie }) {
-  const { id, title, poster_path, release_date, vote_average } = movie;
-  const imgUrl = `https://image.tmdb.org/t/p/w92/${poster_path}`;
-  const year = release_date.substring(0, 4);
-
-  return (
-    <Col style={{ padding: "10px" }}>
-      <Card title={title}>
-        <Row>
-          <Col span={8}>
-            <img src={imgUrl} alt={title} />
-          </Col>
-          <Col span={16}>
-            <Col className="card-text w-25">Release: {release_date}</Col>
-            <Col className="card-text w-25">tmdbid: {id}</Col>
-            <Col className="card-text w-25">Vote: {vote_average}/10</Col>
-          </Col>
-        </Row>
-      </Card>
-    </Col>
-  );
-}
+import MovieListItem from "./MovieListItem";
+import moment from "moment";
+const { WeekPicker } = DatePicker;
 
 function MovieList() {
-  const MONTHS = [
-    { name: "Jan", id: "0" },
-    { name: "Feb", id: "1" },
-    { name: "Mar", id: "2" },
-    { name: "Apr", id: "3" },
-    { name: "May", id: "4" },
-    { name: "Jun", id: "5" },
-    { name: "Jul", id: "6" },
-    { name: "Aug", id: "7" },
-    { name: "Sep", id: "8" },
-    { name: "Oct", id: "9" },
-    { name: "Nov", id: "10" },
-    { name: "Dec", id: "11" }
-  ];
-  const [month, setMonth] = useState(new Date().getMonth());
-  const url = buildDiscoveryUrl(month);
+  // const url = buildDiscoveryUrl(11);
+  const [date, setDate] = useState(new Date());
+  const [url, setUrl] = useState(discoveryUrlByWeek());
   const [{ data, isLoading, isError }, doFetch] = useDataApi(url, {
     results: []
   });
+  const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    console.log(`Month: ${month}`);
-    doFetch(buildDiscoveryUrl(month));
-  }, [month, doFetch]);
+    setUrl(discoveryUrlByWeek(date));
+    doFetch(url);
+  }, [date, url, doFetch]);
 
-  console.log("data");
-  console.log(data);
+  // console.log("data");
+  // console.log(data);
+
+  const dateRangeStr = () => {
+    const s =
+      `${moment(date)
+        .startOf("week")
+        .format("YYYY-MM-DD")}` +
+      " -- " +
+      `${moment(date)
+        .endOf("week")
+        .format("YYYY-MM-DD")}`;
+    return s;
+  };
 
   return (
     <div className="movie-list-wrapper mx-auto">
       <h1 className="text-center">Now Playing ({data.results.length})</h1>
 
-      <SingleSelect
-        initOptions={MONTHS}
-        setSelected={setMonth}
-        startVal={MONTHS[month].name}
+      <WeekPicker
+        format={"MMM Do YY"}
+        onChange={date => setDate(moment(date))}
+        // style={{ width: "300px" }}
+        value={dateRangeStr()}
       />
+      <h4>Date: {dateRangeStr()}</h4>
+      <Button type="primary" onClick={() => setVisible(true)}>
+        Open
+      </Button>
+      <Drawer
+        title="Basic Drawer"
+        placement={"bottom"}
+        closable={false}
+        onClose={visable => setVisible(!visable)}
+        visible={visible}
+      >
+        <WeekPicker
+          format={"MMM Do YY"}
+          onChange={date => setDate(moment(date))}
+        />
+      </Drawer>
 
       <div>
         {isLoading ? (

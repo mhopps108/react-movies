@@ -1,20 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom";
-
-import "./styles.css";
-
-import { buildDiscoveryUrl } from "./tmdb-api";
-import tmdbData from "./tmdb-data";
-import MultiSelect from "./useAntMultiSelect";
-import { MovieList } from "./MovieList";
 import "antd/dist/antd.css";
-import { Spin, Icon, DatePicker } from "antd";
-const { MonthPicker } = DatePicker;
-
-const isLoading = false;
-const antIcon = <Icon type="loading" style={{ fontSize: 24 }} spin />;
-
-//<MonthPicker className="mx-auto w-50" />
+import "./styles.css";
+import { MovieList } from "./MovieList";
 
 function App() {
   // const u = buildDiscoveryUrl();

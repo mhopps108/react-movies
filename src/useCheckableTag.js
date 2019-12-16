@@ -10,14 +10,20 @@ function NamedTag({ startName }) {
 
   const onChange = () => {
     setChecked(!checked);
-    console.log(`checked: ${checked}`);
+    console.log(`checked: ${checked} - ${name}`);
   };
 
   return (
-    <CheckableTag checked={checked} onChange={onChange} visible={true}>
+    <CheckableTag
+      style={{ margin: "5px" }}
+      checked={checked}
+      onChange={onChange}
+      visible={true}
+    >
       {name}
     </CheckableTag>
   );
 }
 
 // <NamedTag startName={"more"}>another</NamedTag>
+export default NamedTag;

@@ -5,6 +5,8 @@ import SingleSelect from "./useAntSelect";
 import { discoveryUrlByWeek, buildDiscoveryUrl, movieLists } from "./tmdb-api";
 import { useDataApi } from "./use-data-api.js";
 import MovieListItem from "./MovieListItem";
+import tmdbData from "./tmdb-data.js";
+import NamedTag from "./useCheckableTag.js";
 import moment from "moment";
 const { WeekPicker } = DatePicker;
 
@@ -16,6 +18,7 @@ function MovieList() {
     results: []
   });
   const [visible, setVisible] = useState(false);
+  const [genres, setGenres] = useState([]);
 
   useEffect(() => {
     setUrl(discoveryUrlByWeek(date));
@@ -60,13 +63,11 @@ function MovieList() {
         closable={false}
         onClose={visable => setVisible(!visable)}
         visible={visible}
-        height={"450"}
+        // height={"200"}
       >
-        <div
-          style={{ width: 300, border: "1px solid #d9d9d9", borderRadius: 4 }}
-        >
-          <Calendar fullscreen={false} onPanelChange={onPanelChange} />
-        </div>
+        {tmdbData.genres.map(genre => (
+          <NamedTag startName={genre.name} />
+        ))}
       </Drawer>
 
       <div>

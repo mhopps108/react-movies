@@ -82,7 +82,7 @@ function MovieList() {
       </Button>
 
       <Drawer
-        title="Basic Drawer"
+        title="Filter"
         placement={"right"}
         closable={true}
         onClose={visable => setVisible(!visable)}
@@ -90,7 +90,14 @@ function MovieList() {
         // height={"100%"}
         width={"350"}
       >
-        <div style={{ borderBottom: "1px solid #E9E9E9", paddingBottom: "0" }}>
+        <div
+          style={{
+            borderBottom: "1px solid #E9E9E9",
+            paddingBottom: "0",
+            display: "inline-flex"
+          }}
+        >
+          <p styple={{ margin: "auto" }}>Release Type</p>
           <Checkbox
             indeterminate={indeterminate}
             onChange={onCheckAllChange}

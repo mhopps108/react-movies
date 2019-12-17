@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Card, Row, Col, DatePicker } from "antd";
-import { Drawer, Button, Radio, Calendar } from "antd";
+import { Drawer, Button, Radio, Calendar, Checkbox } from "antd";
 import SingleSelect from "./useAntSelect";
 import { discoveryUrlByWeek, buildDiscoveryUrl, movieLists } from "./tmdb-api";
 import { useDataApi } from "./use-data-api.js";
@@ -19,6 +19,13 @@ function MovieList() {
   });
   const [visible, setVisible] = useState(false);
   const [genres, setGenres] = useState([]);
+
+  const allGenres = tmdbData.genres.map(g => g.name);
+  console.log(`${genres}`);
+  const [plainOptions, setPlainOptions] = useState(allGenres);
+  const [checkedList, setCheckedList] = useState([]);
+  const [indeterminate, setIndeterminate] = useState(true);
+  const [checkAll, setCheckAll] = useState(false);
 
   useEffect(() => {
     setUrl(discoveryUrlByWeek(date));
@@ -44,6 +51,20 @@ function MovieList() {
     return s;
   };
 
+  const onChange = checkedList => {
+    setCheckedList(checkedList);
+    setIndeterminate(
+      !!checkedList.length && checkedList.length < plainOptions.length
+    );
+    setCheckAll(checkedList.length === plainOptions.length);
+  };
+
+  const onCheckAllChange = e => {
+    setCheckedList(e.target.checked ? plainOptions : []);
+    setIndeterminate(false);
+    setCheckAll(e.target.checked);
+  };
+
   return (
     <div className="movie-list-wrapper mx-auto">
       <h1 className="text-center">Now Playing ({data.results.length})</h1>
@@ -57,6 +78,7 @@ function MovieList() {
       <Button type="primary" onClick={() => setVisible(true)}>
         Open
       </Button>
+
       <Drawer
         title="Basic Drawer"
         placement={"bottom"}
@@ -65,9 +87,21 @@ function MovieList() {
         visible={visible}
         // height={"200"}
       >
-        {tmdbData.genres.map(genre => (
-          <NamedTag startName={genre.name} />
-        ))}
+        <div style={{ borderBottom: "1px solid #E9E9E9" }}>
+          <Checkbox
+            indeterminate={indeterminate}
+            onChange={onCheckAllChange}
+            checked={checkAll}
+          >
+            Check all
+          </Checkbox>
+        </div>
+        <br />
+        <Checkbox.Group
+          options={plainOptions}
+          value={checkedList}
+          onChange={onChange}
+        />
       </Drawer>
 
       <div>

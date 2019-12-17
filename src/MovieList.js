@@ -21,6 +21,8 @@ function MovieList() {
   const [genres, setGenres] = useState([]);
 
   const allGenres = tmdbData.genres.map(g => g.name);
+  const releaseTypes = tmdbData.releaseTypes.map(type => type.name);
+  const certifications = tmdbData.certifications.US.map(type => type.name);
   console.log(`${genres}`);
   const [plainOptions, setPlainOptions] = useState(allGenres);
   const [checkedList, setCheckedList] = useState([]);
@@ -85,9 +87,25 @@ function MovieList() {
         closable={false}
         onClose={visable => setVisible(!visable)}
         visible={visible}
-        // height={"200"}
+        height={"75vh"}
+        // width={"300"}
       >
-        <div style={{ borderBottom: "1px solid #E9E9E9" }}>
+        <div style={{ borderBottom: "1px solid #E9E9E9", marginTop: "10px" }}>
+          <Checkbox
+            indeterminate={indeterminate}
+            onChange={onCheckAllChange}
+            checked={checkAll}
+          >
+            Check all
+          </Checkbox>
+        </div>
+        <br />
+        <Checkbox.Group
+          options={releaseTypes}
+          value={checkedList}
+          onChange={onChange}
+        />
+        <div style={{ borderBottom: "1px solid #E9E9E9", marginTop: "10px" }}>
           <Checkbox
             indeterminate={indeterminate}
             onChange={onCheckAllChange}
@@ -99,6 +117,21 @@ function MovieList() {
         <br />
         <Checkbox.Group
           options={plainOptions}
+          value={checkedList}
+          onChange={onChange}
+        />
+        <div style={{ borderBottom: "1px solid #E9E9E9", marginTop: "10px" }}>
+          <Checkbox
+            indeterminate={indeterminate}
+            onChange={onCheckAllChange}
+            checked={checkAll}
+          >
+            Check all
+          </Checkbox>
+        </div>
+        <br />
+        <Checkbox.Group
+          options={certifications}
           value={checkedList}
           onChange={onChange}
         />

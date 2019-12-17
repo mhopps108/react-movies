@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Card, Row, Col, DatePicker } from "antd";
-import { Drawer, Button, Radio, Calendar, Checkbox } from "antd";
+import { Drawer, Button, Radio, Calendar, Checkbox, Slider } from "antd";
 import SingleSelect from "./useAntSelect";
 import { discoveryUrlByWeek, buildDiscoveryUrl, movieLists } from "./tmdb-api";
 import { useDataApi } from "./use-data-api.js";
@@ -83,13 +83,52 @@ function MovieList() {
 
       <Drawer
         title="Basic Drawer"
-        placement={"bottom"}
-        closable={false}
+        placement={"right"}
+        closable={true}
         onClose={visable => setVisible(!visable)}
         visible={visible}
-        height={"75vh"}
-        // width={"300"}
+        // height={"100%"}
+        width={"350"}
       >
+        <div style={{ borderBottom: "1px solid #E9E9E9", paddingBottom: "0" }}>
+          <Checkbox
+            indeterminate={indeterminate}
+            onChange={onCheckAllChange}
+            checked={checkAll}
+          >
+            Check all
+          </Checkbox>
+        </div>
+        <Checkbox.Group
+          style={{ width: "100%", margin: "0px 0px" }}
+          onChange={onChange}
+        >
+          <Row gutter={(4, 4)}>
+            {releaseTypes.map(item => (
+              <Col span={12}>
+                <Checkbox value="A">{item}</Checkbox>
+              </Col>
+            ))}
+          </Row>
+        </Checkbox.Group>
+        <div style={{ borderBottom: "1px solid #E9E9E9", marginTop: "10px" }}>
+          <Checkbox
+            indeterminate={indeterminate}
+            onChange={onCheckAllChange}
+            checked={checkAll}
+          >
+            Check all
+          </Checkbox>
+        </div>
+        <Checkbox.Group style={{ width: "100%" }} onChange={onChange}>
+          <Row gutter={(4, 4)}>
+            {allGenres.map(item => (
+              <Col span={12}>
+                <Checkbox value="A">{item}</Checkbox>
+              </Col>
+            ))}
+          </Row>
+        </Checkbox.Group>
         <div style={{ borderBottom: "1px solid #E9E9E9", marginTop: "10px" }}>
           <Checkbox
             indeterminate={indeterminate}
@@ -100,41 +139,18 @@ function MovieList() {
           </Checkbox>
         </div>
         <br />
-        <Checkbox.Group
-          options={releaseTypes}
-          value={checkedList}
-          onChange={onChange}
-        />
-        <div style={{ borderBottom: "1px solid #E9E9E9", marginTop: "10px" }}>
-          <Checkbox
-            indeterminate={indeterminate}
-            onChange={onCheckAllChange}
-            checked={checkAll}
-          >
-            Check all
-          </Checkbox>
-        </div>
-        <br />
-        <Checkbox.Group
-          options={plainOptions}
-          value={checkedList}
-          onChange={onChange}
-        />
-        <div style={{ borderBottom: "1px solid #E9E9E9", marginTop: "10px" }}>
-          <Checkbox
-            indeterminate={indeterminate}
-            onChange={onCheckAllChange}
-            checked={checkAll}
-          >
-            Check all
-          </Checkbox>
-        </div>
-        <br />
-        <Checkbox.Group
-          options={certifications}
-          value={checkedList}
-          onChange={onChange}
-        />
+        <Checkbox.Group style={{ width: "100%" }} onChange={onChange}>
+          <Row gutter={(4, 4)}>
+            {certifications.map(item => (
+              <Col span={12}>
+                <Checkbox value="A">{item}</Checkbox>
+              </Col>
+            ))}
+          </Row>
+        </Checkbox.Group>
+        Votes
+        <Slider range defaultValue={[20, 50]} />
+        <Slider range defaultValue={[0, 100]} />
       </Drawer>
 
       <div>

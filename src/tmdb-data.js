@@ -58,7 +58,7 @@ const tmdbData = {
     },
     {
       id: 878,
-      name: "Science Fiction"
+      name: "Sci-Fi"
     },
     {
       id: 10770,
@@ -107,7 +107,7 @@ const tmdbData = {
   },
   releaseTypes: [
     { name: "Premiere", id: 1 },
-    { name: "Theatrical (limited)", id: 2 },
+    { name: "Limited", id: 2 },
     { name: "Theatrical", id: 3 },
     { name: "Digital", id: 4 },
     { name: "Physical", id: 5 },

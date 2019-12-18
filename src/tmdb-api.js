@@ -6,6 +6,7 @@ function discoveryUrlByWeek(startDate) {
   console.log(`startDate-first: ${startDate}`);
   const page = 1;
   const releaseType = 4;
+  // const start = startDate || moment();
   if (startDate === undefined) {
     startDate = moment().startOf("week");
   }

@@ -74,6 +74,7 @@ function MovieList() {
       <WeekPicker
         format={"MMM Do YY"}
         onChange={date => setDate(moment(date))}
+        // onFocus={() => blur()}
         // style={{ width: "300px" }}
       />
       <h4>Date: {dateRangeStr()}</h4>

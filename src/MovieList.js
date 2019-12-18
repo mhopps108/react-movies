@@ -88,16 +88,15 @@ function MovieList() {
         onClose={visable => setVisible(!visable)}
         visible={visible}
         // height={"100%"}
-        width={"350"}
+        width={"375"}
       >
         <div
           style={{
             borderBottom: "1px solid #E9E9E9",
-            paddingBottom: "0",
-            display: "inline-flex"
+            paddingBottom: "0"
           }}
         >
-          <p styple={{ margin: "auto" }}>Release Type</p>
+          {/* <p styple={{ margin: "auto" }}>Release Type</p> */}
           <Checkbox
             indeterminate={indeterminate}
             onChange={onCheckAllChange}
@@ -112,8 +111,8 @@ function MovieList() {
         >
           <Row gutter={(4, 4)}>
             {releaseTypes.map(item => (
-              <Col span={12}>
-                <Checkbox value="A">{item}</Checkbox>
+              <Col span={8}>
+                <Checkbox value={item.id}>{item}</Checkbox>
               </Col>
             ))}
           </Row>
@@ -130,8 +129,8 @@ function MovieList() {
         <Checkbox.Group style={{ width: "100%" }} onChange={onChange}>
           <Row gutter={(4, 4)}>
             {allGenres.map(item => (
-              <Col span={12}>
-                <Checkbox value="A">{item}</Checkbox>
+              <Col span={8}>
+                <Checkbox value={item}>{item}</Checkbox>
               </Col>
             ))}
           </Row>
@@ -149,8 +148,8 @@ function MovieList() {
         <Checkbox.Group style={{ width: "100%" }} onChange={onChange}>
           <Row gutter={(4, 4)}>
             {certifications.map(item => (
-              <Col span={12}>
-                <Checkbox value="A">{item}</Checkbox>
+              <Col span={8}>
+                <Checkbox value={item}>{item}</Checkbox>
               </Col>
             ))}
           </Row>
@@ -158,6 +157,9 @@ function MovieList() {
         Votes
         <Slider range defaultValue={[20, 50]} />
         <Slider range defaultValue={[0, 100]} />
+        <Button type="primary" onClick={() => setVisible(true)}>
+          Submit
+        </Button>
       </Drawer>
 
       <div>

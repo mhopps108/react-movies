@@ -22,7 +22,7 @@ const tmdbData = {
     },
     {
       id: 99,
-      name: "Documentary"
+      name: "Docs"
     },
     {
       id: 18,

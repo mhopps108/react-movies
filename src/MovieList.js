@@ -86,27 +86,35 @@ function MovieList() {
   return (
     <div className="movie-list-wrapper mx-auto">
       <h1 className="text-center">Now Playing ({data.results.length})</h1>
+      <Row>
+        <Col span={4}>
+          <WeekPicker
+            id={"week-picker"}
+            // format={"MMM Do YY"}
+            format={""}
+            // onChange={date => setDate(moment(date))}
+            onChange={onDatePickerChange}
+            onFocus={() => {
+              this.preventDefault();
+              const selector = document.getElementById("week-picker");
+              if (selector) selector.blur();
+            }}
+            style={{ width: "40px" }}
+          />
+        </Col>
+        <Col span={12}>
+          <h4>Date: {dateRangeStr()}</h4>
+        </Col>
+        <Col span={8}>
+          <Button type="primary" onClick={() => setVisible(true)}>
+            Open
+          </Button>
+          <Button type="primary" onClick={() => setRMCVisable(true)}>
+            Cal
+          </Button>
+        </Col>
+      </Row>
 
-      <WeekPicker
-        id={"week-picker"}
-        // format={"MMM Do YY"}
-        format={""}
-        // onChange={date => setDate(moment(date))}
-        onChange={onDatePickerChange}
-        onFocus={() => {
-          this.preventDefault();
-          const selector = document.getElementById("week-picker");
-          if (selector) selector.blur();
-        }}
-        style={{ width: "40px" }}
-      />
-      <h4>Date: {dateRangeStr()}</h4>
-      <Button type="primary" onClick={() => setVisible(true)}>
-        Open
-      </Button>
-      <Button type="primary" onClick={() => setRMCVisable(true)}>
-        Cal
-      </Button>
       <div>
         <RMCCalendar
           locale={enUS}

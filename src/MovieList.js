@@ -8,6 +8,9 @@ import MovieListItem from "./MovieListItem";
 import tmdbData from "./tmdb-data.js";
 import NamedTag from "./useCheckableTag.js";
 import moment from "moment";
+import { Calendar as RMCCalendar } from "rmc-calendar";
+import enUS from "rmc-calendar/lib/locale/en_US";
+import "rmc-calendar/assets/index.css";
 const { WeekPicker } = DatePicker;
 
 function MovieList() {
@@ -17,8 +20,10 @@ function MovieList() {
   const [{ data, isLoading, isError }, doFetch] = useDataApi(url, {
     results: []
   });
-  const [visible, setVisible] = useState(false);
+  const [releaseType, setReleaseType] = useState(4);
   const [genres, setGenres] = useState([]);
+
+  const [visible, setVisible] = useState(false);
 
   const allGenres = tmdbData.genres.map(g => g.name);
   const releaseTypes = tmdbData.releaseTypes; //.map(type => type.name);
@@ -28,24 +33,19 @@ function MovieList() {
   const [checkedList, setCheckedList] = useState([]);
   const [indeterminate, setIndeterminate] = useState(true);
   const [checkAll, setCheckAll] = useState(false);
-  const [releaseType, setReleaseType] = useState(4);
+
+  const [rmcvisable, setRMCVisable] = useState(false);
 
   useEffect(() => {
     setUrl(discoveryUrlByWeek(date));
     doFetch(url);
   }, [date, url, doFetch]);
 
-  // console.log("data");
-  // console.log(data);
   useEffect(() => {
     console.log("STATE");
     console.log(`releaseType: ${releaseType}`);
     console.log(`date: ${date}`);
   }, [releaseType, date]);
-
-  function onPanelChange(value, mode) {
-    console.log(value, mode);
-  }
 
   const dateRangeStr = () => {
     const s =
@@ -58,6 +58,10 @@ function MovieList() {
         .format("YYYY-MM-DD")}`;
     return s;
   };
+
+  function onPanelChange(value, mode) {
+    console.log(value, mode);
+  }
 
   const onChange = checkedList => {
     setCheckedList(checkedList);
@@ -73,21 +77,44 @@ function MovieList() {
     setCheckAll(e.target.checked);
   };
 
+  const onDatePickerChange = date => {
+    const selector = document.getElementById("week-picker");
+    if (selector) selector.blur();
+    setDate(moment(date));
+  };
+
   return (
     <div className="movie-list-wrapper mx-auto">
       <h1 className="text-center">Now Playing ({data.results.length})</h1>
 
       <WeekPicker
-        format={"MMM Do YY"}
-        onChange={date => setDate(moment(date))}
-        open={false}
-        // onFocus={() => blur()}
-        // style={{ width: "300px" }}
+        id={"week-picker"}
+        // format={"MMM Do YY"}
+        format={""}
+        // onChange={date => setDate(moment(date))}
+        onChange={onDatePickerChange}
+        onFocus={() => {
+          this.preventDefault();
+          const selector = document.getElementById("week-picker");
+          if (selector) selector.blur();
+        }}
+        style={{ width: "40px" }}
       />
       <h4>Date: {dateRangeStr()}</h4>
       <Button type="primary" onClick={() => setVisible(true)}>
         Open
       </Button>
+      <Button type="primary" onClick={() => setRMCVisable(true)}>
+        Cal
+      </Button>
+      <div>
+        <RMCCalendar
+          locale={enUS}
+          visible={rmcvisable}
+          onCancel={() => setRMCVisable(false)}
+          onConfirm={""}
+        />
+      </div>
 
       <Drawer
         title="Filter"
@@ -159,8 +186,8 @@ function MovieList() {
         {isLoading ? (
           <div>Loading ...</div>
         ) : (
-          <div style={{ background: "#696969", padding: "30px" }}>
-            <Row>
+          <div style={{ background: "#696969", padding: "10px" }}>
+            <Row gutter={[16, 16]}>
               {data.results.map(movie => (
                 <MovieListItem key={movie.id} movie={movie} />
               ))}

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Card, Row, Col, DatePicker } from "antd";
+import { Card, Row, Col, DatePicker, InputNumber } from "antd";
 import { Drawer, Button, Radio, Calendar, Checkbox, Slider } from "antd";
 import SingleSelect from "./useAntSelect";
 import { discoveryUrlByWeek, buildDiscoveryUrl, movieLists } from "./tmdb-api";
@@ -21,13 +21,14 @@ function MovieList() {
   const [genres, setGenres] = useState([]);
 
   const allGenres = tmdbData.genres.map(g => g.name);
-  const releaseTypes = tmdbData.releaseTypes.map(type => type.name);
+  const releaseTypes = tmdbData.releaseTypes; //.map(type => type.name);
   const certifications = tmdbData.certifications.US.map(type => type.name);
-  console.log(`${genres}`);
+
   const [plainOptions, setPlainOptions] = useState(allGenres);
   const [checkedList, setCheckedList] = useState([]);
   const [indeterminate, setIndeterminate] = useState(true);
   const [checkAll, setCheckAll] = useState(false);
+  const [releaseType, setReleaseType] = useState(4);
 
   useEffect(() => {
     setUrl(discoveryUrlByWeek(date));
@@ -36,6 +37,11 @@ function MovieList() {
 
   // console.log("data");
   // console.log(data);
+  useEffect(() => {
+    console.log("STATE");
+    console.log(`releaseType: ${releaseType}`);
+    console.log(`date: ${date}`);
+  }, [releaseType, date]);
 
   function onPanelChange(value, mode) {
     console.log(value, mode);
@@ -74,6 +80,7 @@ function MovieList() {
       <WeekPicker
         format={"MMM Do YY"}
         onChange={date => setDate(moment(date))}
+        open={false}
         // onFocus={() => blur()}
         // style={{ width: "300px" }}
       />
@@ -91,33 +98,17 @@ function MovieList() {
         // height={"100%"}
         width={"375"}
       >
-        <div
-          style={{
-            borderBottom: "1px solid #E9E9E9",
-            paddingBottom: "0"
-          }}
+        {"Release "}
+        <Radio.Group
+          size={"small"}
+          defaultValue={releaseType}
+          onChange={e => setReleaseType(e.target.value)}
+          buttonStyle="solid"
         >
-          {/* <p styple={{ margin: "auto" }}>Release Type</p> */}
-          <Checkbox
-            indeterminate={indeterminate}
-            onChange={onCheckAllChange}
-            checked={checkAll}
-          >
-            Check all
-          </Checkbox>
-        </div>
-        <Checkbox.Group
-          style={{ width: "100%", margin: "0px 0px" }}
-          onChange={onChange}
-        >
-          <Row gutter={(4, 4)}>
-            {releaseTypes.map(item => (
-              <Col span={8}>
-                <Checkbox value={item.id}>{item}</Checkbox>
-              </Col>
-            ))}
-          </Row>
-        </Checkbox.Group>
+          {releaseTypes.map(item => (
+            <Radio.Button value={item.id}>{item.name}</Radio.Button>
+          ))}
+        </Radio.Group>
         <div style={{ borderBottom: "1px solid #E9E9E9", marginTop: "10px" }}>
           <Checkbox
             indeterminate={indeterminate}
@@ -155,9 +146,10 @@ function MovieList() {
             ))}
           </Row>
         </Checkbox.Group>
-        Votes
+        {"Vote Average"}
         <Slider range defaultValue={[20, 50]} />
-        <Slider range defaultValue={[0, 100]} />
+        {"Minimum Votes"}
+        <Slider range defaultValue={[20, 50]} />
         <Button type="primary" onClick={() => setVisible(true)}>
           Submit
         </Button>

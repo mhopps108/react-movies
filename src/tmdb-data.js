@@ -106,12 +106,12 @@ const tmdbData = {
     ]
   },
   releaseTypes: [
-    { name: "Premiere", id: 1 },
-    { name: "Limited", id: 2 },
+    //{ name: "Premiere", id: 1 },
+    //{ name: "Limited", id: 2 },
     { name: "Theatrical", id: 3 },
     { name: "Digital", id: 4 },
-    { name: "Physical", id: 5 },
-    { name: "TV", id: 6 }
+    { name: "Physical", id: 5 }
+    //{ name: "TV", id: 6 }
   ]
 };
 

@@ -3,9 +3,10 @@ import moment from "moment";
 const AKPEIY = "0d15450f36e2e4eaec96d1e905c43fad";
 
 function discoveryUrlByWeek(startDate) {
-  console.log(`startDate-first: ${startDate}`);
+  // console.log(`startDate-first: ${startDate}`);
   const page = 1;
-  const releaseType = 4;
+  // const releaseType = 4;
+  const releaseType = "4";
   // const start = startDate || moment();
   if (startDate === undefined) {
     startDate = moment().startOf("week");
@@ -13,9 +14,9 @@ function discoveryUrlByWeek(startDate) {
   startDate = moment(startDate).startOf("week");
 
   const endDate = moment(startDate).endOf("week");
-  console.log(
-    `Dates: ${startDate.format("YYYY-MM-DD")} - ${endDate.format("YYYY-MM-DD")}`
-  );
+  // console.log(
+  //   `Dates: ${startDate.format("YYYY-MM-DD")} - ${endDate.format("YYYY-MM-DD")}`
+  // );
 
   const url =
     "https://api.themoviedb.org/3/discover/movie?" +

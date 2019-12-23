@@ -1,5 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { Card, Calendar, Row, Col, DatePicker, Button } from "antd";
+import {
+  Card,
+  Calendar,
+  Row,
+  Col,
+  DatePicker,
+  Button,
+  Icon,
+  Drawer
+} from "antd";
 import { discoveryUrlByWeek, buildDiscoveryUrl, movieLists } from "./tmdb-api";
 import { useDataApi } from "./use-data-api.js";
 import MovieListItem from "./MovieListItem";
@@ -12,13 +21,14 @@ const { WeekPicker } = DatePicker;
 
 function MovieList({ setVisible }) {
   // const url = buildDiscoveryUrl(11);
-  const [date, setDate] = useState(new Date());
+  const [date, setDate] = useState(moment());
   const [url, setUrl] = useState(discoveryUrlByWeek());
   const [{ data, isLoading, isError }, doFetch] = useDataApi(url, {
     results: []
   });
 
   const [rmcvisable, setRMCVisable] = useState(false);
+  const [calendarVisible, setCalendarVisible] = useState(false);
 
   useEffect(() => {
     setUrl(discoveryUrlByWeek(date));
@@ -40,6 +50,13 @@ function MovieList({ setVisible }) {
         .endOf("week")
         .format("YYYY-MM-DD")}`;
     return s;
+  };
+
+  const handleNextWeek = () => {
+    // const thisDate = moment(date);
+    // setDate(thisDate.subtract(7, "d"));
+
+    setDate(moment(date).subtract(7, "d"));
   };
 
   const onDatePickerChange = date => {
@@ -74,6 +91,22 @@ function MovieList({ setVisible }) {
           </Button>
         </Col>
       </Row>
+      <Row>
+        <Button.Group size="default">
+          <Button onClick={handleNextWeek}>
+            <Icon type="left" />
+            Last Week
+          </Button>
+          <Button onClick={() => setCalendarVisible(true)}>
+            <Icon type="calendar" />
+            Calendar
+          </Button>
+          <Button onClick={() => setDate(moment(date).add(7, "d"))}>
+            Next Week
+            <Icon type="right" />
+          </Button>
+        </Button.Group>
+      </Row>
 
       <div>
         <RMCCalendar
@@ -83,6 +116,26 @@ function MovieList({ setVisible }) {
           onConfirm={""}
         />
       </div>
+
+      <Drawer
+        title="Select Week"
+        placement={"bottom"}
+        closable={true}
+        onClose={() => ""}
+        visible={calendarVisible}
+        height={450}
+        zIndex={100}
+      >
+        <div
+          style={{
+            width: "100%",
+            border: "1px solid #d9d9d9",
+            borderRadius: 4
+          }}
+        >
+          <Calendar fullscreen={false} onPanelChange={() => ""} />
+        </div>
+      </Drawer>
 
       <div>
         {isLoading ? (

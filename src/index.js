@@ -1,23 +1,17 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom";
 import "antd/dist/antd.css";
 import "./styles.css";
 import { MovieList } from "./MovieList";
+import { Filterer } from "./Filterer";
 
 function App() {
-  // const u = buildDiscoveryUrl();
-  // console.log(`${buildDiscoveryUrl()}`);
+  const [filterVisible, setFilterVisible] = useState(false);
+
   return (
     <div className="App">
-      {/* <MultiSelect initOptions={tmdbData.genres} placeholder="Genres" /> */}
-      {/* <MultiSelect
-        initOptions={tmdbData.certifications.US}
-        placeholder="Cert"
-      />       */}
-
-      {/* {console.log(tmdbData)} */}
-      {/* {isLoading && <Spin indicator={antIcon} />} */}
-      <MovieList />
+      <MovieList setVisible={setFilterVisible} />
+      <Filterer visible={filterVisible} setVisible={setFilterVisible} />
     </div>
   );
 }

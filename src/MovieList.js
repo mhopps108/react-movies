@@ -19,7 +19,9 @@ import "rmc-calendar/assets/index.css";
 
 const { WeekPicker } = DatePicker;
 
-function MovieList({ setVisible }) {
+// NEEDED: data, isLoading, isError
+
+function MovieList({ setVisible, releaseType }) {
   // const url = buildDiscoveryUrl(11);
   const [date, setDate] = useState(moment());
   const [url, setUrl] = useState(discoveryUrlByWeek());
@@ -31,14 +33,15 @@ function MovieList({ setVisible }) {
   const [calendarVisible, setCalendarVisible] = useState(false);
 
   useEffect(() => {
-    setUrl(discoveryUrlByWeek(date));
+    setUrl(discoveryUrlByWeek(date, releaseType));
     doFetch(url);
-  }, [date, url, doFetch]);
+  }, [date, url, doFetch, releaseType]);
 
   useEffect(() => {
     console.log("STATE");
     console.log(`date: ${date}`);
-  }, [date]);
+    console.log(`url: ${url}`);
+  }, [date, url]);
 
   const dateRangeStr = () => {
     const s =
@@ -67,7 +70,7 @@ function MovieList({ setVisible }) {
 
   return (
     <div className="movie-list-wrapper mx-auto">
-      <h1 className="text-center">Now Playing ({data.results.length})</h1>
+      {/* <h1 className="text-center">Now Playing ({data.results.length})</h1> */}
       <Row>
         <Col span={4}>
           <WeekPicker

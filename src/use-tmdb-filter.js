@@ -1,30 +1,13 @@
 import { useState, useEffect } from "react";
 import moment from "moment";
 
-
 const useDataApi = (initialUrl, initialData) => {
-  const [data, setData] = useState(initialData);
-  const [url, setUrl] = useState(initialUrl);
-  const [isLoading, setIsLoading] = useState(false);
-  const [isError, setIsError] = useState(false);
+  const [releaseType, setReleaseType] = useState([]);
+  const [genres, setGenres] = useState([]);
+  const [ratings, setRatings] = useState([]);
+  const [voteAvg, setVoteAvg] = useState([]); // [0, 10]
 
-  useEffect(() => {
-    const fetchData = async () => {
-      setIsError(false);
-      setIsLoading(true);
-      try {
-        console.log(`Url:\n${url}`);
-        const result = await axios(url);
-
-        setData(result.data);
-      } catch (error) {
-        setIsError(true);
-      }
-      setIsLoading(false);
-    };
-
-    fetchData();
-  }, [url]);
+  useEffect(() => {}, []);
 
   return [{ data, isLoading, isError }, setUrl];
 };

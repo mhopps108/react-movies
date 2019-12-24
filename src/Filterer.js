@@ -3,22 +3,26 @@ import { Row, Col, InputNumber, Icon } from "antd";
 import { Drawer, Button, Radio, Checkbox, Slider } from "antd";
 import tmdbData from "./tmdb-data.js";
 
-function Filterer({ visible, setVisible }) {
+/*
+// NEEDED: allGenres, allReleaseTyles, allCertifications
+*/
+
+function Filterer({ visible, setVisible, releaseType, setReleaseType }) {
   // const allGenres = tmdbData.genres.map(g => g.name);
   const allGenres = tmdbData.genres;
   const releaseTypes = tmdbData.releaseTypes; //.map(type => type.name);
   const allCertifications = tmdbData.certifications.US; //.map(type => type.name);
 
-  const [releaseType, setReleaseType] = useState(4);
+  // const [releaseType, setReleaseType] = useState(4);
   const [genres, setGenres] = useState([]);
   const [ratings, setRatings] = useState([]);
 
   useEffect(() => {
     console.log("FILTERER-STATE");
-    console.log(`releaseType: ${releaseType}`);
+    // console.log(`releaseType: ${releaseType}`);
     console.log(`genres: ${genres}`);
     console.log(`ratings: ${ratings}`);
-  }, [releaseType, genres, ratings]);
+  }, [genres, ratings]);
 
   return (
     <div className="drawer-container">

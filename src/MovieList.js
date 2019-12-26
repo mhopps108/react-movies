@@ -28,14 +28,17 @@ function MovieList({ setVisible, releaseType }) {
   const [{ data, isLoading, isError }, doFetch] = useDataApi(url, {
     results: []
   });
+  const [page, setPage] = useState(1);
 
   const [rmcvisable, setRMCVisable] = useState(false);
   const [calendarVisible, setCalendarVisible] = useState(false);
 
   useEffect(() => {
-    setUrl(discoveryUrlByWeek(date, releaseType));
+    setUrl(discoveryUrlByWeek(date, releaseType, page));
     doFetch(url);
-  }, [date, url, doFetch, releaseType]);
+    console.log("data");
+    console.log(data);
+  }, [date, url, doFetch, releaseType, page]);
 
   useEffect(() => {
     console.log("STATE");
@@ -70,7 +73,7 @@ function MovieList({ setVisible, releaseType }) {
 
   return (
     <div className="movie-list-wrapper mx-auto">
-      {/* <h1 className="text-center">Now Playing ({data.results.length})</h1> */}
+      <p className="text-center">Count ({data.results.length})</p>
       <Row>
         <Col span={4}>
           <WeekPicker
@@ -110,6 +113,28 @@ function MovieList({ setVisible, releaseType }) {
           </Button>
         </Button.Group>
       </Row>
+      <Row>
+        <Button.Group size="default">
+          <Button
+            disabled={data.page <= data.total_pages}
+            onClick={() => setPage(page => page - 1)}
+          >
+            <Icon type="left" />
+            {data.page - 1}
+          </Button>
+          <Button onClick={() => ""}>
+            {data.page} of {data.total_pages}
+          </Button>
+
+          <Button
+            disabled={data.page >= data.total_pages}
+            onClick={() => setPage(page => page + 1)}
+          >
+            {data.page + 1}
+            <Icon type="right" />
+          </Button>
+        </Button.Group>
+      </Row>
 
       <div>
         <RMCCalendar
@@ -124,7 +149,7 @@ function MovieList({ setVisible, releaseType }) {
         title="Select Week"
         placement={"bottom"}
         closable={true}
-        onClose={() => ""}
+        onClose={() => setCalendarVisible(false)}
         visible={calendarVisible}
         height={450}
         zIndex={100}

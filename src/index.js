@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom";
+import { Button } from "antd";
 import "antd/dist/antd.css";
 import "./styles.css";
 import { MovieList } from "./MovieList";
 import { Filterer } from "./Filterer";
 
-// 
+//
 
 function App() {
   const [filterVisible, setFilterVisible] = useState(false);
@@ -35,6 +36,7 @@ function App() {
         releaseType={releaseType}
         setReleaseType={setReleaseType}
       />
+      
     </div>
   );
 }

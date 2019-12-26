@@ -2,22 +2,15 @@ import moment from "moment";
 
 const AKPEIY = "0d15450f36e2e4eaec96d1e905c43fad";
 
-function discoveryUrlByWeek(startDate, releaseType) {
-  // console.log(`startDate-first: ${startDate}`);
-  const page = 1;
-  // const releaseType = 4;
+function discoveryUrlByWeek(startDate, releaseType, page) {
+  const pageNum = page || 1;
   const withReleaseType = releaseType || "4";
   // const start = startDate || moment();
   if (startDate === undefined) {
     startDate = moment().startOf("week");
   }
   startDate = moment(startDate).startOf("week");
-  // const fromReleaseDate =
-
   const endDate = moment(startDate).endOf("week");
-  // console.log(
-  //   `Dates: ${startDate.format("YYYY-MM-DD")} - ${endDate.format("YYYY-MM-DD")}`
-  // );
 
   const url =
     "https://api.themoviedb.org/3/discover/movie?" +
@@ -26,7 +19,7 @@ function discoveryUrlByWeek(startDate, releaseType) {
     "&region=US" +
     "&include_adult=false" +
     "&with_original_language=en" +
-    `&page=${page}` +
+    `&page=${pageNum}` +
     "&sort_by=release_date.asc" +
     `&release_date.gte=${startDate.format("YYYY-MM-DD")}` +
     `&release_date.lte=${endDate.format("YYYY-MM-DD")}` +

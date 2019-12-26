@@ -15,6 +15,9 @@ const useDataApi = (initialUrl, initialData) => {
         console.log(`Url:\n${url}`);
         const result = await axios(url);
 
+        console.log("api call result");
+        console.log(result);
+
         setData(result.data);
       } catch (error) {
         setIsError(true);

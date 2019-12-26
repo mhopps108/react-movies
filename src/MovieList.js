@@ -116,7 +116,7 @@ function MovieList({ setVisible, releaseType }) {
       <Row>
         <Button.Group size="default">
           <Button
-            disabled={data.page <= data.total_pages}
+            disabled={data.page - 1 <= 0}
             onClick={() => setPage(page => page - 1)}
           >
             <Icon type="left" />
@@ -127,7 +127,7 @@ function MovieList({ setVisible, releaseType }) {
           </Button>
 
           <Button
-            disabled={data.page >= data.total_pages}
+            disabled={data.page + 1 > data.total_pages}
             onClick={() => setPage(page => page + 1)}
           >
             {data.page + 1}

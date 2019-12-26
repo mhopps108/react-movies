@@ -73,22 +73,23 @@ function MovieList({ setVisible, releaseType }) {
 
   return (
     <div className="movie-list-wrapper mx-auto">
-      <p className="text-center">Count ({data.results.length})</p>
       <Row>
-        <Col span={4}>
+        <Col span={10}>
           <WeekPicker
             id={"week-picker"}
-            // format={"MMM Do YY"}
-            format={""}
+            format={"MMM Do YY"}
+            // format={""}
             // onChange={date => setDate(moment(date))}
             onChange={onDatePickerChange}
-            style={{ width: "40px" }}
+            // style={{ width: "40px" }}
           />
         </Col>
-        <Col span={12}>
-          <h4>Date: {dateRangeStr()}</h4>
+        <Col span={14}>
+          <h4>{dateRangeStr()}</h4>
         </Col>
-        <Col span={8}>
+      </Row>
+      <Row>
+        <Col>
           <Button type="primary" onClick={() => setVisible(true)}>
             Open
           </Button>
@@ -123,7 +124,8 @@ function MovieList({ setVisible, releaseType }) {
             {data.page - 1}
           </Button>
           <Button onClick={() => ""}>
-            {data.page} of {data.total_pages}
+            {data.page} of {data.total_pages} ----- {data.results.length} /{" "}
+            {data.total_results}
           </Button>
 
           <Button

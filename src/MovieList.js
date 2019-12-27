@@ -22,7 +22,6 @@ const { WeekPicker } = DatePicker;
 // NEEDED: data, isLoading, isError
 
 function MovieList({ setVisible, releaseType }) {
-  // const url = buildDiscoveryUrl(11);
   const [date, setDate] = useState(moment());
   const [url, setUrl] = useState(discoveryUrlByWeek());
   const [{ data, isLoading, isError }, doFetch] = useDataApi(url, {
@@ -50,25 +49,12 @@ function MovieList({ setVisible, releaseType }) {
     const s =
       `${moment(date)
         .startOf("week")
-        .format("YYYY-MM-DD")}` +
-      " -- " +
+        .format("MMM DD YYYY")}` +
+      " to " +
       `${moment(date)
         .endOf("week")
-        .format("YYYY-MM-DD")}`;
+        .format("MMM DD YYYY")}`;
     return s;
-  };
-
-  const handleNextWeek = () => {
-    // const thisDate = moment(date);
-    // setDate(thisDate.subtract(7, "d"));
-
-    setDate(moment(date).subtract(7, "d"));
-  };
-
-  const onDatePickerChange = date => {
-    const selector = document.getElementById("week-picker");
-    if (selector) selector.blur();
-    setDate(moment(date));
   };
 
   return (
@@ -78,10 +64,7 @@ function MovieList({ setVisible, releaseType }) {
           <WeekPicker
             id={"week-picker"}
             format={"MMM Do YY"}
-            // format={""}
-            // onChange={date => setDate(moment(date))}
-            onChange={onDatePickerChange}
-            // style={{ width: "40px" }}
+            onChange={date => setDate(moment(date))}
           />
         </Col>
         <Col span={14}>
@@ -100,13 +83,17 @@ function MovieList({ setVisible, releaseType }) {
       </Row>
       <Row>
         <Button.Group size="default">
-          <Button onClick={handleNextWeek}>
+          <Button onClick={() => setDate(moment(date).subtract(7, "d"))}>
             <Icon type="left" />
             Last Week
           </Button>
-          <Button onClick={() => setCalendarVisible(true)}>
+          {/* <Button onClick={() => setCalendarVisible(true)}>
             <Icon type="calendar" />
             Calendar
+          </Button> */}
+          <Button onClick={() => setDate(moment())}>
+            <Icon type="calendar" />
+            Today
           </Button>
           <Button onClick={() => setDate(moment(date).add(7, "d"))}>
             Next Week
@@ -124,10 +111,11 @@ function MovieList({ setVisible, releaseType }) {
             {data.page - 1}
           </Button>
           <Button onClick={() => ""}>
-            {data.page} of {data.total_pages} ----- {data.results.length} /{" "}
-            {data.total_results}
+            {data.page} of {data.total_pages}
           </Button>
-
+          <Button onClick={() => ""}>
+            {data.results.length} / {data.total_results}
+          </Button>
           <Button
             disabled={data.page + 1 > data.total_pages}
             onClick={() => setPage(page => page + 1)}

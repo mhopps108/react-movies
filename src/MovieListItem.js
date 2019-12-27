@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Card, Row, Col, Typography } from "antd";
 import tmdbData from "./tmdb-data.js";
+import moment from "moment";
 const { Title, Paragraph, Text } = Typography;
 
 /*
@@ -49,7 +50,9 @@ function MovieListItem({ movie }) {
           </Col>
           <Col xs={{ span: 17 }} sm={{ span: 16 }} lg={{ span: 18 }}>
             <Title level={4}>{title}</Title>
-            <Text type="secondary">{release_date}</Text>
+            <Text type="secondary">
+              {moment(release_date).format("MMM DD")}
+            </Text>
             <br />
             {/* <Text type="secondary">tmdbid: {id}</Text> */}
             {/* <br /> */}

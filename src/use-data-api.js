@@ -14,6 +14,7 @@ const useDataApi = (initialUrl, initialData) => {
       try {
         console.log(`Url:\n${url}`);
         const result = await axios(url);
+        // const result = await axios(url, { params: params });
 
         console.log("api call result");
         console.log(result);

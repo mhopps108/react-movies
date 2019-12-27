@@ -22,7 +22,7 @@ const tmdbData = {
     },
     {
       id: 99,
-      name: "Docs"
+      name: "Doc"
     },
     {
       id: 18,

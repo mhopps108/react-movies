@@ -1,4 +1,10 @@
 const tmdbData = {
+  list: [
+    { name: "Top Rated", path: "/top_rated" },
+    { name: "Popular", path: "/popular" },
+    { name: "Now Playing", path: "/now_playing" },
+    { name: "Upcoming", path: "/upcoming" }
+  ],
   genres: [
     {
       id: 28,

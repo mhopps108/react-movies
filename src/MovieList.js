@@ -21,7 +21,7 @@ const { WeekPicker } = DatePicker;
 
 // NEEDED: data, isLoading, isError
 
-function MovieList({ setVisible, releaseType }) {
+function MovieList({ setVisible, releaseType, setListVisible }) {
   const [date, setDate] = useState(moment());
   const [url, setUrl] = useState(discoveryUrlByWeek());
   const [{ data, isLoading, isError }, doFetch] = useDataApi(url, {
@@ -78,6 +78,9 @@ function MovieList({ setVisible, releaseType }) {
           </Button>
           <Button type="primary" onClick={() => setRMCVisable(true)}>
             Cal
+          </Button>
+          <Button type="primary" onClick={() => setListVisible(true)}>
+            List
           </Button>
         </Col>
       </Row>

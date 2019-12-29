@@ -24,15 +24,12 @@ function MovieListItem({ movie }) {
   const imgUrl = `https://image.tmdb.org/t/p/w92/${poster_path}`;
   const year = release_date.substring(0, 4);
 
-  const genresToString = () => {
-    const allGenres = tmdbData.genres;
+  const allGenres = tmdbData.genres;
 
+  const genresToString = () => {
     const a = allGenres.filter(item => {
       return genre_ids.includes(item.id);
     });
-    console.log("genre string");
-    console.log(a);
-
     return a.map(item => item.name).join(", ");
   };
 

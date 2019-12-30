@@ -1,9 +1,10 @@
 const tmdbData = {
   list: [
-    { name: "Top Rated", path: "/top_rated" },
-    { name: "Popular", path: "/popular" },
-    { name: "Now Playing", path: "/now_playing" },
-    { name: "Upcoming", path: "/upcoming" }
+    { name: "Top Rated", path: "/movie/top_rated" },
+    { name: "Popular", path: "/movie/popular" },
+    { name: "Now Playing", path: "/movie/now_playing" },
+    { name: "Upcoming", path: "/movie/upcoming" },
+    { name: "This Week", path: "/discover/movie" }
   ],
   genres: [
     {

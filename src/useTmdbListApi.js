@@ -4,7 +4,7 @@ import tmdbData from "./tmdb-data.js";
 
 const useTmdbListApi = () => {
   const tmdbLists = tmdbData.list;
-  const [list, setList] = useState(tmdbLists.popular);
+  const [list, setList] = useState(tmdbLists[1]);
   // const [list, setList] = useState({ name: "Popular", path: "/popular" });
   const [data, setData] = useState([]);
   // const [url, setUrl] = useState(makeTmdbUrl(listName));
@@ -18,9 +18,12 @@ const useTmdbListApi = () => {
     page: "1",
     region: "US"
   };
-  const baseUrl = "https://api.themoviedb.org/3/movie";
+
+  const baseUrl = "https://api.themoviedb.org/3";
 
   useEffect(() => {
+    console.log("useTmdbList - list");
+    console.log(tmdbLists);
     const fetchData = async () => {
       setIsError(false);
       setIsLoading(true);

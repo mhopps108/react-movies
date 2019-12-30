@@ -2,17 +2,19 @@ import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom";
 import { Button, Drawer, Row, Col } from "antd";
 import { Calendar, DatePicker, Icon } from "antd";
-import { discoveryUrlByWeek } from "./tmdb-api";
-import { useDataApi } from "./use-data-api.js";
-import "antd/dist/antd.css";
-import "./styles.css";
+
 import { MovieList } from "./MovieList";
 import { Filterer } from "./Filterer";
 import { MovieListDrawer } from "./MovieListDrawer";
-import tmdbData from "./tmdb-data.js";
+
+import { useDataApi } from "./useDataApi.js";
 import { useTmdbListApi } from "./useTmdbListApi";
-import { Item } from "rc-menu";
+
 import moment from "moment";
+import tmdbData from "./tmdb-data.js";
+import { discoveryUrlByWeek } from "./tmdb-api";
+import "antd/dist/antd.css";
+import "./styles.css";
 
 const { WeekPicker } = DatePicker;
 
@@ -48,7 +50,7 @@ function App() {
     console.log(`data:`);
     console.log(data);
     // setList(tmdbList.popular);
-  }, [data]);
+  }, [list, data]);
 
   // useEffect(() => {
   //   // setUrl(discoveryUrlByWeek(date, releaseType, page));

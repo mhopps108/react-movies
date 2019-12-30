@@ -12,13 +12,9 @@ const useDataApi = (initialUrl, initialData) => {
       setIsError(false);
       setIsLoading(true);
       try {
-        console.log(`Url:\n${url}`);
         const result = await axios(url);
-        // const result = await axios(url, { params: params });
-
-        console.log("api call result");
-        console.log(result);
-
+        // console.log("api call result");
+        // console.log(result);
         setData(result.data);
       } catch (error) {
         setIsError(true);
@@ -29,7 +25,7 @@ const useDataApi = (initialUrl, initialData) => {
     fetchData();
   }, [url]);
 
-  return [{ data, isLoading, isError }, setUrl];
+  return [{ data, isLoading, isError, setUrl }];
 };
 
 export { useDataApi };

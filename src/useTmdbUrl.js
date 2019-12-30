@@ -3,13 +3,6 @@ import axios from "axios";
 import tmdbData from "./tmdb-data.js";
 import { useDataApi } from "./useDataApi.js";
 
-const defaultParams = {
-  api_key: "0d15450f36e2e4eaec96d1e905c43fad",
-  language: "en-US",
-  page: "1",
-  region: "US"
-};
-
 var queryString = params =>
   Object.keys(params)
     .map(key => key + "=" + params[key])
@@ -32,21 +25,24 @@ const useTmdbUrl = () => {
   const [totalPages, setTotalPages] = useState(1);
   const [startDate, setStartDate] = useState([]);
   const [endDate, setEndDate] = useState([]);
+  // sortby, release type,
 
-  const [params, setParams] = useState(defaultParams);
-
-  // const url =
-  //   "https://api.themoviedb.org/3/discover/movie?" +
-  //   // `api_key=${AKPEIY}` +
-  //   // "&language=en-US" +
-  //   // "&region=US" +
-  //   "&include_adult=false" +
-  //   "&with_original_language=en" +
-  //   `&page=${pageNum}` +
-  //   "&sort_by=release_date.asc" +
-  //   `&release_date.gte=${startDate.format("YYYY-MM-DD")}` +
-  //   `&release_date.lte=${endDate.format("YYYY-MM-DD")}` +
-  //   `&with_release_type=${withReleaseType}`;
+  const defaultParams = {
+    api_key: "0d15450f36e2e4eaec96d1e905c43fad",
+    language: "en-US",
+    page: "1",
+    region: "US"
+  };
+  const discoveryParms = {
+    ...defaultParams,
+    include_adult: "false",
+    with_original_language: "en",
+    sort_by: "release_date.asc",
+    "release_date.gte": `${startDate.format("YYYY-MM-DD")}`,
+    "release_date.lte": `${endDate.format("YYYY-MM-DD")}`,
+    with_release_type: "4|5"
+  };
+  const [params, setParams] = useState("");
 
   useEffect(() => {
     // const newUrl = baseUrl + queryString(...defaultParams, ...params);

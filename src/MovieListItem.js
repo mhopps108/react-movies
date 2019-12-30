@@ -48,7 +48,7 @@ function MovieListItem({ movie }) {
           <Col xs={{ span: 17 }} sm={{ span: 16 }} lg={{ span: 18 }}>
             <Title level={4}>{title}</Title>
             <Text type="secondary">
-              {moment(release_date).format("MMM DD")}
+              {moment(release_date).format("MMM DD YYYY")}
             </Text>
             <br />
             {/* <Text type="secondary">tmdbid: {id}</Text> */}

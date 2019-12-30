@@ -50,6 +50,7 @@ function App() {
     console.log(`data:`);
     console.log(data);
     // setList(tmdbList.popular);
+    setTitle(`${list.name} Movies`);
   }, [list, data]);
 
   // useEffect(() => {

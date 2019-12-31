@@ -14,17 +14,19 @@ function MovieListDrawer({ visible, setVisible, setList }) {
     <div className="drawer-container">
       <Drawer
         title="Filter"
-        placement={"bottom"}
+        placement={"left"}
         closable={true}
         visible={visible}
         onClose={visable => setVisible(!visable)}
-        height={"250"}
-        // width={"375"}
+        // height={"250"}
+        width={"250"}
       >
         {tmdbList.map(list => (
-          <Button type="link" onClick={() => setList(list)}>
-            {list.name}
-          </Button>
+          <Row>
+            <Button key={list.name} type="link" onClick={() => setList(list)}>
+              {list.name}
+            </Button>
+          </Row>
         ))}
       </Drawer>
     </div>

@@ -123,3 +123,22 @@ const tmdbData = {
 };
 
 export default tmdbData;
+
+const listNotes = [
+  {
+    name: "Top Rated",
+    path: "/movie/top_rated",
+    type: "list"
+  },
+  { name: "Popular", path: "/movie/popular", type: "list" },
+  { name: "Now Playing", path: "/movie/now_playing", type: "list" },
+  { name: "Upcoming", path: "/movie/upcoming", type: "list" },
+  {
+    name: "This Week",
+    path: "/discover/movie",
+    type: "discovery",
+    sortBy: "release_date.asc",
+    releaseType: "4|5",
+    pageBy: "week"
+  }
+];

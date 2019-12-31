@@ -1,4 +1,4 @@
-/*
+
 Discovery
 - Type: All Movies
 - Filters: 
@@ -16,7 +16,7 @@ TMDb Lists
 - upcoming
 
 Releases
-Needs: release type | date | page
+Needs: release type | date (range) | page
 - Type: theater, home (digital & bluray)
 - View: week range (sun-sat)
 - PageBy: week
@@ -43,9 +43,32 @@ return:
       + genres | cert | vote avg | min votes
 
 
-*/
 
-/*
+HEADERS
+Lists
+  - display date range if list has one
+Releases
+  - toggle releaseType (theater/home)
+  
+  - display date range (month/week)
+Discovery
+  - 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 const baseUrl = "https://api.themoviedb.org/3/movie/";
 const defaultParams = {
   api_key: "0d15450f36e2e4eaec96d1e905c43fad",
@@ -85,4 +108,3 @@ const url =
     `&release_date.lte=${endDate.format("YYYY-MM-DD")}` +
     `&with_release_type=${withReleaseType}`;
 
-*/

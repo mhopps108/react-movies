@@ -39,7 +39,19 @@ function App() {
   // const [page, setPage] = useState(1);
 
   const [
-    { data, isLoading, isError, list, setList, setReleaseType, setPage }
+    {
+      data,
+      isLoading,
+      isError,
+      list,
+      setList,
+      setReleaseType,
+      setPage,
+      startDate,
+      setStartDate,
+      endDate,
+      setEndDate
+    }
   ] = useTmdbUrl();
 
   // useEffect(() => {
@@ -57,17 +69,12 @@ function App() {
     setTitle(`${list.name} Movies`);
   }, [list, data]);
 
-  // const dateRangeStr = () => {
-  //   const s =
-  //     `${moment(date)
-  //       .startOf("week")
-  //       .format("MMM DD YYYY")}` +
-  //     " to " +
-  //     `${moment(date)
-  //       .endOf("week")
-  //       .format("MMM DD YYYY")}`;
-  //   return s;
-  // };
+  const dateRangeStr = () => {
+    const s = `${moment(startDate).format("MMM DD YYYY")} to ${moment(
+      endDate
+    ).format("MMM DD YYYY")}`;
+    return s;
+  };
 
   return (
     <div className="App">
@@ -81,12 +88,10 @@ function App() {
               onChange={date => setDate(moment(date))}
             />
           </Col>
-          <Col span={14}>
-            <h4>{dateRangeStr()}</h4>
-          </Col>
+          
         </Row> */}
         <Row>
-          <Col>
+          <Col span={10}>
             <Button type="primary" onClick={() => setFilterVisible(true)}>
               Open
             </Button>
@@ -94,23 +99,37 @@ function App() {
               List
             </Button>
           </Col>
+          <Col span={14}>
+            <h4>{dateRangeStr()}</h4>
+          </Col>
         </Row>
-        {/* <Row>
+        {list.type === "discovery" && (
+          <Row>
+            <Button.Group size="default">
+              <Button onClick={() => setReleaseType("3")}>Theaters</Button>
+              <Button onClick={() => setReleaseType("4|5")}>Digital</Button>
+            </Button.Group>
+          </Row>
+        )}
+
+        <Row>
           <Button.Group size="default">
-            <Button onClick={() => setDate(moment(date).subtract(7, "d"))}>
+            <Button
+              onClick={() => setStartDate(moment(startDate).subtract(7, "d"))}
+            >
               <Icon type="left" />
               Last Week
             </Button>
-            <Button onClick={() => setDate(moment())}>
+            <Button onClick={() => setStartDate(moment().startOf("week"))}>
               <Icon type="calendar" />
               Today
             </Button>
-            <Button onClick={() => setDate(moment(date).add(7, "d"))}>
+            <Button onClick={() => setStartDate(moment(startDate).add(7, "d"))}>
               Next Week
               <Icon type="right" />
             </Button>
           </Button.Group>
-        </Row> */}
+        </Row>
         <Row>
           <Button.Group size="default">
             <Button
@@ -124,7 +143,7 @@ function App() {
               {data.page} of {data.total_pages}
             </Button>
             <Button>
-              {data.length} / {data.total_results}
+              {data.results.length} / {data.total_results}
             </Button>
             <Button
               disabled={data.page + 1 > data.total_pages}

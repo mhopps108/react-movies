@@ -8,6 +8,10 @@ var queryString = params =>
     .map(key => key + "=" + params[key])
     .join("&");
 
+const startOfWeek = date => {
+  return (moment(date) || moment()).startOf("week");
+};
+
 const useTmdbUrl = () => {
   const tmdbLists = tmdbData.list;
   const starterList = tmdbLists.find(
@@ -15,12 +19,9 @@ const useTmdbUrl = () => {
   );
   const [list, setList] = useState(starterList);
 
-  // const [results, setResults] = useState([]);
-  // const [totalResults, setTotalResults] = useState([]);
   const [page, setPage] = useState(1);
-  // const [totalPages, setTotalPages] = useState(1);
-
-  const [startDate, setStartDate] = useState(moment().startOf("week"));
+  // const [startDate, setStartDate] = useState(moment().startOf("week"));
+  const [startDate, setStartDate] = useState(startOfWeek());
   const [endDate, setEndDate] = useState(moment(startDate).endOf("week"));
 
   const [sortBy, setSortBy] = useState("release_date.asc");
@@ -54,14 +55,9 @@ const useTmdbUrl = () => {
       setSortBy(list.sortBy);
     }
 
-    let params = "";
-    if (list.listtype === "discovery") {
-      params = queryString(discoveryParams);
-    }
-    if (list.listtype === "list") {
-      params = queryString(defaultParams);
-    }
-    const newUrl = `${baseUrl}${list.path}?${params}`;
+    const params =
+      list.listtype === "discovery" ? discoveryParams : defaultParams;
+    const newUrl = `${baseUrl}${list.path}?${queryString(params)}`;
     setUrl(newUrl);
   }, [list, page, startDate, defaultParams, discoveryParams, setUrl]);
 
@@ -69,8 +65,10 @@ const useTmdbUrl = () => {
     if ("dates" in data) {
       setStartDate(moment(data.dates.minimum));
       setEndDate(moment(data.dates.maximum));
+    } else {
+      // setStartDate(startOfWeek(startDate));
     }
-  }, [data]);
+  }, [data, list]);
 
   useEffect(() => {
     if (list.listtype !== "list") {

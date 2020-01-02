@@ -22,7 +22,6 @@ function MovieListDrawer({ visible, setVisible, setList }) {
       <Drawer
         title="Movies"
         placement={"left"}
-        // placement={"top"}
         closable={true}
         visible={visible}
         onClose={visable => setVisible(!visable)}
@@ -34,7 +33,6 @@ function MovieListDrawer({ visible, setVisible, setList }) {
           .filter(list => list.listtype === "list")
           .map(list => (
             <Row key={list.id}>
-              {/* <Button onClick={list => onListSelection(list)}> */}
               <Button onClick={() => onListSelection(list)}>{list.name}</Button>
             </Row>
           ))}

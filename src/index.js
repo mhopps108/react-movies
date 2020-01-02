@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom";
-import { Button, Drawer, Row, Col } from "antd";
-import { Calendar, DatePicker, Icon } from "antd";
+import { Button, Drawer, Row, Col, Icon } from "antd";
 
 import { MovieList } from "./MovieList";
 import { Filterer } from "./Filterer";
@@ -9,19 +8,12 @@ import { MovieListDrawer } from "./MovieListDrawer";
 import { useTmdbUrl } from "./useTmdbUrl";
 
 import moment from "moment";
-import tmdbData from "./tmdb-data";
 import "antd/dist/antd.css";
 import "./styles.css";
-
-const { WeekPicker } = DatePicker;
-
-//
 
 function App() {
   const [filterVisible, setFilterVisible] = useState(false);
   const [listVisible, setListVisible] = useState(false);
-  const [title, setTitle] = useState("Movies");
-  // const tmdbList = tmdbData.list;
 
   const [
     {
@@ -37,14 +29,7 @@ function App() {
       endDate
     }
   ] = useTmdbUrl();
-
   const { page, total_results, total_pages, results } = data;
-
-  useEffect(() => {
-    setTitle(list.name);
-    console.log(`list`);
-    console.log(list);
-  }, [list]);
 
   const dateRangeStr = () => {
     const s = `${moment(startDate).format("MMM DD YYYY")} to ${moment(
@@ -64,7 +49,7 @@ function App() {
             </Button>
           </Col>
           <Col span={16} style={{ textAlign: "center" }}>
-            <h2>{title}</h2>
+            <h2>{list.name}</h2>
           </Col>
           <Col span={4}>
             {/* <Button type="" onClick={() => setFilterVisible(true)}> */}

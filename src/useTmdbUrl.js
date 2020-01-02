@@ -10,7 +10,10 @@ var queryString = params =>
 
 const useTmdbUrl = () => {
   const tmdbLists = tmdbData.list;
-  const [list, setList] = useState(tmdbLists[1]);
+  const starterList = tmdbLists.find(
+    list => list.name === "Home Release Dates"
+  );
+  const [list, setList] = useState(starterList);
 
   // const [results, setResults] = useState([]);
   // const [totalResults, setTotalResults] = useState([]);

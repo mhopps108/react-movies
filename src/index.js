@@ -67,21 +67,22 @@ function App() {
             <h2>{title}</h2>
           </Col>
           <Col span={4}>
-            <Button type="" onClick={() => setFilterVisible(true)}>
+            {/* <Button type="" onClick={() => setFilterVisible(true)}> */}
+            <Button type="" onClick={() => setListVisible(true)}>
               Open
             </Button>
           </Col>
         </Row>
-        <Row>
-          {list.listtype === "discovery" && (
-            <Col span={14}>
-              <h4>{dateRangeStr()}</h4>
-            </Col>
-          )}
-        </Row>
+
+        {list.listtype === "discovery" && (
+          <Row style={{ textAlign: "center" }}>
+            <h4>{dateRangeStr()}</h4>
+          </Row>
+        )}
+
         {list.listtype === "discovery" && (
           <>
-            <Row>
+            <Row style={{ textAlign: "center" }}>
               <Button.Group size="default">
                 <Button
                   onClick={() =>
@@ -106,8 +107,9 @@ function App() {
           </>
         )}
 
-        <Row>
-          <Button.Group size="default">
+        {/* <Row style={{ }}> */}
+        <Row style={{ textAlign: "center" }}>
+          <Button.Group>
             <Button
               disabled={page - 1 <= 0}
               onClick={() => setPage(page => page - 1)}

@@ -1,10 +1,45 @@
 const tmdbData = {
   list: [
-    { name: "Top Rated", path: "/movie/top_rated", type: "list" },
-    { name: "Popular", path: "/movie/popular", type: "list" },
-    { name: "Now Playing", path: "/movie/now_playing", type: "list" },
-    { name: "Upcoming", path: "/movie/upcoming", type: "list" },
-    { name: "This Week", path: "/discover/movie", type: "discovery" }
+    {
+      id: 11,
+      name: "Top Rated Movies",
+      path: "/movie/top_rated",
+      listtype: "list"
+    },
+    {
+      id: 12,
+      name: "Popular Movies",
+      path: "/movie/popular",
+      listtype: "list"
+    },
+    {
+      id: 13,
+      name: "Now Playing Movies",
+      path: "/movie/now_playing",
+      listtype: "list"
+    },
+    {
+      id: 14,
+      name: "Upcoming Movies",
+      path: "/movie/upcoming",
+      listtype: "list"
+    },
+    {
+      id: 21,
+      name: "Theater Release Dates",
+      path: "/discover/movie",
+      listtype: "discovery",
+      releaseType: "3",
+      sortBy: "release_date.asc"
+    },
+    {
+      id: 22,
+      name: "Home Release Dates",
+      path: "/discover/movie",
+      listtype: "discovery",
+      releaseType: "4|5",
+      sortBy: "release_date.asc"
+    }
   ],
   genres: [
     {

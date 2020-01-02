@@ -6,13 +6,10 @@ import { Calendar, DatePicker, Icon } from "antd";
 import { MovieList } from "./MovieList";
 import { Filterer } from "./Filterer";
 import { MovieListDrawer } from "./MovieListDrawer";
-
-import { useDataApi } from "./useDataApi.js";
-import { useTmdbListApi } from "./useTmdbListApi";
-import { useTmdbUrl, discoveryUrlByWeek } from "./useTmdbUrl";
+import { useTmdbUrl } from "./useTmdbUrl";
 
 import moment from "moment";
-import tmdbData from "./tmdb-data.js";
+import tmdbData from "./tmdb-data";
 import "antd/dist/antd.css";
 import "./styles.css";
 
@@ -23,20 +20,8 @@ const { WeekPicker } = DatePicker;
 function App() {
   const [filterVisible, setFilterVisible] = useState(false);
   const [listVisible, setListVisible] = useState(false);
-
-  // const [releaseType, setReleaseType] = useState(4);
-  // const [listName, setListName] = useState(tmdbList["popular"]);
   const [title, setTitle] = useState("Movies");
-
-  // const [{ data, isLoading, isError }, list, setList] = useTmdbListApi();
-  const tmdbList = tmdbData.list;
-
-  // const [date, setDate] = useState(moment());
-  // const [url, setUrl] = useState(discoveryUrlByWeek());
-  // const [{ data, isLoading, isError }, doFetch] = useDataApi(url, {
-  //   results: []
-  // });
-  // const [page, setPage] = useState(1);
+  // const tmdbList = tmdbData.list;
 
   const [
     {
@@ -49,25 +34,17 @@ function App() {
       setPage,
       startDate,
       setStartDate,
-      endDate,
-      setEndDate
+      endDate
     }
   ] = useTmdbUrl();
 
-  // useEffect(() => {
-  //   setUrl(discoveryUrlByWeek(date, releaseType, page));
-  //   doFetch(url);
-  //   console.log("data");
-  //   console.log(data);
-  // }, [date, url, doFetch, releaseType, page]);
+  const { page, total_results, total_pages, results } = data;
 
   useEffect(() => {
-    console.log(`list: ${list}`);
-    console.log(`data:`);
-    console.log(data);
-    // setList(tmdbList.popular);
-    setTitle(`${list.name} Movies`);
-  }, [list, data]);
+    setTitle(list.name);
+    console.log(`list`);
+    console.log(list);
+  }, [list]);
 
   const dateRangeStr = () => {
     const s = `${moment(startDate).format("MMM DD YYYY")} to ${moment(
@@ -78,78 +55,77 @@ function App() {
 
   return (
     <div className="App">
-      <h1 className="text-center">{title}</h1>
       <div>
-        {/* <Row>
-          <Col span={10}>
-            <WeekPicker
-              id={"week-picker"}
-              format={"MMM Do YY"}
-              onChange={date => setDate(moment(date))}
-            />
-          </Col>
-          
-        </Row> */}
+        <br />
         <Row>
-          <Col span={10}>
-            <Button type="primary" onClick={() => setFilterVisible(true)}>
-              Open
-            </Button>
-            <Button type="primary" onClick={() => setListVisible(true)}>
+          <Col span={4}>
+            <Button type="" onClick={() => setListVisible(true)}>
               List
             </Button>
           </Col>
-          <Col span={14}>
-            <h4>{dateRangeStr()}</h4>
+          <Col span={16} style={{ textAlign: "center" }}>
+            <h2>{title}</h2>
+          </Col>
+          <Col span={4}>
+            <Button type="" onClick={() => setFilterVisible(true)}>
+              Open
+            </Button>
           </Col>
         </Row>
-        {list.type === "discovery" && (
-          <Row>
-            <Button.Group size="default">
-              <Button onClick={() => setReleaseType("3")}>Theaters</Button>
-              <Button onClick={() => setReleaseType("4|5")}>Digital</Button>
-            </Button.Group>
-          </Row>
+        <Row>
+          {list.listtype === "discovery" && (
+            <Col span={14}>
+              <h4>{dateRangeStr()}</h4>
+            </Col>
+          )}
+        </Row>
+        {list.listtype === "discovery" && (
+          <>
+            <Row>
+              <Button.Group size="default">
+                <Button
+                  onClick={() =>
+                    setStartDate(moment(startDate).subtract(7, "d"))
+                  }
+                >
+                  <Icon type="left" />
+                  Last Week
+                </Button>
+                <Button onClick={() => setStartDate(moment().startOf("week"))}>
+                  <Icon type="calendar" />
+                  Today
+                </Button>
+                <Button
+                  onClick={() => setStartDate(moment(startDate).add(7, "d"))}
+                >
+                  Next Week
+                  <Icon type="right" />
+                </Button>
+              </Button.Group>
+            </Row>
+          </>
         )}
 
         <Row>
           <Button.Group size="default">
             <Button
-              onClick={() => setStartDate(moment(startDate).subtract(7, "d"))}
-            >
-              <Icon type="left" />
-              Last Week
-            </Button>
-            <Button onClick={() => setStartDate(moment().startOf("week"))}>
-              <Icon type="calendar" />
-              Today
-            </Button>
-            <Button onClick={() => setStartDate(moment(startDate).add(7, "d"))}>
-              Next Week
-              <Icon type="right" />
-            </Button>
-          </Button.Group>
-        </Row>
-        <Row>
-          <Button.Group size="default">
-            <Button
-              disabled={data.page - 1 <= 0}
+              disabled={page - 1 <= 0}
               onClick={() => setPage(page => page - 1)}
             >
               <Icon type="left" />
-              {data.page - 1}
+              {page - 1}
             </Button>
             <Button onClick={() => ""}>
-              {data.page} of {data.total_pages}
+              {page} of {total_pages}
             </Button>
             <Button>
-              {data.results.length} / {data.total_results}
+              {results.length} / {total_results}
             </Button>
             <Button
-              disabled={data.page + 1 > data.total_pages}
+              disabled={page + 1 > total_pages}
               onClick={() => setPage(page => page + 1)}
             >
-              {data.page + 1}
+              {page + 1}
               <Icon type="right" />
             </Button>
           </Button.Group>

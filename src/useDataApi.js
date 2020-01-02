@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-const useDataApi = (initialUrl, initialData) => {
+const useDataApi = (initialUrl, initialData = { results: [] }) => {
   const [data, setData] = useState(initialData);
   const [url, setUrl] = useState(initialUrl);
   const [isLoading, setIsLoading] = useState(false);
@@ -13,8 +13,6 @@ const useDataApi = (initialUrl, initialData) => {
       setIsLoading(true);
       try {
         const result = await axios(url);
-        // console.log("api call result");
-        // console.log(result);
         setData(result.data);
       } catch (error) {
         setIsError(true);

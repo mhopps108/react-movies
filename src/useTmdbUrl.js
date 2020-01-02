@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
-import tmdbData from "./tmdb-data.js";
-import { useDataApi } from "./useDataApi.js";
+import tmdbData from "./tmdb-data";
+import { useDataApi } from "./useDataApi";
 import moment from "moment";
 
 var queryString = params =>
@@ -13,10 +12,11 @@ const useTmdbUrl = () => {
   const tmdbLists = tmdbData.list;
   const [list, setList] = useState(tmdbLists[1]);
 
-  const [results, setResults] = useState([]);
-  const [totalResults, setTotalResults] = useState([]);
+  // const [results, setResults] = useState([]);
+  // const [totalResults, setTotalResults] = useState([]);
   const [page, setPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
+  // const [totalPages, setTotalPages] = useState(1);
+
   const [startDate, setStartDate] = useState(moment().startOf("week"));
   const [endDate, setEndDate] = useState(moment(startDate).endOf("week"));
 
@@ -39,39 +39,30 @@ const useTmdbUrl = () => {
     "release_date.lte": `${moment(endDate).format("YYYY-MM-DD")}`,
     with_release_type: `${releaseType}`
   };
-  const [params, setParams] = useState("");
 
   const starterUrl = `${baseUrl}${list.path}?${queryString(defaultParams)}`;
-  // console.log(`starterUrl: ${starterUrl}`);
-  const [{ data, isLoading, isError, setUrl }] = useDataApi(starterUrl, {
-    results: []
-  });
+  const [{ data, isLoading, isError, setUrl }] = useDataApi(starterUrl);
 
   useEffect(() => {
-    let newUrl = "";
-    console.log(`list-type: ${list.type}`);
-    if (list.type === "discovery") {
-      newUrl = `${baseUrl}${list.path}?${queryString(discoveryParams)}`;
+    if ("releaseType" in list) {
+      setReleaseType(list.releaseType);
     }
-    if (list.type === "list") {
-      newUrl = `${baseUrl}${list.path}?${queryString(defaultParams)}`;
+    if ("sortBy" in list) {
+      setSortBy(list.sortBy);
     }
 
+    let params = "";
+    if (list.listtype === "discovery") {
+      params = queryString(discoveryParams);
+    }
+    if (list.listtype === "list") {
+      params = queryString(defaultParams);
+    }
+    const newUrl = `${baseUrl}${list.path}?${params}`;
     setUrl(newUrl);
-    console.log("useTmdbList - url");
-    console.log(newUrl);
-    console.log("page");
-    console.log(page);
-  }, [list, page, startDate, defaultParams, params, setUrl]);
+  }, [list, page, startDate, defaultParams, discoveryParams, setUrl]);
 
   useEffect(() => {
-    console.log("useTmdbList - data");
-    console.log(data);
-    setResults("results" in data ? data.results : []);
-    setTotalResults("total_results" in data ? data.total_results : 0);
-    setTotalPages("total_pages" in data ? data.total_pages : 0);
-    // setPage by scrolling to bottom page+1
-    // setStartDate("dates" in data ? data.dates.minimum : startDate);
     if ("dates" in data) {
       setStartDate(moment(data.dates.minimum));
       setEndDate(moment(data.dates.maximum));
@@ -79,19 +70,10 @@ const useTmdbUrl = () => {
   }, [data]);
 
   useEffect(() => {
-    console.log(`startDate: ${startDate.format("YYYY-MM-DD")}`);
-    // let end = startDate.clone().add(7, "d");
-    let end = startDate.clone().endOf("week");
-    // if (!("dates" in data)) {
-    //   setEndDate(end);
-    // }
-    if (list.type === "discovery") {
-      setEndDate(end);
+    if (list.listtype !== "list") {
+      setEndDate(startDate.clone().endOf("week"));
     }
-
-    console.log(`startDate: ${startDate.format("YYYY-MM-DD")}`);
-    console.log(`endDate: ${endDate.format("YYYY-MM-DD")}`);
-  }, [startDate]);
+  }, [startDate, setEndDate, list]);
 
   useEffect(() => {
     console.log("STATE: useTmdbList");
@@ -100,7 +82,7 @@ const useTmdbUrl = () => {
     console.log("start & end Dates");
     console.log(startDate);
     console.log(endDate);
-  }, [list, page, startDate, defaultParams, params, setUrl]);
+  }, [list, page, startDate, defaultParams, setUrl, data, endDate]);
 
   return [
     {

@@ -49,7 +49,7 @@ function App() {
             </Button>
           </Col>
           <Col span={16} style={{ textAlign: "center" }}>
-            <h2>{list.name}</h2>
+            <h2 style={{ fontSize: "5vw" }}>{list.name}</h2>
           </Col>
           <Col span={4}>
             {/* <Button type="" onClick={() => setFilterVisible(true)}> */}

@@ -46,7 +46,7 @@ function MovieListItem({ movie }) {
             <img src={imgUrl} alt={"no-poster"} />
           </Col>
           <Col xs={{ span: 17 }} sm={{ span: 16 }} lg={{ span: 18 }}>
-            <Title level={4}>{title}</Title>
+            <Title level={4} style={{ fontSize: "5vw" }}>{title}</Title>
             <Text type="secondary">
               {moment(release_date).format("MMM DD YYYY")}
             </Text>

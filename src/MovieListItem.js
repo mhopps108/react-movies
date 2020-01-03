@@ -50,17 +50,31 @@ function MovieListItem({ movie }) {
           borderRadius: "5px"
         }}
       >
-        <div>
-          <img
+        {/* <div style={{ overflow: "hidden", width: "92px", height: "auto" }}> */}
+        {/* <div style={{ width: "92px", height: "auto", alignSelf: "center" }}> */}
+        <div
+          style={{
+            minWidth: "92px",
+            height: "140px",
+            // height: "auto",
+            backgroundImage: `url(${imgUrl})`,
+            // objectFit: "contain"
+            backgroundPosition: "center",
+            backgroundSize: "cover",
+            backgroundRepeat: "no-repeat",
+            borderRadius: "5px"
+          }}
+        >
+          {/* <img
             style={{
-              width: "92px",
-              height: "auto",
-              objectFit: "contain",
+              width: "100%",
+              height: "100%",
+              // objectFit: "contain",
               borderRadius: "5px"
             }}
             src={imgUrl}
             alt={"no-poster"}
-          />
+          /> */}
         </div>
         <div style={{ paddingLeft: "0.5rem" }}>
           <h4 style={{ fontSize: "1.1rem" }}>{title}</h4>

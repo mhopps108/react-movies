@@ -92,7 +92,6 @@ function App() {
           </>
         )}
 
-        {/* <Row style={{ }}> */}
         <Row style={{ textAlign: "center" }}>
           <Button.Group>
             <Button
@@ -102,7 +101,7 @@ function App() {
               <Icon type="left" />
               {page - 1}
             </Button>
-            <Button onClick={() => ""}>
+            <Button onClick={() => setPage(1)}>
               {page} of {total_pages}
             </Button>
             <Button>
@@ -123,6 +122,7 @@ function App() {
       <MovieListDrawer
         visible={listVisible}
         setVisible={setListVisible}
+        currentList={list}
         setList={setList}
       />
       {/* <Filterer

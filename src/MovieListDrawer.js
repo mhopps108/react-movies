@@ -7,7 +7,7 @@ import tmdbData from "./tmdb-data";
 // NEEDED: allGenres, allReleaseTyles, allCertifications
 */
 
-function MovieListDrawer({ visible, setVisible, setList }) {
+function MovieListDrawer({ visible, setVisible, setList, currentList }) {
   const tmdbList = tmdbData.list;
 
   const onListSelection = list => {
@@ -33,7 +33,12 @@ function MovieListDrawer({ visible, setVisible, setList }) {
           .filter(list => list.listtype === "list")
           .map(list => (
             <Row key={list.id}>
-              <Button onClick={() => onListSelection(list)}>{list.name}</Button>
+              <Button
+                type={currentList === list ? "primary" : "default"}
+                onClick={() => onListSelection(list)}
+              >
+                {list.name}
+              </Button>
             </Row>
           ))}
         <br />
@@ -42,7 +47,12 @@ function MovieListDrawer({ visible, setVisible, setList }) {
           .filter(list => list.listtype === "discovery")
           .map(list => (
             <Row key={list.id}>
-              <Button onClick={() => onListSelection(list)}>{list.name}</Button>
+              <Button
+                type={currentList === list ? "primary" : "default"}
+                onClick={() => onListSelection(list)}
+              >
+                {list.name}
+              </Button>
             </Row>
           ))}
       </Drawer>

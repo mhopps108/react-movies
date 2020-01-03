@@ -40,27 +40,41 @@ function MovieListItem({ movie }) {
       lg={{ span: 8 }}
       style={{ paddingBottom: "10px" }}
     >
-      <Card bodyStyle={{ padding: "5px" }}>
-        <Row type="flex" justify="space-around" align="middle">
-          <Col xs={{ span: 7 }} sm={{ span: 8 }} lg={{ span: 6 }}>
-            <img src={imgUrl} alt={"no-poster"} />
-          </Col>
-          <Col xs={{ span: 17 }} sm={{ span: 16 }} lg={{ span: 18 }}>
-            <Title level={4} style={{ fontSize: "5vw" }}>{title}</Title>
-            <Text type="secondary">
+      <div
+        style={{
+          background: "white",
+          padding: "5px",
+          height: "150px",
+          // maxWidth: "300px",
+          display: "flex",
+          borderRadius: "5px"
+        }}
+      >
+        <div>
+          <img
+            style={{
+              width: "auto",
+              height: "100%",
+              objectFit: "contain",
+              borderRadius: "5px"
+            }}
+            src={imgUrl}
+            alt={"no-poster"}
+          />
+        </div>
+        <div>
+          <h4 style={{ fontSize: "1.1rem" }}>{title}</h4>
+          <div>
+            <p style={{ margin: 0 }}>
               {moment(release_date).format("MMM DD YYYY")}
-            </Text>
-            <br />
-            {/* <Text type="secondary">tmdbid: {id}</Text> */}
-            {/* <br /> */}
-            <Text type="secondary">
+            </p>
+            <p style={{ margin: 0 }}>
               {vote_average} / 10 ({vote_count} votes)
-            </Text>
-            <br />
-            <Text type="secondary">{genresToString()}</Text>
-          </Col>
-        </Row>
-      </Card>
+            </p>
+            <p style={{ margin: 0 }}>{genresToString()}</p>
+          </div>
+        </div>
+      </div>
     </Col>
   );
 }

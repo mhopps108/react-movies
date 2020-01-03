@@ -38,7 +38,7 @@ function MovieListItem({ movie }) {
       xs={{ span: 24 }}
       sm={{ span: 12 }}
       lg={{ span: 8 }}
-      style={{ paddingBottom: "10px" }}
+      style={{ paddingBottom: "0px" }}
     >
       <div
         style={{
@@ -53,8 +53,8 @@ function MovieListItem({ movie }) {
         <div>
           <img
             style={{
-              width: "auto",
-              height: "100%",
+              width: "92px",
+              height: "auto",
               objectFit: "contain",
               borderRadius: "5px"
             }}
@@ -62,7 +62,7 @@ function MovieListItem({ movie }) {
             alt={"no-poster"}
           />
         </div>
-        <div>
+        <div style={{ paddingLeft: "0.5rem" }}>
           <h4 style={{ fontSize: "1.1rem" }}>{title}</h4>
           <div>
             <p style={{ margin: 0 }}>

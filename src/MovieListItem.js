@@ -43,7 +43,7 @@ function MovieListItem({ movie }) {
       <div
         style={{
           background: "white",
-          padding: "5px",
+          padding: "6px",
           height: "150px",
           // maxWidth: "300px",
           display: "flex",
@@ -55,7 +55,7 @@ function MovieListItem({ movie }) {
         <div
           style={{
             minWidth: "92px",
-            height: "140px",
+            height: "138px",
             // height: "auto",
             backgroundImage: `url(${imgUrl})`,
             // objectFit: "contain"
@@ -76,7 +76,7 @@ function MovieListItem({ movie }) {
             alt={"no-poster"}
           /> */}
         </div>
-        <div style={{ paddingLeft: "0.5rem" }}>
+        <div style={{ paddingLeft: "1rem", paddingTop: "0.5rem" }}>
           <h4 style={{ fontSize: "1.1rem" }}>{title}</h4>
           <div>
             <p style={{ margin: 0 }}>

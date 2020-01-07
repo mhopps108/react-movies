@@ -117,6 +117,7 @@ function App() {
           </Button.Group>
         </Row>
       </div>
+
       {isLoading ? (
         <p>Loading movies...</p>
       ) : (

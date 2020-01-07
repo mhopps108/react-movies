@@ -117,8 +117,12 @@ function App() {
           </Button.Group>
         </Row>
       </div>
+      {isLoading ? (
+        <p>Loading movies...</p>
+      ) : (
+        <MovieList movies={data.results} />
+      )}
 
-      <MovieList movies={data.results} />
       <MovieListDrawer
         visible={listVisible}
         setVisible={setListVisible}

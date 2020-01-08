@@ -36,6 +36,7 @@ function MovieListDrawer({ visible, setVisible, setList, currentList }) {
               <Button
                 type={currentList === list ? "primary" : "default"}
                 onClick={() => onListSelection(list)}
+                style={{ width: "100%" }}
               >
                 {list.name}
               </Button>
@@ -50,6 +51,7 @@ function MovieListDrawer({ visible, setVisible, setList, currentList }) {
               <Button
                 type={currentList === list ? "primary" : "default"}
                 onClick={() => onListSelection(list)}
+                style={{ width: "100%" }}
               >
                 {list.name}
               </Button>

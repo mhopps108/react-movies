@@ -20,7 +20,6 @@ const useTmdbUrl = () => {
   const [list, setList] = useState(starterList);
 
   const [page, setPage] = useState(1);
-  // const [startDate, setStartDate] = useState(moment().startOf("week"));
   const [startDate, setStartDate] = useState(startOfWeek());
   const [endDate, setEndDate] = useState(moment(startDate).endOf("week"));
 
@@ -59,22 +58,42 @@ const useTmdbUrl = () => {
       list.listtype === "discovery" ? discoveryParams : defaultParams;
     const newUrl = `${baseUrl}${list.path}?${queryString(params)}`;
     setUrl(newUrl);
-  }, [list, page, startDate, defaultParams, discoveryParams, setUrl]);
+  }, [list, page, defaultParams, discoveryParams, setUrl]);
+
+  // useEffect(() => {
+  //   if ("dates" in data) {
+  //     setStartDate(moment(data.dates.minimum));
+  //     setEndDate(moment(data.dates.maximum));
+  //   } else {
+  //     // setStartDate(startOfWeek(startDate));
+  //     if (list.listType === "list") {
+  //       setStartDate(null);
+  //       setEndDate(null);
+  //     } else {
+  //       setStartDate(startOfWeek(startDate));
+  //       setEndDate(
+  //         moment(startDate)
+  //           .clone()
+  //           .endOf("week")
+  //       );
+  //     }
+  //   }
+  // }, [data, list, startDate]);
 
   useEffect(() => {
     if ("dates" in data) {
       setStartDate(moment(data.dates.minimum));
       setEndDate(moment(data.dates.maximum));
-    } else {
-      // setStartDate(startOfWeek(startDate));
-    }
-  }, [data, list]);
+    } 
+  }, [data, list, startDate]);
 
-  useEffect(() => {
-    if (list.listtype !== "list") {
-      setEndDate(startDate.clone().endOf("week"));
-    }
-  }, [startDate, setEndDate, list]);
+  // useEffect(() => {
+  //   if (!("dates" in data)) {
+  //   }
+  //   // if (list.listtype !== "list") {
+  //   //   setEndDate(startDate.clone().endOf("week"));
+  //   // }
+  // }, [startDate, setEndDate, list]);
 
   useEffect(() => {
     console.log("STATE: useTmdbList");

@@ -30,7 +30,8 @@ const tmdbData = {
       path: "/discover/movie",
       listtype: "discovery",
       releaseType: "3",
-      sortBy: "release_date.asc"
+      sortBy: "release_date.asc",
+      startDate: ""
     },
     {
       id: 22,

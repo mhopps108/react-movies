@@ -8,23 +8,13 @@ var queryString = params =>
     .map(key => key + "=" + params[key])
     .join("&");
 
-const startOfWeek = date => {
-  return (moment(date) || moment()).startOf("week");
-};
-
 const useTmdbUrl = () => {
   const tmdbLists = tmdbData.list;
-  const starterList = tmdbLists.find(
-    list => list.name === "Home Release Dates"
-  );
+  const starterList = tmdbLists.find(list => list.name === "Popular Movies");
   const [list, setList] = useState(starterList);
-
   const [page, setPage] = useState(1);
-  const [startDate, setStartDate] = useState(startOfWeek());
-  const [endDate, setEndDate] = useState(moment(startDate).endOf("week"));
-
-  const [sortBy, setSortBy] = useState("release_date.asc");
-  const [releaseType, setReleaseType] = useState("4|5");
+  const [startDate, setStartDate] = useState();
+  const [endDate, setEndDate] = useState();
 
   /* params */
   const baseUrl = "https://api.themoviedb.org/3";
@@ -34,54 +24,23 @@ const useTmdbUrl = () => {
     page: `${page}`,
     region: "US"
   };
-  const discoveryParams = {
-    ...defaultParams,
-    include_adult: "false",
-    with_original_language: "en",
-    sort_by: `${sortBy}`,
-    "release_date.gte": `${moment(startDate).format("YYYY-MM-DD")}`,
-    "release_date.lte": `${moment(endDate).format("YYYY-MM-DD")}`,
-    with_release_type: `${releaseType}`
+  const params = page => {
+    return {
+      api_key: "0d15450f36e2e4eaec96d1e905c43fad",
+      language: "en-US",
+      page: `${page}`,
+      region: "US"
+    };
   };
 
-  const starterUrl = `${baseUrl}${list.path}?${queryString(discoveryParams)}`;
+  const starterUrl = `${baseUrl}${list.path}?${queryString(defaultParams)}`;
   const [{ data, isLoading, isError, setUrl }] = useDataApi(starterUrl);
 
   /* EFFECT */
   useEffect(() => {
-    if ("releaseType" in list) {
-      setReleaseType(list.releaseType);
-    }
-    if ("sortBy" in list) {
-      setSortBy(list.sortBy);
-    }
-
-    const params =
-      list.listtype === "discovery" ? discoveryParams : defaultParams;
-    const newUrl = `${baseUrl}${list.path}?${queryString(params)}`;
+    const newUrl = `${baseUrl}${list.path}?${queryString(defaultParams)}`;
     setUrl(newUrl);
-  }, [list, page, defaultParams, discoveryParams, setUrl]);
-
-  /* EFFECT */
-  // useEffect(() => {
-  //   if ("dates" in data) {
-  //     setStartDate(moment(data.dates.minimum));
-  //     setEndDate(moment(data.dates.maximum));
-  //   } else {
-  //     // setStartDate(startOfWeek(startDate));
-  //     if (list.listType === "list") {
-  //       setStartDate(null);
-  //       setEndDate(null);
-  //     } else {
-  //       setStartDate(startOfWeek(startDate));
-  //       setEndDate(
-  //         moment(startDate)
-  //           .clone()
-  //           .endOf("week")
-  //       );
-  //     }
-  //   }
-  // }, [data, list, startDate]);
+  }, [list, page, defaultParams, setUrl]);
 
   /* EFFECT */
   useEffect(() => {
@@ -90,14 +49,6 @@ const useTmdbUrl = () => {
       setEndDate(moment(data.dates.maximum));
     }
   }, [data, list]);
-
-  // useEffect(() => {
-  //   if (!("dates" in data)) {
-  //   }
-  //   // if (list.listtype !== "list") {
-  //   //   setEndDate(startDate.clone().endOf("week"));
-  //   // }
-  // }, [startDate, setEndDate, list]);
 
   useEffect(() => {
     console.log("STATE: useTmdbList");
@@ -115,7 +66,6 @@ const useTmdbUrl = () => {
       isError,
       list,
       setList,
-      setReleaseType,
       setPage,
       startDate,
       setStartDate,
@@ -154,4 +104,5 @@ const useTmdbUrl = () => {
 // }
 
 // export { useTmdbUrl, discoveryUrlByWeek };
-export { useTmdbUrl };
+
+// export { useTmdbUrl };

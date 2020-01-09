@@ -49,7 +49,8 @@ function MovieListItem({ movie }) {
           display: "flex",
           borderRadius: "5px",
           border: "1px solid rgba(0,0,0,0.25)",
-          boxShadow: "3px 3px 3px 0px rgba(0,0,0,0.25)"
+          //boxShadow: "3px 3px 3px 0px rgba(0,0,0,0.25)"
+          boxShadow: "0 4px 8px 2px rgba(0,0,0,.5)"
         }}
       >
         {/* <div style={{ overflow: "hidden", width: "92px", height: "auto" }}> */}

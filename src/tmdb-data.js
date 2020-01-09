@@ -4,7 +4,9 @@ const tmdbData = {
       id: 11,
       name: "Top Rated Movies",
       path: "/movie/top_rated",
-      listtype: "list"
+      listtype: "list",
+      canSort: false,
+      pageBy: ''
     },
     {
       id: 12,

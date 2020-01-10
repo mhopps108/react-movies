@@ -94,7 +94,7 @@ function App() {
           </Row>
         )} */}
 
-        {list.listtype === "discovery" && (
+        {list.source === "discovery" && (
           <>
             <Row style={{ textAlign: "center" }}>
               <Button.Group size="default">

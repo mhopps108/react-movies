@@ -30,7 +30,7 @@ function MovieListDrawer({ visible, setVisible, setList, currentList }) {
       >
         <h4>{"TMDb List"}</h4>
         {tmdbList
-          .filter(list => list.listtype === "list")
+          .filter(list => list.source === "tmdb")
           .map(list => (
             <Row key={list.id}>
               <Button
@@ -45,7 +45,7 @@ function MovieListDrawer({ visible, setVisible, setList, currentList }) {
         <br />
         <h4>{"Release Dates"}</h4>
         {tmdbList
-          .filter(list => list.listtype === "discovery")
+          .filter(list => list.source === "discovery")
           .map(list => (
             <Row key={list.id}>
               <Button

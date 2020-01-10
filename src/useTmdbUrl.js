@@ -24,7 +24,7 @@ const useTmdbUrl = () => {
   const [endDate, setEndDate] = useState(moment(startDate).endOf("week"));
 
   const [sortBy, setSortBy] = useState("release_date.asc");
-  const [releaseType, setReleaseType] = useState("4|5");
+  const [releaseType, setReleaseType] = useState("");
 
   /* params */
   const baseUrl = "https://api.themoviedb.org/3";

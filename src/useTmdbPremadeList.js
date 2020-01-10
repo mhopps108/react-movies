@@ -9,12 +9,12 @@ var queryString = params =>
     .join("&");
 
 const useTmdPremadeList = () => {
-  const tmdbLists = tmdbData.list;
-  const starterList = tmdbLists.find(list => list.name === "Popular Movies");
-  const [list, setList] = useState(starterList);
-  const [page, setPage] = useState(1);
-  const [startDate, setStartDate] = useState();
-  const [endDate, setEndDate] = useState();
+  // const tmdbLists = tmdbData.list;
+  // const starterList = tmdbLists.find(list => list.name === "Popular Movies");
+  // const [list, setList] = useState(starterList);
+  // const [page, setPage] = useState(1);
+  // const [startDate, setStartDate] = useState();
+  // const [endDate, setEndDate] = useState();
 
   /* params */
   const baseUrl = "https://api.themoviedb.org/3";

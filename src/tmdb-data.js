@@ -43,7 +43,7 @@ const tmdbData = {
       name: "Home Release Dates",
       path: "/discover/movie",
       source: "discovery",
-      releaseType: "4|5",
+      releaseType: "4",
       sortBy: "release_date.asc"
     }
   ],

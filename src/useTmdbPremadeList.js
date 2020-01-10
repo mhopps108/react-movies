@@ -8,7 +8,7 @@ var queryString = params =>
     .map(key => key + "=" + params[key])
     .join("&");
 
-const useTmdbUrl = () => {
+const useTmdPremadeList = () => {
   const tmdbLists = tmdbData.list;
   const starterList = tmdbLists.find(list => list.name === "Popular Movies");
   const [list, setList] = useState(starterList);
@@ -74,35 +74,4 @@ const useTmdbUrl = () => {
   ];
 };
 
-//
-//
-//
-
-// function discoveryUrlByWeek(startDate, releaseType, page) {
-//   const pageNum = page || 1;
-//   const withReleaseType = releaseType || "4";
-//   // const start = startDate || moment();
-//   if (startDate === undefined) {
-//     startDate = moment().startOf("week");
-//   }
-//   startDate = moment(startDate).startOf("week");
-//   const endDate = moment(startDate).endOf("week");
-
-//   const url =
-//     "https://api.themoviedb.org/3/discover/movie?" +
-//     `api_key=0d15450f36e2e4eaec96d1e905c43fad` +
-//     "&language=en-US" +
-//     "&region=US" +
-//     "&include_adult=false" +
-//     "&with_original_language=en" +
-//     `&page=${pageNum}` +
-//     "&sort_by=release_date.asc" +
-//     `&release_date.gte=${startDate.format("YYYY-MM-DD")}` +
-//     `&release_date.lte=${endDate.format("YYYY-MM-DD")}` +
-//     `&with_release_type=${withReleaseType}`;
-//   return url;
-// }
-
-// export { useTmdbUrl, discoveryUrlByWeek };
-
-// export { useTmdbUrl };
+export { useTmdPremadeList };

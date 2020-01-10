@@ -4,33 +4,36 @@ const tmdbData = {
       id: 11,
       name: "Top Rated Movies",
       path: "/movie/top_rated",
-      listtype: "list",
+      source: "tmdb",
       canSort: false,
-      pageBy: ''
+      pageBy: ""
     },
     {
       id: 12,
       name: "Popular Movies",
       path: "/movie/popular",
-      listtype: "list"
+      listtype: "list",
+      source: "tmdb"
     },
     {
       id: 13,
       name: "Now Playing Movies",
       path: "/movie/now_playing",
-      listtype: "list"
+      listtype: "list",
+      source: "tmdb"
     },
     {
       id: 14,
       name: "Upcoming Movies",
       path: "/movie/upcoming",
-      listtype: "list"
+      listtype: "list",
+      source: "tmdb"
     },
     {
       id: 21,
       name: "Theater Release Dates",
       path: "/discover/movie",
-      listtype: "discovery",
+      source: "discovery",
       releaseType: "3",
       sortBy: "release_date.asc",
       startDate: ""
@@ -39,7 +42,7 @@ const tmdbData = {
       id: 22,
       name: "Home Release Dates",
       path: "/discover/movie",
-      listtype: "discovery",
+      source: "discovery",
       releaseType: "4|5",
       sortBy: "release_date.asc"
     }

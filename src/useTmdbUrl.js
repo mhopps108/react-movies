@@ -26,7 +26,7 @@ const useTmdbUrl = () => {
   const [endDate, setEndDate] = useState(moment(startDate).endOf("week"));
 
   const [sortBy, setSortBy] = useState("release_date.asc");
-  const [releaseType, setReleaseType] = useState("");
+  const [releaseType, setReleaseType] = useState("4");
 
   /* params */
   const baseUrl = "https://api.themoviedb.org/3";
@@ -47,7 +47,9 @@ const useTmdbUrl = () => {
   };
 
   const starterUrl = `${baseUrl}${list.path}?${queryString(discoveryParams)}`;
-  const [{ data, isLoading, isError, setUrl }] = useDataApi(starterUrl);
+  // const [{ data, isLoading, isError, setUrl }] = useDataApi(starterUrl);
+  const [state, setUrl] = useDataApi(starterUrl, []);
+  const { data, isLoading, isError } = state;
 
   /* EFFECT */
   useEffect(() => {

@@ -17,8 +17,6 @@ function App() {
   const [filterVisible, setFilterVisible] = useState(false);
   const [listVisible, setListVisible] = useState(false);
 
-  const mPicker = useRef(null);
-
   const [
     {
       data,
@@ -51,18 +49,8 @@ function App() {
       <div>
         <Row>
           <Col>
-            <MonthPicker
-              // ref={mPicker}
-              onChange={onMonthChange}
-              placeholder="Select month"
-              // style={{fontSize: "16px"}}
-            />
-            <WeekPicker
-              // ref={mPicker}
-              onChange={onMonthChange}
-              placeholder="Select week"
-              // style={{fontSize: "16px"}}
-            />
+            <MonthPicker onChange={onMonthChange} placeholder="Select month" />
+            <WeekPicker onChange={onMonthChange} placeholder="Select week" />
           </Col>
         </Row>
         <br />
@@ -88,11 +76,6 @@ function App() {
             <h4>{dateRangeStr()}</h4>
           </Row>
         )}
-        {/* {list.listtype === "discovery" && (
-          <Row style={{ textAlign: "center" }}>
-            <h4>{dateRangeStr()}</h4>
-          </Row>
-        )} */}
 
         {list.source === "discovery" && (
           <>

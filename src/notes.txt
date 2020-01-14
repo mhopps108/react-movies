@@ -27,11 +27,6 @@ All
 
 
 
-useTmdbApi
-- build url
-- doFetch (use-data-api)
-- set data, 
-
 
 TMDb-Api
 return:
@@ -48,8 +43,6 @@ HEADERS
 Lists
   - display date range if list has one
 Releases
-  - toggle releaseType (theater/home)
-  
   - display date range (month/week)
 Discovery
   - 

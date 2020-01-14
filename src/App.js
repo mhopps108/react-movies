@@ -31,7 +31,8 @@ function App() {
       endDate
     }
   ] = useTmdbUrl();
-  const { page, total_results, total_pages, results } = data;
+
+  const [{ page, total_results, total_pages, results }] = data;
 
   const dateRangeStr = () => {
     const s = `${moment(startDate).format("MMM DD YYYY")} to ${moment(
@@ -130,11 +131,7 @@ function App() {
         </Row>
       </div>
 
-      {isLoading ? (
-        <p>Loading movies...</p>
-      ) : (
-        <MovieList movies={data.results} />
-      )}
+      {isLoading ? <p>Loading movies...</p> : <MovieList movies={results} />}
 
       <MovieListDrawer
         visible={listVisible}

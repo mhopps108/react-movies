@@ -88,7 +88,7 @@ const useTmdbUrl = () => {
     console.log(startDate);
     console.log(endDate);
     const sectionDates = {};
-    const r = data.results.forEach(item => {
+    data.results.forEach(item => {
       // console.log(item);
       if (item.release_date in sectionDates) {
         sectionDates[item.release_date].push(item);

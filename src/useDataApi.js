@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
+// TODO: implement cancel with boolean flag
+
 const useDataApi = (initialUrl, initialData = { results: [] }) => {
   const [data, setData] = useState(initialData);
   const [url, setUrl] = useState(initialUrl);

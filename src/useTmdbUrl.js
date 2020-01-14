@@ -87,6 +87,17 @@ const useTmdbUrl = () => {
     console.log("start & end Dates");
     console.log(startDate);
     console.log(endDate);
+    const sectionDates = {};
+    const r = data.results.forEach(item => {
+      // console.log(item);
+      if (item.release_date in sectionDates) {
+        sectionDates[item.release_date].push(item);
+      } else {
+        sectionDates[item.release_date] = [];
+        sectionDates[item.release_date].push(item);
+      }
+    });
+    console.log(sectionDates);
   }, [list, page, startDate, defaultParams, setUrl, data, endDate]);
 
   return [

@@ -5,10 +5,11 @@ import moment from "moment";
 
 // Need to use useCallback(), useMemo??
 
-var queryString = params =>
-  Object.keys(params)
+var queryString = params => {
+  return Object.keys(params)
     .map(key => key + "=" + params[key])
     .join("&");
+};
 
 const startOfWeek = date => {
   return (moment(date) || moment()).startOf("week");
@@ -48,7 +49,9 @@ const useTmdbUrl = () => {
 
   const starterUrl = `${baseUrl}${list.path}?${queryString(discoveryParams)}`;
   // const [{ data, isLoading, isError, setUrl }] = useDataApi(starterUrl);
-  const [state, setUrl] = useDataApi(starterUrl, []);
+  console.log(`starterUrl: ${starterUrl}`);
+  console.log(`queryString: ${queryString(discoveryParams)}`);
+  const [state, setUrl] = useDataApi(starterUrl);
   const { data, isLoading, isError } = state;
 
   /* EFFECT */
@@ -63,6 +66,9 @@ const useTmdbUrl = () => {
     const params =
       list.source === "discovery" ? discoveryParams : defaultParams;
     const newUrl = `${baseUrl}${list.path}?${queryString(params)}`;
+    console.log(`params:`);
+    console.log(params);
+    console.log(`newUrl:\n${newUrl}`);
     setUrl(newUrl);
   }, [list, page, defaultParams, discoveryParams, setUrl]);
 
@@ -89,33 +95,31 @@ const useTmdbUrl = () => {
     console.log("start & end Dates");
     console.log(startDate);
     console.log(endDate);
-    const sectionDates = {};
-    data.results.forEach(item => {
-      // console.log(item);
-      if (item.release_date in sectionDates) {
-        sectionDates[item.release_date].push(item);
-      } else {
-        sectionDates[item.release_date] = [];
-        sectionDates[item.release_date].push(item);
-      }
-    });
-    console.log(sectionDates);
+    // const sectionDates = {};
+    // data.results.forEach(item => {
+    //   // console.log(item);
+    //   if (item.release_date in sectionDates) {
+    //     sectionDates[item.release_date].push(item);
+    //   } else {
+    //     sectionDates[item.release_date] = [];
+    //     sectionDates[item.release_date].push(item);
+    //   }
+    // });
+    // console.log(sectionDates);
   }, [list, page, startDate, defaultParams, setUrl, data, endDate]);
 
-  return [
-    {
-      data,
-      isLoading,
-      isError,
-      list,
-      setList,
-      setReleaseType,
-      setPage,
-      startDate,
-      setStartDate,
-      endDate
-    }
-  ];
+  return {
+    data,
+    isLoading,
+    isError,
+    list,
+    setList,
+    setReleaseType,
+    setPage,
+    startDate,
+    setStartDate,
+    endDate
+  };
 };
 
 //

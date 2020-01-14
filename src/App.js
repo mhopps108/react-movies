@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import ReactDOM from "react-dom";
+
 import { Button, Drawer, Row, Col, Icon, DatePicker } from "antd";
 
 import { MovieList } from "./MovieList";
@@ -11,28 +12,30 @@ import moment from "moment";
 import "antd/dist/antd.css";
 import "./styles.css";
 
-const { MonthPicker, WeekPicker } = DatePicker;
+// const { MonthPicker, WeekPicker } = DatePicker;
 
 function App() {
   const [filterVisible, setFilterVisible] = useState(false);
   const [listVisible, setListVisible] = useState(false);
 
-  const [
-    {
-      data,
-      isLoading,
-      isError,
-      list,
-      setList,
-      setReleaseType,
-      setPage,
-      startDate,
-      setStartDate,
-      endDate
-    }
-  ] = useTmdbUrl();
-
-  const [{ page, total_results, total_pages, results }] = data;
+  const {
+    data,
+    isLoading,
+    isError,
+    list,
+    setList,
+    setReleaseType,
+    setPage,
+    startDate,
+    setStartDate,
+    endDate
+  } = useTmdbUrl();
+  console.log(data);
+  // const page = 0,
+  //   total_results = 0,
+  //   total_pages = 0,
+  //   results = 0;
+  const { page, total_results, total_pages, results } = data;
 
   const dateRangeStr = () => {
     const s = `${moment(startDate).format("MMM DD YYYY")} to ${moment(
@@ -48,13 +51,13 @@ function App() {
   return (
     <div className="App">
       <div>
-        <Row>
+        {/* <Row>
           <Col>
             <MonthPicker onChange={onMonthChange} placeholder="Select month" />
             <WeekPicker onChange={onMonthChange} placeholder="Select week" />
           </Col>
         </Row>
-        <br />
+        <br /> */}
         <Row>
           <Col span={4}>
             <Button type="" onClick={() => setListVisible(true)}>
@@ -131,7 +134,12 @@ function App() {
         </Row>
       </div>
 
-      {isLoading ? <p>Loading movies...</p> : <MovieList movies={results} />}
+      {isLoading ? (
+        <p>Loading movies...</p>
+      ) : (
+        // <MovieList movies={data.results} />
+        <MovieList movies={results} />
+      )}
 
       <MovieListDrawer
         visible={listVisible}

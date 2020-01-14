@@ -3,6 +3,8 @@ import tmdbData from "./tmdb-data";
 import { useDataApi } from "./useDataApi";
 import moment from "moment";
 
+// Need to use useCallback(), useMemo??
+
 var queryString = params =>
   Object.keys(params)
     .map(key => key + "=" + params[key])

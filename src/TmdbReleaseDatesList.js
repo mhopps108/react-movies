@@ -53,10 +53,11 @@ function TmdbReleaseDatesList({ list }) {
     )}`;
   };
 
-  const detailString = () => {
-    return `${page} of ${total_pages} | ${
-      results ? results.length : 0
-    } of ${total_results} Movies`;
+  const pageString = () => {
+    return `${page} of ${total_pages}`;
+  };
+  const resultString = () => {
+    return `${results ? results.length : 0} of ${total_results} Movies`;
   };
 
   useEffect(() => {
@@ -68,6 +69,10 @@ function TmdbReleaseDatesList({ list }) {
 
     setUrl(starterUrl);
   }, [list, setUrl, startDate, starterUrl, page]);
+
+  useEffect(() => {
+    setPage(1);
+  }, [list, startDate]);
 
   return (
     <div>
@@ -103,11 +108,8 @@ function TmdbReleaseDatesList({ list }) {
             <Icon type="left" />
             {page - 1}
           </Button>
-          <Button>{detailString()}</Button>
-          {/* <Button onClick={() => setPage(1)}>
-              {page} of {total_pages} -- {results.length || 0} of{" "}
-              {total_results} Movies
-            </Button> */}
+          <Button>{pageString()}</Button>
+          <Button>{resultString()}</Button>
           <Button
             disabled={page + 1 > total_pages}
             onClick={() => setPage(page => page + 1)}

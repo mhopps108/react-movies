@@ -53,8 +53,7 @@ const useDataApi = (initialUrl, initialData) => {
       }
     };
     fetchData();
-
-    console.log("state");
+    console.log("state - useDataApi");
     console.log(state);
     console.log(`url: ${url}`);
 

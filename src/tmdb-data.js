@@ -33,17 +33,16 @@ const tmdbData = {
       name: "Theater Release Dates",
       path: "/discover/movie",
       source: "discovery",
-      releaseType: "3",
-      sortBy: "release_date.asc",
-      startDate: ""
+      releaseType: "3"
+      // sortBy: "release_date.asc"
     },
     {
       id: 22,
       name: "Home Release Dates",
       path: "/discover/movie",
       source: "discovery",
-      releaseType: "4",
-      sortBy: "release_date.asc"
+      releaseType: "4"
+      // sortBy: "release_date.asc"
     }
   ],
   genres: [

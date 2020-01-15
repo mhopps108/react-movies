@@ -15,8 +15,6 @@ var queryString = params => {
 };
 
 function TmdbList({ list }) {
-  // const [listVisible, setListVisible] = useState(false);
-
   const baseUrl = "https://api.themoviedb.org/3";
   const defaultParams = {
     api_key: "0d15450f36e2e4eaec96d1e905c43fad",
@@ -29,31 +27,29 @@ function TmdbList({ list }) {
 
   const [state, setUrl] = useDataApi(starterUrl, []);
   const { data, isLoading, isError } = state;
-  const { page, total_results, total_pages, results } = data;
+  const { page, total_results, total_pages, results, dates = null } = data;
 
-  // const dateRangeStr = () => {
-  //   const s = `${moment(startDate).format("MMM DD YYYY")} to ${moment(
-  //     endDate
-  //   ).format("MMM DD YYYY")}`;
-  //   return s;
-  // };
+  const dateString = (start, end) => {
+    return `${moment(start).format("MMM DD YYYY")} to ${moment(end).format(
+      "MMM DD YYYY"
+    )}`;
+  };
+
+  useEffect(() => {
+    setUrl(starterUrl);
+  }, [list, setUrl]);
 
   return (
     <div>
-      {/* <div>
-        {startDate && (
+      <div>
+        {dates && (
           <Row style={{ textAlign: "center" }}>
-            <h4>{dateRangeStr()}</h4>
+            <h4>{dateString(dates.minimum, dates.maximum)}</h4>
           </Row>
         )}
-      </div> */}
+      </div>
 
-      {isLoading ? (
-        <p>Loading movies...</p>
-      ) : (
-        // <MovieList movies={data.results} />
-        <MovieList movies={results} />
-      )}
+      {isLoading ? <p>Loading movies...</p> : <MovieList movies={results} />}
     </div>
   );
 }

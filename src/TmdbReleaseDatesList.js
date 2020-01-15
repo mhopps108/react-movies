@@ -53,6 +53,12 @@ function TmdbReleaseDatesList({ list }) {
     )}`;
   };
 
+  const detailString = () => {
+    return `${page} of ${total_pages} | ${
+      results ? results.length : 0
+    } of ${total_results} Movies`;
+  };
+
   useEffect(() => {
     if ("releaseType" in list) {
       setReleaseType(list.releaseType);
@@ -90,31 +96,27 @@ function TmdbReleaseDatesList({ list }) {
         </Row>
 
         <Row style={{ textAlign: "center" }}>
-          <Button.Group>
-            <Button
-              disabled={page - 1 <= 0}
-              onClick={() => setPage(page => page - 1)}
-            >
-              <Icon type="left" />
-              {page - 1}
-            </Button>
-            <span>
-              {page} of {total_pages} -- {results.length || 0} of{" "}
-              {total_results} Movies
-            </span>
-            {/* <Button onClick={() => setPage(1)}>
+          <Button
+            disabled={page - 1 <= 0}
+            onClick={() => setPage(page => page - 1)}
+          >
+            <Icon type="left" />
+            {page - 1}
+          </Button>
+          <Button>{detailString()}</Button>
+          {/* <Button onClick={() => setPage(1)}>
               {page} of {total_pages} -- {results.length || 0} of{" "}
               {total_results} Movies
             </Button> */}
-            <Button
-              disabled={page + 1 > total_pages}
-              onClick={() => setPage(page => page + 1)}
-            >
-              {page + 1}
-              <Icon type="right" />
-            </Button>
-          </Button.Group>
+          <Button
+            disabled={page + 1 > total_pages}
+            onClick={() => setPage(page => page + 1)}
+          >
+            {page + 1}
+            <Icon type="right" />
+          </Button>
         </Row>
+        <Row />
       </div>
 
       <div>

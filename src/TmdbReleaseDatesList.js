@@ -28,11 +28,10 @@ function TmdbReleaseDatesList({ list }) {
   const [page, setPage] = useState(1);
 
   const baseUrl = "https://api.themoviedb.org/3";
-  const defaultParams = {
+  const params = {
     api_key: "0d15450f36e2e4eaec96d1e905c43fad",
     language: "en-US",
     page: `${page}`,
-    // page: "1",
     region: "US",
     include_adult: "false",
     with_original_language: "en",
@@ -41,7 +40,7 @@ function TmdbReleaseDatesList({ list }) {
     "release_date.lte": `${endOfWeek(startDate).format("YYYY-MM-DD")}`,
     with_release_type: `${releaseType}`
   };
-  const starterUrl = `${baseUrl}${list.path}?${queryString(defaultParams)}`;
+  const starterUrl = `${baseUrl}${list.path}?${queryString(params)}`;
 
   const [state, setUrl] = useDataApi(starterUrl, []);
   const { data, isLoading, isError } = state;

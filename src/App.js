@@ -6,7 +6,6 @@ import { Button, Drawer, Row, Col, Icon, DatePicker } from "antd";
 // import { MovieList } from "./MovieList";
 import { Filterer } from "./Filterer";
 import { MovieListDrawer } from "./MovieListDrawer";
-// import { useTmdbUrl } from "./useTmdbUrl";
 
 import tmdbData from "./tmdb-data";
 import { TmdbList } from "./TmdbList";

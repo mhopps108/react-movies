@@ -5,7 +5,6 @@ const tmdbData = {
       name: "Top Rated Movies",
       path: "/movie/top_rated",
       source: "tmdb",
-      canSort: false,
       pageBy: ""
     },
     {

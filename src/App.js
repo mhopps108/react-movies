@@ -8,6 +8,8 @@ import { Filterer } from "./Filterer";
 import { MovieListDrawer } from "./MovieListDrawer";
 import { useTmdbUrl } from "./useTmdbUrl";
 
+import { TmdbList } from "./TmdbList";
+import tmdbData from "./tmdb-data";
 import moment from "moment";
 import "antd/dist/antd.css";
 import "./styles.css";
@@ -18,35 +20,35 @@ function App() {
   const [filterVisible, setFilterVisible] = useState(false);
   const [listVisible, setListVisible] = useState(false);
 
-  const {
-    data,
-    isLoading,
-    isError,
-    list,
-    setList,
-    setReleaseType,
-    setPage,
-    startDate,
-    setStartDate,
-    endDate
-  } = useTmdbUrl();
-  console.log(data);
-  // const page = 0,
-  //   total_results = 0,
-  //   total_pages = 0,
-  //   results = 0;
-  const { page, total_results, total_pages, results } = data;
+  const tmdbLists = tmdbData.list;
+  const starterList = tmdbLists.find(list => list.name === "Popular Movies");
+  const [list, setList] = useState(starterList);
 
-  const dateRangeStr = () => {
-    const s = `${moment(startDate).format("MMM DD YYYY")} to ${moment(
-      endDate
-    ).format("MMM DD YYYY")}`;
-    return s;
-  };
+  // const {
+  //   data,
+  //   isLoading,
+  //   isError,
+  //   list,
+  //   setList,
+  //   setReleaseType,
+  //   setPage,
+  //   startDate,
+  //   setStartDate,
+  //   endDate
+  // } = useTmdbUrl();
+  // console.log(data);
+  // // const page = 0,
+  // //   total_results = 0,
+  // //   total_pages = 0,
+  // //   results = 0;
+  // const { page, total_results, total_pages, results } = data;
 
-  const onMonthChange = () => {
-    // mPicker.current.blur();
-  };
+  // const dateRangeStr = () => {
+  //   const s = `${moment(startDate).format("MMM DD YYYY")} to ${moment(
+  //     endDate
+  //   ).format("MMM DD YYYY")}`;
+  //   return s;
+  // };
 
   return (
     <div className="App">
@@ -75,13 +77,13 @@ function App() {
           </Col>
         </Row>
 
-        {startDate && (
+        {/* {startDate && (
           <Row style={{ textAlign: "center" }}>
             <h4>{dateRangeStr()}</h4>
           </Row>
-        )}
+        )} */}
 
-        {list.source === "discovery" && (
+        {/* {list.source === "discovery" && (
           <>
             <Row style={{ textAlign: "center" }}>
               <Button.Group size="default">
@@ -106,9 +108,9 @@ function App() {
               </Button.Group>
             </Row>
           </>
-        )}
+        )} */}
 
-        <Row style={{ textAlign: "center" }}>
+        {/* <Row style={{ textAlign: "center" }}>
           <Button.Group>
             <Button
               disabled={page - 1 <= 0}
@@ -131,15 +133,15 @@ function App() {
               <Icon type="right" />
             </Button>
           </Button.Group>
-        </Row>
+        </Row> */}
       </div>
 
-      {isLoading ? (
+      {/* {isLoading ? (
         <p>Loading movies...</p>
       ) : (
         // <MovieList movies={data.results} />
         <MovieList movies={results} />
-      )}
+      )} */}
 
       <MovieListDrawer
         visible={listVisible}
@@ -147,6 +149,8 @@ function App() {
         currentList={list}
         setList={setList}
       />
+      <TmdbList list={list} />
+
       {/* <Filterer
         visible={filterVisible}
         setVisible={setFilterVisible}

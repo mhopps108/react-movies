@@ -83,9 +83,9 @@ function TmdbReleaseDatesList({ list }) {
 
   return (
     <>
-      <Row>
-        <Col span={14}>
-          <Button.Group size="default">
+      <Row style={{ paddingBottom: "10px" }}>
+        <Col span={12} style={{ textAlign: "center" }}>
+          <Button.Group size="small">
             <Button
               onClick={() => setStartDate(moment(startDate).subtract(7, "d"))}
             >
@@ -98,13 +98,13 @@ function TmdbReleaseDatesList({ list }) {
             </Button>
           </Button.Group>
         </Col>
-        <Col span={10}>
+        <Col span={12} style={{ textAlign: "center" }}>
           <Icon type="calendar" />
           {twixDateString(startOfWeek(startDate), endOfWeek(startDate))}
         </Col>
       </Row>
 
-      <Row style={{ textAlign: "center" }}>
+      <Row style={{ textAlign: "center", paddingBottom: "10px" }}>
         <Button
           disabled={page - 1 <= 0}
           onClick={() => setPage(page => page - 1)}

@@ -5,6 +5,7 @@ import { Button, Drawer, Row, Col, Icon, DatePicker } from "antd";
 import { MovieList } from "./MovieList";
 import { useDataApi } from "./useDataApi";
 import moment from "moment";
+import twix from "twix";
 import "antd/dist/antd.css";
 import "./styles.css";
 
@@ -52,6 +53,13 @@ function TmdbReleaseDatesList({ list }) {
     )}`;
   };
 
+  const twixDateString = (start, end) => {
+    // moment("1982-01-25").twix("1982-02-25", {allDay: true}).format();
+    return moment(start)
+      .twix(end, { allDay: true })
+      .format();
+  };
+
   const pageString = () => {
     return `${page} of ${total_pages}`;
   };
@@ -74,63 +82,50 @@ function TmdbReleaseDatesList({ list }) {
   }, [list, startDate]);
 
   return (
-    <div>
-      <div>
-        <Row style={{ textAlign: "center" }}>
-          <h4>{dateString(startOfWeek(startDate), endOfWeek(startDate))}</h4>
-        </Row>
-
-        <Row style={{ textAlign: "center" }}>
+    <>
+      <Row>
+        <Col span={14}>
           <Button.Group size="default">
             <Button
               onClick={() => setStartDate(moment(startDate).subtract(7, "d"))}
             >
               <Icon type="left" />
             </Button>
-            <Button onClick={() => setStartDate(moment().startOf("week"))}>
-              <Icon type="calendar" />
-              Today
-            </Button>
-            <Button>
-              {dateString(startOfWeek(startDate), endOfWeek(startDate))}
-            </Button>
+            <Button onClick={() => setStartDate(startOfWeek())}>Today</Button>
+
             <Button onClick={() => setStartDate(moment(startDate).add(7, "d"))}>
               <Icon type="right" />
             </Button>
           </Button.Group>
-        </Row>
+        </Col>
+        <Col span={10}>
+          <Icon type="calendar" />
+          {twixDateString(startOfWeek(startDate), endOfWeek(startDate))}
+        </Col>
+      </Row>
 
-        <Row style={{ textAlign: "center" }}>
-          <Button
-            disabled={page - 1 <= 0}
-            onClick={() => setPage(page => page - 1)}
-          >
-            <Icon type="left" />
-            {page - 1}
-          </Button>
-          <Button>{pageString()}</Button>
-          <Button>{resultString()}</Button>
-          <Button
-            disabled={page + 1 > total_pages}
-            onClick={() => setPage(page => page + 1)}
-          >
-            {page + 1}
-            <Icon type="right" />
-          </Button>
-        </Row>
-        <Row />
-      </div>
-
-      <div>
-        {dates && (
-          <Row style={{ textAlign: "center" }}>
-            <h4>{dateString(startOfWeek(startDate), endOfWeek(startDate))}</h4>
-          </Row>
-        )}
-      </div>
+      <Row style={{ textAlign: "center" }}>
+        <Button
+          disabled={page - 1 <= 0}
+          onClick={() => setPage(page => page - 1)}
+        >
+          <Icon type="left" />
+          {page - 1}
+        </Button>
+        <Button>{pageString()}</Button>
+        <Button>{resultString()}</Button>
+        <Button
+          disabled={page + 1 > total_pages}
+          onClick={() => setPage(page => page + 1)}
+        >
+          {page + 1}
+          <Icon type="right" />
+        </Button>
+      </Row>
+      <Row />
 
       {isLoading ? <p>Loading movies...</p> : <MovieList movies={results} />}
-    </div>
+    </>
   );
 }
 

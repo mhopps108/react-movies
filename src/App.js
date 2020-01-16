@@ -27,20 +27,20 @@ function App() {
     <div className="App">
       <div>
         <Row>
-          <Col span={4}>
+          <Col span={24} style={{ textAlign: "right", padding: "5px" }}>
             <Button type="" onClick={() => setListVisible(true)}>
               List
             </Button>
           </Col>
-          <Col span={16} style={{ textAlign: "center" }}>
+          {/* <Col span={16} style={{ textAlign: "center" }}>
             <h2 style={{ fontSize: "5vw" }}>{list.name}</h2>
-          </Col>
-          <Col span={4}>
-            {/* <Button type="" onClick={() => setFilterVisible(true)}> */}
+          </Col> */}
+          {/* <Col span={4}>
+            <Button type="" onClick={() => setFilterVisible(true)}>
             <Button type="" onClick={() => setListVisible(true)}>
               Open
             </Button>
-          </Col>
+          </Col> */}
         </Row>
       </div>
 

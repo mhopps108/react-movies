@@ -83,6 +83,17 @@ function TmdbReleaseDatesList({ list }) {
 
   return (
     <>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center ",
+          padding: "0 10px"
+        }}
+      >
+        <p style={{ fontSize: "4vw" }}>{list.name}</p>
+        <p style={{ fontSize: "3vw" }}>{resultString()}</p>
+      </div>
       <Row style={{ paddingBottom: "10px" }}>
         <Col span={12} style={{ textAlign: "center" }}>
           <Button.Group size="small">
@@ -105,22 +116,24 @@ function TmdbReleaseDatesList({ list }) {
       </Row>
 
       <Row style={{ textAlign: "center", paddingBottom: "10px" }}>
-        <Button
-          disabled={page - 1 <= 0}
-          onClick={() => setPage(page => page - 1)}
-        >
-          <Icon type="left" />
-          {page - 1}
-        </Button>
-        <Button>{pageString()}</Button>
-        <Button>{resultString()}</Button>
-        <Button
-          disabled={page + 1 > total_pages}
-          onClick={() => setPage(page => page + 1)}
-        >
-          {page + 1}
-          <Icon type="right" />
-        </Button>
+        <Button.Group size="small">
+          <Button
+            disabled={page - 1 <= 0}
+            onClick={() => setPage(page => page - 1)}
+          >
+            <Icon type="left" />
+            {page - 1}
+          </Button>
+          <Button>{pageString()}</Button>
+          {/* <Button>{resultString()}</Button> */}
+          <Button
+            disabled={page + 1 > total_pages}
+            onClick={() => setPage(page => page + 1)}
+          >
+            {page + 1}
+            <Icon type="right" />
+          </Button>
+        </Button.Group>
       </Row>
       <Row />
 

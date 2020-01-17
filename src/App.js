@@ -24,7 +24,7 @@ function App() {
   const [list, setList] = useState(starterList);
 
   return (
-    <div className="App">
+    <div className="App" style={{ maxWidth: "900px" }}>
       <div>
         <Row>
           <Col span={24} style={{ textAlign: "right", padding: "5px" }}>

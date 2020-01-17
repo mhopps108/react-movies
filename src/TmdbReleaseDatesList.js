@@ -32,12 +32,12 @@ function TmdbReleaseDatesList({ list }) {
   const params = {
     api_key: "0d15450f36e2e4eaec96d1e905c43fad",
     language: "en-US",
-    page: `${page}`,
     region: "US",
     include_adult: "false",
     with_original_language: "en",
     sort_by: "release_date.asc",
-    "release_date.gte": `${moment(startDate).format("YYYY-MM-DD")}`,
+    page: `${page}`,
+    "release_date.gte": `${startOfWeek(startDate).format("YYYY-MM-DD")}`,
     "release_date.lte": `${endOfWeek(startDate).format("YYYY-MM-DD")}`,
     with_release_type: `${releaseType}`
   };
@@ -47,14 +47,7 @@ function TmdbReleaseDatesList({ list }) {
   const { data, isLoading, isError } = state;
   const { total_results, total_pages, results, dates = null } = data; // useState for page
 
-  const dateString = (start, end) => {
-    return `${moment(start).format("MMM DD YYYY")} to ${moment(end).format(
-      "MMM DD YYYY"
-    )}`;
-  };
-
   const twixDateString = (start, end) => {
-    // moment("1982-01-25").twix("1982-02-25", {allDay: true}).format();
     return moment(start)
       .twix(end, { allDay: true })
       .format();
@@ -63,17 +56,17 @@ function TmdbReleaseDatesList({ list }) {
   const pageString = () => {
     return `${page} of ${total_pages}`;
   };
-  const resultString = () => {
-    return `${results ? results.length : 0} of ${total_results} Movies`;
-  };
+  // const resultString = () => {
+  //   return `${
+  //     results ? results.length + (page - 1) * 20 : 0
+  //   } of ${total_results} Movies`;
+  // };
+  const resultString = () => `${total_results} Movies`;
 
   useEffect(() => {
     if ("releaseType" in list) {
       setReleaseType(list.releaseType);
     }
-    // setStartDate(startOfWeek(startDate));
-    // setEndDate(startDate.clone().endOf("week"));
-
     setUrl(starterUrl);
   }, [list, setUrl, startDate, starterUrl, page]);
 
@@ -115,7 +108,7 @@ function TmdbReleaseDatesList({ list }) {
         </Col>
       </Row>
 
-      <Row style={{ textAlign: "center", paddingBottom: "10px" }}>
+      <Row style={{ textAlign: "right", paddingBottom: "10px" }}>
         <Button.Group size="small">
           <Button
             disabled={page - 1 <= 0}
@@ -136,7 +129,7 @@ function TmdbReleaseDatesList({ list }) {
         </Button.Group>
       </Row>
       <Row />
-
+      {isError && <p>Error</p>}
       {isLoading ? <p>Loading movies...</p> : <MovieList movies={results} />}
     </>
   );

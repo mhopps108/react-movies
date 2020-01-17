@@ -3,8 +3,6 @@ import tmdbData from "./tmdb-data";
 import { useDataApi } from "./useDataApi";
 import moment from "moment";
 
-// Need to use useCallback(), useMemo??
-
 var queryString = params => {
   return Object.keys(params)
     .map(key => key + "=" + params[key])
@@ -88,26 +86,6 @@ const useTmdbUrl = () => {
     }
   }, [data, list]);
 
-  useEffect(() => {
-    console.log("STATE: useTmdbList");
-    console.log("data");
-    console.log(data);
-    console.log("start & end Dates");
-    console.log(startDate);
-    console.log(endDate);
-    // const sectionDates = {};
-    // data.results.forEach(item => {
-    //   // console.log(item);
-    //   if (item.release_date in sectionDates) {
-    //     sectionDates[item.release_date].push(item);
-    //   } else {
-    //     sectionDates[item.release_date] = [];
-    //     sectionDates[item.release_date].push(item);
-    //   }
-    // });
-    // console.log(sectionDates);
-  }, [list, page, startDate, defaultParams, setUrl, data, endDate]);
-
   return {
     data,
     isLoading,
@@ -151,5 +129,4 @@ const useTmdbUrl = () => {
 //   return url;
 // }
 
-// export { useTmdbUrl, discoveryUrlByWeek };
-export { useTmdbUrl };
+// export { useTmdbUrl };

@@ -152,7 +152,14 @@ function TmdbReleaseDatesList({ list }) {
             </Button>
             <Button onClick={() => setStartDate(startOfWeek())}>Today</Button>
 
-            <Button onClick={() => setStartDate(moment(startDate).add(7, "d"))}>
+            <Button
+              // onClick={() => setStartDate(moment(startDate).add(7, "d"))
+              onClick={() =>
+                paramsDispatch({
+                  type: "NEXT_WEEK"
+                })
+              }
+            >
               <Icon type="right" />
             </Button>
           </Button.Group>

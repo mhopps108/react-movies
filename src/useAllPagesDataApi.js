@@ -19,16 +19,20 @@ const paramsReducer = (state, action) => {
         page: state.page < action.totalPages ? state.page + 1 : state.page
       };
     case "NEXT_WEEK":
+      const start = moment(state["release_date.gte"]).add(7, "d");
+      const end = moment(state["release_date.lte"]).add(7, "d");
       return {
         ...state,
-        "release_date.gte": moment(state.startDate).add(7, "d"),
-        "release_date.lte": moment(state.startDate).add(7, "d")
+        "release_date.gte": `${moment(start).format("YYYY-MM-DD")}`,
+        "release_date.lte": `${moment(end).format("YYYY-MM-DD")}`
       };
     case "PREV_WEEK":
+      const startDate = moment(state["release_date.gte"]).subtract(7, "d");
+      const endDate = moment(state["release_date.lte"]).subtract(7, "d");
       return {
         ...state,
-        "release_date.gte": moment(state.startDate).subtract(7, "d"),
-        "release_date.lte": moment(state.startDate).subtract(7, "d")
+        "release_date.gte": `${moment(startDate).format("YYYY-MM-DD")}`,
+        "release_date.lte": `${moment(endDate).format("YYYY-MM-DD")}`
       };
     default:
       throw new Error();
@@ -76,9 +80,9 @@ const useAllPagesDataApi = (initialUrl, initialParams, initialData) => {
       type: "NEXT_PAGE",
       totalpages: data.total_pages
     });
-    if (data.results) {
-      movies.concat(data.results);
-    }
+    // if (data.results) {
+    movies.concat(data.results);
+    // }
     // setUrl(`${url}?${queryString(params)}`);
   }, [data]);
 

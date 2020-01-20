@@ -1,13 +1,33 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useReducer } from "react";
 import ReactDOM from "react-dom";
 
 import { Button, Drawer, Row, Col, Icon, DatePicker } from "antd";
 import { MovieList } from "./MovieList";
 import { useDataApi } from "./useDataApi";
+import { useAllPagesDataApi } from "./useAllPagesDataApi";
 import moment from "moment";
 import twix from "twix";
 import "antd/dist/antd.css";
 import "./styles.css";
+
+const movieFetchReducer = (state, action) => {
+  switch (action.type) {
+    case "FETCH_SUCCESS":
+      return {
+        ...state,
+        // movies: [...state.movies, ...action.payload]
+        movies: state.movies.concat(action.payload)
+        // movies: action.payload
+      };
+    case "FETCH_NEW":
+      return {
+        ...state,
+        movies: []
+      };
+    default:
+      throw new Error();
+  }
+};
 
 var queryString = params => {
   return Object.keys(params)
@@ -27,6 +47,11 @@ function TmdbReleaseDatesList({ list }) {
   const [startDate, setStartDate] = useState(startOfWeek());
   const [releaseType, setReleaseType] = useState(list.releaseType);
   const [page, setPage] = useState(1);
+  // const [movies, setMovies] = useState([]);
+  const [movieState, movieDispatch] = useReducer(movieFetchReducer, {
+    movies: [],
+    other: true
+  });
 
   const baseUrl = "https://api.themoviedb.org/3";
   const params = {
@@ -43,7 +68,10 @@ function TmdbReleaseDatesList({ list }) {
   };
   const starterUrl = `${baseUrl}${list.path}?${queryString(params)}`;
 
-  const [state, setUrl] = useDataApi(starterUrl, []);
+  // const [state, setUrl] = useDataApi(starterUrl, []);
+  // const { data, isLoading, isError } = state;
+  // const { total_results, total_pages, results, dates = null } = data; // useState for page
+  const [state, setUrl] = useAllPagesDataApi(starterUrl, []);
   const { data, isLoading, isError } = state;
   const { total_results, total_pages, results, dates = null } = data; // useState for page
 
@@ -56,11 +84,7 @@ function TmdbReleaseDatesList({ list }) {
   const pageString = () => {
     return `${page} of ${total_pages}`;
   };
-  // const resultString = () => {
-  //   return `${
-  //     results ? results.length + (page - 1) * 20 : 0
-  //   } of ${total_results} Movies`;
-  // };
+
   const resultString = () => `${total_results} Movies`;
 
   useEffect(() => {
@@ -72,7 +96,24 @@ function TmdbReleaseDatesList({ list }) {
 
   useEffect(() => {
     setPage(1);
+    movieDispatch({ type: "FETCH_NEW" });
   }, [list, startDate]);
+
+  useEffect(() => {
+    if (total_pages) {
+      if (page < total_pages) {
+        setPage(page + 1);
+      }
+    }
+
+    console.log("movieState");
+    console.log(movieState);
+    console.log(`total_pages: ${total_pages}`);
+  }, [total_pages, setPage, page]);
+
+  useEffect(() => {
+    movieDispatch({ type: "FETCH_SUCCESS", payload: results });
+  }, [results]);
 
   return (
     <>
@@ -130,7 +171,12 @@ function TmdbReleaseDatesList({ list }) {
       </Row>
       <Row />
       {isError && <p>Error</p>}
-      {isLoading ? <p>Loading movies...</p> : <MovieList movies={results} />}
+      {/* {isLoading ? <p>Loading movies...</p> : <MovieList movies={results} />} */}
+      {isLoading ? (
+        <p>Loading movies...</p>
+      ) : (
+        <MovieList movies={movieState.movies} />
+      )}
     </>
   );
 }

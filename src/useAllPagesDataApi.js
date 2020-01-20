@@ -27,12 +27,47 @@ const dataFetchReducer = (state, action) => {
   }
 };
 
-const useAllPagesDataApi = (initialUrl, initialData) => {
+const paramsReducer = (state, action) => {
+  switch (action.type) {
+    case "NEXT_PAGE":
+      return {
+        ...state,
+        page: state.page + 1
+      };
+    case "FETCH_SUCCESS":
+      return {
+        ...state,
+        isLoading: false,
+        isError: false,
+        data: action.payload
+      };
+    case "FETCH_FAILURE":
+      return {
+        ...state,
+        isLoading: false,
+        isError: true
+      };
+    default:
+      throw new Error();
+  }
+};
+
+var queryString = params => {
+  return Object.keys(params)
+    .map(key => key + "=" + params[key])
+    .join("&");
+};
+
+const useAllPagesDataApi = (initialUrl, initialParams, initialData) => {
   const [url, setUrl] = useState(initialUrl);
+  // const [, setParams] = useState(initialParams);
   const [state, dispatch] = useReducer(dataFetchReducer, {
     isLoading: false,
     isError: false,
     data: initialData
+  });
+  const [params, paramsDispatch] = useReducer(paramsReducer, {
+    ...initialParams
   });
 
   useEffect(() => {
@@ -53,6 +88,7 @@ const useAllPagesDataApi = (initialUrl, initialData) => {
       }
     };
     fetchData();
+
     console.log("state - useDataApi");
     console.log(state);
     console.log(`url: ${url}`);
@@ -61,6 +97,14 @@ const useAllPagesDataApi = (initialUrl, initialData) => {
       didCancel = true;
     };
   }, [url]);
+
+  useEffect(() => {
+    if (params.page < state.data.total_pages) {
+      paramsDispatch({ type: "NEXT_PAGE" });
+      setUrl(`${url}?${queryString(params)}`);
+    }
+  }, [state, setUrl]);
+
   return [state, setUrl];
 };
 

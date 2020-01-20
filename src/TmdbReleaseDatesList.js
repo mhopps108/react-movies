@@ -67,11 +67,13 @@ function TmdbReleaseDatesList({ list }) {
     with_release_type: `${releaseType}`
   };
   const starterUrl = `${baseUrl}${list.path}?${queryString(params)}`;
+  const basicUrl = `${baseUrl}${list.path}`;
 
   // const [state, setUrl] = useDataApi(starterUrl, []);
   // const { data, isLoading, isError } = state;
   // const { total_results, total_pages, results, dates = null } = data; // useState for page
-  const [state, setUrl] = useAllPagesDataApi(starterUrl, []);
+  // const [state, setUrl] = useAllPagesDataApi(starterUrl, []);
+  const [state, setUrl] = useAllPagesDataApi(basicUrl, params, []);
   const { data, isLoading, isError } = state;
   const { total_results, total_pages, results, dates = null } = data; // useState for page
 

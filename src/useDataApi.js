@@ -61,6 +61,7 @@ const useDataApi = (initialUrl, initialData) => {
       didCancel = true;
     };
   }, [url]);
+
   return [state, setUrl];
 };
 

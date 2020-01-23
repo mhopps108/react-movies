@@ -63,18 +63,22 @@ const useMyDataApi = (initialUrl, startPage, initialData) => {
     let didCancel = false;
     let hasMore = true;
     if (page === 1) {
-      dispatch({ type: "FETCH_RESET" });
+      // dispatch({ type: "FETCH_RESET" });
     }
+    dispatch({ type: "FETCH_RESET" });
     const fetchData = async page => {
       dispatch({ type: "FETCH_INIT" });
       try {
         const result = await axios(`${url}&page=${page}`);
+        console.log("result");
+        console.log(result);
         if (!didCancel) {
           dispatch({ type: "FETCH_SUCCESS", payload: result.data });
           if (page < result.data.total_pages) {
             // setPage(page => page + 1);
             console.log("HAS-MORE");
             page = page + 1;
+            console.log(`page: ${page} of ${state.data.total_pages}`);
             fetchData(page);
           }
         }
@@ -94,8 +98,8 @@ const useMyDataApi = (initialUrl, startPage, initialData) => {
   useEffect(() => {
     console.log("state - useMYDataApi");
     console.log(state);
-    console.log(`page: ${page} of ${state.data.total_pages}`);
-    console.log(`url: ${url}`);
+
+    // console.log(`url: ${url}`);
   }, [state]);
 
   return [state, setUrl];

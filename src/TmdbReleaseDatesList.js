@@ -3,12 +3,27 @@ import ReactDOM from "react-dom";
 
 import { Button, Drawer, Row, Col, Icon, DatePicker } from "antd";
 import { MovieList } from "./MovieList";
-import { useDataApi } from "./useDataApi";
+// import { useDataApi } from "./useDataApi";
+import { useMyDataApi } from "./useMyDataApi";
 import { useAllPagesDataApi } from "./useAllPagesDataApi";
 import moment from "moment";
 import twix from "twix";
 import "antd/dist/antd.css";
 import "./styles.css";
+
+var queryString = params => {
+  return Object.keys(params)
+    .map(key => key + "=" + params[key])
+    .join("&");
+};
+
+const startOfWeek = date => {
+  return (moment(date) || moment()).startOf("week");
+};
+
+const endOfWeek = date => {
+  return (moment(date) || moment()).endOf("week");
+};
 
 const movieFetchReducer = (state, action) => {
   switch (action.type) {
@@ -29,20 +44,6 @@ const movieFetchReducer = (state, action) => {
   }
 };
 
-var queryString = params => {
-  return Object.keys(params)
-    .map(key => key + "=" + params[key])
-    .join("&");
-};
-
-const startOfWeek = date => {
-  return (moment(date) || moment()).startOf("week");
-};
-
-const endOfWeek = date => {
-  return (moment(date) || moment()).endOf("week");
-};
-
 function TmdbReleaseDatesList({ list }) {
   const [startDate, setStartDate] = useState(startOfWeek());
   const [releaseType, setReleaseType] = useState(list.releaseType);
@@ -61,27 +62,30 @@ function TmdbReleaseDatesList({ list }) {
     include_adult: "false",
     with_original_language: "en",
     sort_by: "release_date.asc",
-    page: `${page}`,
+    // page: `${page}`,
     "release_date.gte": `${startOfWeek(startDate).format("YYYY-MM-DD")}`,
     "release_date.lte": `${endOfWeek(startDate).format("YYYY-MM-DD")}`,
     with_release_type: `${releaseType}`
   };
   const starterUrl = `${baseUrl}${list.path}?${queryString(params)}`;
-  const basicUrl = `${baseUrl}${list.path}`;
+  // const basicUrl = `${baseUrl}${list.path}`;
 
+  const [state, setUrl] = useMyDataApi(starterUrl, page, []);
+  const { data, isLoading, isError, allResults } = state;
+  const { total_results, total_pages, results, dates = null } = data; // useState for page
   // const [state, setUrl] = useDataApi(starterUrl, []);
   // const { data, isLoading, isError } = state;
   // const { total_results, total_pages, results, dates = null } = data; // useState for page
   // const [state, setUrl] = useAllPagesDataApi(starterUrl, []);
-  const {
-    data,
-    isLoading,
-    isError,
-    setBaseUrl,
-    paramsDispatch
-  } = useAllPagesDataApi(basicUrl, params, []);
-  // const { data, isLoading, isError } = state;
-  const { total_results, total_pages, results, dates = null } = data; // useState for page
+  // const {
+  //   data,
+  //   isLoading,
+  //   isError,
+  //   setBaseUrl,
+  //   paramsDispatch
+  // } = useAllPagesDataApi(basicUrl, params, []);
+  // // const { data, isLoading, isError } = state;
+  // const { total_results, total_pages, results, dates = null } = data; // useState for page
 
   const twixDateString = (start, end) => {
     return moment(start)
@@ -99,30 +103,14 @@ function TmdbReleaseDatesList({ list }) {
     if ("releaseType" in list) {
       setReleaseType(list.releaseType);
     }
-    // setUrl(starterUrl);
-    setBaseUrl(basicUrl);
-  }, [list, startDate, starterUrl, page]);
+    setUrl(starterUrl);
+    // setBaseUrl(basicUrl);
+  }, [list, startDate, starterUrl]);
 
   useEffect(() => {
     setPage(1);
     // movieDispatch({ type: "FETCH_NEW" });
   }, [list, startDate]);
-
-  // useEffect(() => {
-  //   if (total_pages) {
-  //     if (page < total_pages) {
-  //       setPage(page + 1);
-  //     }
-  //   }
-
-  //   console.log("movieState");
-  //   console.log(movieState);
-  //   console.log(`total_pages: ${total_pages}`);
-  // }, [total_pages, setPage, page]);
-
-  // useEffect(() => {
-  //   movieDispatch({ type: "FETCH_SUCCESS", payload: results });
-  // }, [results]);
 
   return (
     <>
@@ -141,24 +129,16 @@ function TmdbReleaseDatesList({ list }) {
         <Col span={12} style={{ textAlign: "center" }}>
           <Button.Group size="small">
             <Button
-              // onClick={() => setStartDate(moment(startDate).subtract(7, "d"))}
-              onClick={() =>
-                paramsDispatch({
-                  type: "PREV_WEEK"
-                })
-              }
+              onClick={() => setStartDate(moment(startDate).subtract(7, "d"))}
+              // onClick={() => paramsDispatch({ type: "PREV_WEEK" })}
             >
               <Icon type="left" />
             </Button>
             <Button onClick={() => setStartDate(startOfWeek())}>Today</Button>
 
             <Button
-              // onClick={() => setStartDate(moment(startDate).add(7, "d"))
-              onClick={() =>
-                paramsDispatch({
-                  type: "NEXT_WEEK"
-                })
-              }
+              onClick={() => setStartDate(moment(startDate).add(7, "d"))}
+              // onClick={() => paramsDispatch({ type: "NEXT_WEEK" })}
             >
               <Icon type="right" />
             </Button>
@@ -192,7 +172,8 @@ function TmdbReleaseDatesList({ list }) {
       </Row>
       <Row />
       {isError && <p>Error</p>}
-      {isLoading ? <p>Loading movies...</p> : <MovieList movies={results} />}
+      {/* {isLoading ? <p>Loading movies...</p> : <MovieList movies={results} />} */}
+      {isLoading ? <p>Loading movies...</p> : <MovieList movies={allResults} />}
       {/* {isLoading ? (
         <p>Loading movies...</p>
       ) : (

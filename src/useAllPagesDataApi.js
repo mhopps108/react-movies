@@ -56,6 +56,7 @@ const useAllPagesDataApi = (initialUrl, initialParams, initialData) => {
     `${baseUrl}?${queryString(params)}`,
     initialData
   );
+
   const { data, isLoading, isError } = fetchState;
   // const { total_results, total_pages, results, dates = null } = data; // useState for page
 

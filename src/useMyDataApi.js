@@ -3,19 +3,16 @@ import axios from "axios";
 
 const dataFetchReducer = (state, action) => {
   switch (action.type) {
+    case "FETCH_RESET":
+      return {
+        ...state,
+        allResults: []
+      };
     case "FETCH_INIT":
       return {
         ...state,
         isLoading: true,
         isError: false
-        // allResults: []
-      };
-    case "FETCH_RESET":
-      return {
-        ...state,
-        isLoading: true,
-        isError: false,
-        allResults: []
       };
     case "FETCH_SUCCESS":
       return {
@@ -23,19 +20,9 @@ const dataFetchReducer = (state, action) => {
         isLoading: false,
         isError: false,
         data: action.payload,
-        // allResults: state.allResults.concat(action.payload.results)
         allResults: [
           ...new Set(state.allResults.concat(action.payload.results))
         ]
-        // allResults: [
-        //   ...new Set([...state.allResults, ...action.payload.results])
-        // ]
-        // allResults: [
-        //   ...state.allResults,
-        //   ...action.payload.results.filter(item =>
-        //     state.allResults.includes(item)
-        //   )
-        // ]
       };
     case "FETCH_FAILURE":
       return {
@@ -48,9 +35,8 @@ const dataFetchReducer = (state, action) => {
   }
 };
 
-const useMyDataApi = (initialUrl, startPage, initialData) => {
-  // const [page, setPage] = useState(startPage);
-  let page = startPage;
+const useMyDataApi = (initialUrl, initialData) => {
+  let page = 1;
   const [url, setUrl] = useState(`${initialUrl}&page=${page}`);
   const [state, dispatch] = useReducer(dataFetchReducer, {
     isLoading: false,
@@ -61,10 +47,6 @@ const useMyDataApi = (initialUrl, startPage, initialData) => {
 
   useEffect(() => {
     let didCancel = false;
-    let hasMore = true;
-    if (page === 1) {
-      // dispatch({ type: "FETCH_RESET" });
-    }
     dispatch({ type: "FETCH_RESET" });
     const fetchData = async page => {
       dispatch({ type: "FETCH_INIT" });
@@ -75,8 +57,6 @@ const useMyDataApi = (initialUrl, startPage, initialData) => {
         if (!didCancel) {
           dispatch({ type: "FETCH_SUCCESS", payload: result.data });
           if (page < result.data.total_pages) {
-            // setPage(page => page + 1);
-            console.log("HAS-MORE");
             page = page + 1;
             console.log(`page: ${page} of ${state.data.total_pages}`);
             fetchData(page);

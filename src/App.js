@@ -24,24 +24,29 @@ function App() {
   const [list, setList] = useState(starterList);
 
   return (
-    <div className="App" style={{ maxWidth: "900px" }}>
-      <div>
-        <Row>
-          <Col span={24} style={{ textAlign: "right", padding: "5px" }}>
-            <Button type="" onClick={() => setListVisible(true)}>
-              List
-            </Button>
-          </Col>
-          {/* <Col span={16} style={{ textAlign: "center" }}>
-            <h2 style={{ fontSize: "5vw" }}>{list.name}</h2>
-          </Col> */}
-          {/* <Col span={4}>
+    <div className="App" style={{ maxWidth: "1000px" }}>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center ",
+          padding: "5px 10px"
+        }}
+      >
+        <p style={{ fontSize: "6vw", fontWeight: 600, padding: 0, margin: 0 }}>
+          {list.name}
+        </p>
+
+        <Button type="" onClick={() => setListVisible(true)}>
+          <Icon type="menu-fold" style={{ fontSize: "18px", color: "#666" }} />
+        </Button>
+
+        {/* <Col span={4}>
             <Button type="" onClick={() => setFilterVisible(true)}>
             <Button type="" onClick={() => setListVisible(true)}>
               Open
             </Button>
           </Col> */}
-        </Row>
       </div>
 
       <MovieListDrawer

@@ -5,7 +5,7 @@ import { Button, Drawer, Row, Col, Icon, DatePicker } from "antd";
 import { MovieList } from "./MovieList";
 // import { useDataApi } from "./useDataApi";
 import { useMyDataApi } from "./useMyDataApi";
-import { useAllPagesDataApi } from "./useAllPagesDataApi";
+// import { useAllPagesDataApi } from "./useAllPagesDataApi";
 import moment from "moment";
 import twix from "twix";
 import "antd/dist/antd.css";
@@ -25,34 +25,10 @@ const endOfWeek = date => {
   return (moment(date) || moment()).endOf("week");
 };
 
-const movieFetchReducer = (state, action) => {
-  switch (action.type) {
-    case "FETCH_SUCCESS":
-      return {
-        ...state,
-        // movies: [...state.movies, ...action.payload]
-        movies: state.movies.concat(action.payload)
-        // movies: action.payload
-      };
-    case "FETCH_NEW":
-      return {
-        ...state,
-        movies: []
-      };
-    default:
-      throw new Error();
-  }
-};
-
 function TmdbReleaseDatesList({ list }) {
   const [startDate, setStartDate] = useState(startOfWeek());
   const [releaseType, setReleaseType] = useState(list.releaseType);
   const [page, setPage] = useState(1);
-  // const [movies, setMovies] = useState([]);
-  // const [movieState, movieDispatch] = useReducer(movieFetchReducer, {
-  //   movies: [],
-  //   other: true
-  // });
 
   const baseUrl = "https://api.themoviedb.org/3";
   const params = {
@@ -68,24 +44,10 @@ function TmdbReleaseDatesList({ list }) {
     with_release_type: `${releaseType}`
   };
   const starterUrl = `${baseUrl}${list.path}?${queryString(params)}`;
-  // const basicUrl = `${baseUrl}${list.path}`;
 
-  const [state, setUrl] = useMyDataApi(starterUrl, page, []);
+  const [state, setUrl] = useMyDataApi(starterUrl, []);
   const { data, isLoading, isError, allResults } = state;
   const { total_results, total_pages, results, dates = null } = data; // useState for page
-  // const [state, setUrl] = useDataApi(starterUrl, []);
-  // const { data, isLoading, isError } = state;
-  // const { total_results, total_pages, results, dates = null } = data; // useState for page
-  // const [state, setUrl] = useAllPagesDataApi(starterUrl, []);
-  // const {
-  //   data,
-  //   isLoading,
-  //   isError,
-  //   setBaseUrl,
-  //   paramsDispatch
-  // } = useAllPagesDataApi(basicUrl, params, []);
-  // // const { data, isLoading, isError } = state;
-  // const { total_results, total_pages, results, dates = null } = data; // useState for page
 
   const twixDateString = (start, end) => {
     return moment(start)
@@ -97,19 +59,17 @@ function TmdbReleaseDatesList({ list }) {
     return `${page} of ${total_pages}`;
   };
 
-  const resultString = () => `${total_results} Movies`;
+  const resultString = () => `#${allResults.length}`;
 
   useEffect(() => {
     if ("releaseType" in list) {
       setReleaseType(list.releaseType);
     }
     setUrl(starterUrl);
-    // setBaseUrl(basicUrl);
   }, [list, startDate, starterUrl]);
 
   useEffect(() => {
     setPage(1);
-    // movieDispatch({ type: "FETCH_NEW" });
   }, [list, startDate]);
 
   return (
@@ -119,58 +79,31 @@ function TmdbReleaseDatesList({ list }) {
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center ",
-          padding: "0 10px"
+          padding: "5px 10px",
+          backgroundColor: "white"
         }}
       >
-        <p style={{ fontSize: "4vw" }}>{list.name}</p>
-        <p style={{ fontSize: "3vw" }}>{resultString()}</p>
-      </div>
-      <Row style={{ paddingBottom: "10px" }}>
-        <Col span={12} style={{ textAlign: "center" }}>
-          <Button.Group size="small">
-            <Button
-              onClick={() => setStartDate(moment(startDate).subtract(7, "d"))}
-              // onClick={() => paramsDispatch({ type: "PREV_WEEK" })}
-            >
-              <Icon type="left" />
-            </Button>
-            <Button onClick={() => setStartDate(startOfWeek())}>Today</Button>
+        <p style={{ fontSize: "4vw", padding: 0, margin: 0 }}>
+          {resultString()}
+        </p>
 
-            <Button
-              onClick={() => setStartDate(moment(startDate).add(7, "d"))}
-              // onClick={() => paramsDispatch({ type: "NEXT_WEEK" })}
-            >
-              <Icon type="right" />
-            </Button>
-          </Button.Group>
-        </Col>
-        <Col span={12} style={{ textAlign: "center" }}>
-          <Icon type="calendar" />
-          {twixDateString(startOfWeek(startDate), endOfWeek(startDate))}
-        </Col>
-      </Row>
-
-      <Row style={{ textAlign: "right", paddingBottom: "10px" }}>
         <Button.Group size="small">
           <Button
-            disabled={page - 1 <= 0}
-            onClick={() => setPage(page => page - 1)}
+            onClick={() => setStartDate(moment(startDate).subtract(7, "d"))}
           >
             <Icon type="left" />
-            {page - 1}
           </Button>
-          <Button>{pageString()}</Button>
-          {/* <Button>{resultString()}</Button> */}
-          <Button
-            disabled={page + 1 > total_pages}
-            onClick={() => setPage(page => page + 1)}
-          >
-            {page + 1}
+          <Button onClick={() => setStartDate(startOfWeek())}>Today</Button>
+          <Button>
+            <Icon type="calendar" />{" "}
+            {twixDateString(startOfWeek(startDate), endOfWeek(startDate))}
+          </Button>
+          <Button onClick={() => setStartDate(moment(startDate).add(7, "d"))}>
             <Icon type="right" />
           </Button>
         </Button.Group>
-      </Row>
-      <Row />
+      </div>
+
       {isError && <p>Error</p>}
       {/* {isLoading ? <p>Loading movies...</p> : <MovieList movies={results} />} */}
       {isLoading ? <p>Loading movies...</p> : <MovieList movies={allResults} />}

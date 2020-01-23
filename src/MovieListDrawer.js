@@ -21,7 +21,7 @@ function MovieListDrawer({ visible, setVisible, setList, currentList }) {
     <div className="drawer-container">
       <Drawer
         title="Movies"
-        placement={"left"}
+        placement={"right"}
         closable={true}
         visible={visible}
         onClose={visable => setVisible(!visable)}

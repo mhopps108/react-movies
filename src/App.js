@@ -37,8 +37,8 @@ function App() {
           {"TMDB Movies"}
         </p>
 
-        <Button type="" onClick={() => setListVisible(true)}>
-          <Icon type="menu-fold" style={{ fontSize: "18px", color: "#666" }} />
+        <Button style={{ border: "none" }} onClick={() => setListVisible(true)}>
+          <Icon type="menu" style={{ fontSize: "18px", color: "#666" }} />
         </Button>
 
         {/* <Col span={4}>

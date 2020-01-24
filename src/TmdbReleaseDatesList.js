@@ -55,10 +55,6 @@ function TmdbReleaseDatesList({ list }) {
       .format();
   };
 
-  const pageString = () => {
-    return `${page} of ${total_pages}`;
-  };
-
   useEffect(() => {
     if ("releaseType" in list) {
       setReleaseType(list.releaseType);
@@ -95,23 +91,23 @@ function TmdbReleaseDatesList({ list }) {
           backgroundColor: "white"
         }}
       >
-        {/* <Button size="small" onClick={() => setStartDate(startOfWeek())}>
-          Today
-        </Button> */}
         <Button
-          type=""
-          size="small"
+          style={{ border: "none" }}
+          size=""
           onClick={() => setStartDate(moment(startDate).subtract(7, "d"))}
         >
           <Icon type="left" />
         </Button>
-        <span>
+        <Button
+          style={{ border: "none" }}
+          onClick={() => setStartDate(startOfWeek())}
+        >
           <Icon type="calendar" />{" "}
           {twixDateString(startOfWeek(startDate), endOfWeek(startDate))}
-        </span>
+        </Button>
         <Button
-          type=""
-          size="small"
+          style={{ border: "none" }}
+          size=""
           onClick={() => setStartDate(moment(startDate).add(7, "d"))}
         >
           <Icon type="right" />

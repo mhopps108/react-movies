@@ -12,17 +12,19 @@ Genres(3)
 */
 
 function MovieListItem({ movie }) {
+  console.log("a movie");
+  console.log(movie);
   const {
     id,
     title,
     poster_path,
-    release_date,
+    release_date = "0000",
     vote_average,
     genre_ids,
     vote_count
   } = movie;
   const imgUrl = `https://image.tmdb.org/t/p/w92/${poster_path}`;
-  const year = release_date.substring(0, 4);
+  const year = release_date.substring(0, 4) || "0000";
 
   const allGenres = tmdbData.genres;
 

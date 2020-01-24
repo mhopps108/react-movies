@@ -58,7 +58,7 @@ const useMyDataApi = (initialUrl, initialData) => {
           dispatch({ type: "FETCH_SUCCESS", payload: result.data });
           if (page < result.data.total_pages) {
             page = page + 1;
-            console.log(`page: ${page} of ${state.data.total_pages}`);
+            // console.log(`page: ${page} of ${state.data.total_pages}`);
             fetchData(page);
           }
         }
@@ -78,8 +78,6 @@ const useMyDataApi = (initialUrl, initialData) => {
   useEffect(() => {
     console.log("state - useMYDataApi");
     console.log(state);
-
-    // console.log(`url: ${url}`);
   }, [state]);
 
   return [state, setUrl];

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, useReducer } from "react";
 import ReactDOM from "react-dom";
 
 import { Button, Drawer, Row, Col, Icon, DatePicker } from "antd";
-import { MovieList } from "./MovieList";
+import { MovieList, MovieSectionList } from "./MovieList";
 // import { useDataApi } from "./useDataApi";
 import { useMyDataApi } from "./useMyDataApi";
 // import { useAllPagesDataApi } from "./useAllPagesDataApi";
@@ -29,6 +29,7 @@ function TmdbReleaseDatesList({ list }) {
   const [startDate, setStartDate] = useState(startOfWeek());
   const [releaseType, setReleaseType] = useState(list.releaseType);
   const [page, setPage] = useState(1);
+  const [movies, setMovies] = useState({});
 
   const baseUrl = "https://api.themoviedb.org/3";
   const params = {
@@ -63,6 +64,22 @@ function TmdbReleaseDatesList({ list }) {
   }, [list, startDate, starterUrl]);
 
   useEffect(() => {
+    let sorted = {};
+    allResults.forEach(item => {
+      // sorted[item.id] = item.title;
+      if (item.release_date in sorted) {
+        sorted[item.release_date].push(item);
+      } else {
+        sorted[item.release_date] = [];
+        sorted[item.release_date].push(item);
+      }
+    });
+    console.log("sorted");
+    console.log(sorted);
+    setMovies(sorted);
+  }, [allResults]);
+
+  useEffect(() => {
     setPage(1);
   }, [list, startDate]);
 
@@ -77,7 +94,9 @@ function TmdbReleaseDatesList({ list }) {
           backgroundColor: "white"
         }}
       >
-        <p style={{ fontSize: "4vw", padding: 0, margin: 0 }}>{list.name}</p>
+        <p style={{ fontSize: "4vw", fontWeight: 700, padding: 0, margin: 0 }}>
+          {list.name}
+        </p>
         <p style={{ fontSize: "4vw", padding: 0, margin: 0 }}>
           #{allResults.length}
         </p>
@@ -87,7 +106,7 @@ function TmdbReleaseDatesList({ list }) {
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center ",
-          padding: "5px 10px",
+          padding: "5px 0px",
           backgroundColor: "white"
         }}
       >
@@ -99,7 +118,7 @@ function TmdbReleaseDatesList({ list }) {
           <Icon type="left" />
         </Button>
         <Button
-          style={{ border: "none" }}
+          style={{ border: "none", fontSize: "4vw", fontWeight: 500 }}
           onClick={() => setStartDate(startOfWeek())}
         >
           <Icon type="calendar" />{" "}
@@ -112,32 +131,17 @@ function TmdbReleaseDatesList({ list }) {
         >
           <Icon type="right" />
         </Button>
-
-        {/* <Button.Group size="small">
-          <Button
-            onClick={() => setStartDate(moment(startDate).subtract(7, "d"))}
-          >
-            <Icon type="left" />
-          </Button>
-          <Button onClick={() => setStartDate(startOfWeek())}>Today</Button>
-          <Button>
-            <Icon type="calendar" />{" "}
-            {twixDateString(startOfWeek(startDate), endOfWeek(startDate))}
-          </Button>
-          <Button onClick={() => setStartDate(moment(startDate).add(7, "d"))}>
-            <Icon type="right" />
-          </Button>
-        </Button.Group> */}
       </div>
 
       {isError && <p>Error</p>}
       {/* {isLoading ? <p>Loading movies...</p> : <MovieList movies={results} />} */}
-      {isLoading ? <p>Loading movies...</p> : <MovieList movies={allResults} />}
-      {/* {isLoading ? (
+      {/* {isLoading ? <p>Loading movies...</p> : <MovieList movies={allResults} />} */}
+      {/* {isLoading ? <p>Loading movies...</p> : <MovieList movies={movies} />} */}
+      {isLoading ? (
         <p>Loading movies...</p>
       ) : (
-        <MovieList movies={movieState.movies} />
-      )} */}
+        <MovieSectionList movies={movies} />
+      )}
     </>
   );
 }

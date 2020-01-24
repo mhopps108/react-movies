@@ -18,9 +18,7 @@ import "./styles.css";
 function App() {
   // const [filterVisible, setFilterVisible] = useState(false);
   const [listVisible, setListVisible] = useState(false);
-  const starterList = tmdbData.list.find(
-    list => list.name === "Home Release Dates"
-  );
+  const starterList = tmdbData.list.find(list => list.id === 22);
   const [list, setList] = useState(starterList);
 
   return (
@@ -30,11 +28,13 @@ function App() {
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center ",
-          padding: "5px 10px"
+          padding: "5px 10px",
+          borderBottom: "1px solid #ccc"
         }}
       >
-        <p style={{ fontSize: "6vw", fontWeight: 600, padding: 0, margin: 0 }}>
-          {list.name}
+        <p style={{ fontSize: "5vw", fontWeight: 600, padding: 0, margin: 0 }}>
+          {/* {list.name} */}
+          {"TMDB Movies"}
         </p>
 
         <Button type="" onClick={() => setListVisible(true)}>

@@ -59,8 +59,6 @@ function TmdbReleaseDatesList({ list }) {
     return `${page} of ${total_pages}`;
   };
 
-  const resultString = () => `#${allResults.length}`;
-
   useEffect(() => {
     if ("releaseType" in list) {
       setReleaseType(list.releaseType);
@@ -83,11 +81,43 @@ function TmdbReleaseDatesList({ list }) {
           backgroundColor: "white"
         }}
       >
+        <p style={{ fontSize: "4vw", padding: 0, margin: 0 }}>{list.name}</p>
         <p style={{ fontSize: "4vw", padding: 0, margin: 0 }}>
-          {resultString()}
+          #{allResults.length}
         </p>
+      </div>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center ",
+          padding: "5px 10px",
+          backgroundColor: "white"
+        }}
+      >
+        {/* <Button size="small" onClick={() => setStartDate(startOfWeek())}>
+          Today
+        </Button> */}
+        <Button
+          type=""
+          size="small"
+          onClick={() => setStartDate(moment(startDate).subtract(7, "d"))}
+        >
+          <Icon type="left" />
+        </Button>
+        <span>
+          <Icon type="calendar" />{" "}
+          {twixDateString(startOfWeek(startDate), endOfWeek(startDate))}
+        </span>
+        <Button
+          type=""
+          size="small"
+          onClick={() => setStartDate(moment(startDate).add(7, "d"))}
+        >
+          <Icon type="right" />
+        </Button>
 
-        <Button.Group size="small">
+        {/* <Button.Group size="small">
           <Button
             onClick={() => setStartDate(moment(startDate).subtract(7, "d"))}
           >
@@ -101,7 +131,7 @@ function TmdbReleaseDatesList({ list }) {
           <Button onClick={() => setStartDate(moment(startDate).add(7, "d"))}>
             <Icon type="right" />
           </Button>
-        </Button.Group>
+        </Button.Group> */}
       </div>
 
       {isError && <p>Error</p>}

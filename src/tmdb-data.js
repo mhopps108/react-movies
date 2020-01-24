@@ -38,7 +38,7 @@ const tmdbData = {
     },
     {
       id: 22,
-      name: "Home Release Dates",
+      name: "Digital Release Dates",
       path: "/discover/movie",
       source: "discovery",
       releaseType: "4"

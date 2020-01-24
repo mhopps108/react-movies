@@ -107,7 +107,8 @@ function TmdbReleaseDatesList({ list }) {
           justifyContent: "space-between",
           alignItems: "center ",
           padding: "5px 0px",
-          backgroundColor: "white"
+          backgroundColor: "white",
+          borderBottom: "1px solid #ccc"
         }}
       >
         <Button

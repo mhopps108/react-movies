@@ -15,7 +15,7 @@ function MovieSectionList({ movies }) {
             <>
               <h3
                 style={{
-                  color: "",
+                  color: "#666",
                   margin: "20px 0px 0px 15px",
                   fontWeight: 600
                 }}

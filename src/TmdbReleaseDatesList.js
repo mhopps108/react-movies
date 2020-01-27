@@ -121,7 +121,6 @@ function TmdbReleaseDatesList({ list }) {
       >
         <Button
           style={{ border: "none" }}
-          size=""
           onClick={() => setStartDate(moment(startDate).subtract(7, "d"))}
         >
           <Icon type="left" />
@@ -142,17 +141,11 @@ function TmdbReleaseDatesList({ list }) {
         </Button>
       </div>
       {isError && <p>Error</p>}
-      {/* {isLoading ? <p>Loading movies...</p> : <MovieList movies={results} />} */}
-      {/* {isLoading ? <p>Loading movies...</p> : <MovieList movies={allResults} />} */}
-      {/* {isLoading ? <p>Loading movies...</p> : <MovieList movies={movies} />} */}
-      {/* {isLoading && dates ? (
+      {isLoading ? (
         <p>Loading movies...</p>
       ) : (
         <MovieSectionList movies={movies} />
-      )} */}
-      {isLoading && <p>Loading movies...</p>}
-      {/* {!isLoading && !dates && <MovieList movies={allResults} />} */}
-      {!isLoading && <MovieSectionList movies={movies} />}
+      )}
     </>
   );
 }

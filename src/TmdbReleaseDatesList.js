@@ -152,7 +152,7 @@ function TmdbReleaseDatesList({ list }) {
       )} */}
       {isLoading && <p>Loading movies...</p>}
       {/* {!isLoading && !dates && <MovieList movies={allResults} />} */}
-      {!isLoading && dates && <MovieSectionList movies={movies} />}
+      {!isLoading && <MovieSectionList movies={movies} />}
     </>
   );
 }

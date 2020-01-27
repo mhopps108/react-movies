@@ -5,8 +5,8 @@ import moment from "moment";
 const { Title, Paragraph, Text } = Typography;
 
 function MovieListItem({ movie }) {
-  console.log("a movie");
-  console.log(movie);
+  // console.log("a movie");
+  // console.log(movie);
   const {
     id,
     title,

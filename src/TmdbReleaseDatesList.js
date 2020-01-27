@@ -65,18 +65,26 @@ function TmdbReleaseDatesList({ list }) {
 
   useEffect(() => {
     let sorted = {};
+    console.log("allResults");
+    console.log(allResults);
     allResults.forEach(item => {
       // sorted[item.id] = item.title;
-      if (item.release_date in sorted) {
-        sorted[item.release_date].push(item);
-      } else {
-        sorted[item.release_date] = [];
-        sorted[item.release_date].push(item);
+      if (item) {
+        if (item.release_date in sorted) {
+          sorted[item.release_date].push(item);
+        } else {
+          sorted[item.release_date] = [];
+          sorted[item.release_date].push(item);
+        }
       }
     });
-    console.log("sorted");
-    console.log(sorted);
-    setMovies(sorted);
+    var orderedDates = {};
+    Object.keys(sorted)
+      .sort((a, b) => moment(a, "YYYYMMDD") - moment(b, "YYYYMMDD"))
+      .forEach(key => (orderedDates[key] = sorted[key]));
+    console.log("orderedDates");
+    console.log(orderedDates);
+    setMovies(orderedDates);
   }, [allResults]);
 
   useEffect(() => {
@@ -133,16 +141,18 @@ function TmdbReleaseDatesList({ list }) {
           <Icon type="right" />
         </Button>
       </div>
-
       {isError && <p>Error</p>}
       {/* {isLoading ? <p>Loading movies...</p> : <MovieList movies={results} />} */}
       {/* {isLoading ? <p>Loading movies...</p> : <MovieList movies={allResults} />} */}
       {/* {isLoading ? <p>Loading movies...</p> : <MovieList movies={movies} />} */}
-      {isLoading ? (
+      {/* {isLoading && dates ? (
         <p>Loading movies...</p>
       ) : (
         <MovieSectionList movies={movies} />
-      )}
+      )} */}
+      {isLoading && <p>Loading movies...</p>}
+      {/* {!isLoading && !dates && <MovieList movies={allResults} />} */}
+      {!isLoading && dates && <MovieSectionList movies={movies} />}
     </>
   );
 }

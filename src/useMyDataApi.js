@@ -35,7 +35,7 @@ const dataFetchReducer = (state, action) => {
   }
 };
 
-const useMyDataApi = (initialUrl, initialData) => {
+const useMyDataApi = (initialUrl, initialData, maxPages = 5) => {
   let page = 1;
   const [url, setUrl] = useState(`${initialUrl}&page=${page}`);
   const [state, dispatch] = useReducer(dataFetchReducer, {
@@ -52,11 +52,11 @@ const useMyDataApi = (initialUrl, initialData) => {
       dispatch({ type: "FETCH_INIT" });
       try {
         const result = await axios(`${url}&page=${page}`);
-        console.log("result");
-        console.log(result);
+        // console.log("result");
+        // console.log(result);
         if (!didCancel) {
           dispatch({ type: "FETCH_SUCCESS", payload: result.data });
-          if (page < result.data.total_pages) {
+          if (page < result.data.total_pages && page < maxPages) {
             page = page + 1;
             // console.log(`page: ${page} of ${state.data.total_pages}`);
             fetchData(page);

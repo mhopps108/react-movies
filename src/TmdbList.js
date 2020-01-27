@@ -2,8 +2,9 @@ import React, { useState, useEffect, useRef } from "react";
 import ReactDOM from "react-dom";
 
 import { Button, Drawer, Row, Col, Icon, DatePicker } from "antd";
-import { MovieList } from "./MovieList";
+import { MovieList, MovieSectionList } from "./MovieList";
 import { useDataApi } from "./useDataApi";
+import { useMyDataApi } from "./useMyDataApi";
 import moment from "moment";
 import "antd/dist/antd.css";
 import "./styles.css";
@@ -25,9 +26,14 @@ function TmdbList({ list }) {
   };
   const starterUrl = `${baseUrl}${list.path}?${queryString(params)}`;
 
-  const [state, setUrl] = useDataApi(starterUrl, []);
-  const { data, isLoading, isError } = state;
-  const { page, total_results, total_pages, results, dates = null } = data;
+  // const [state, setUrl] = useDataApi(starterUrl, []);
+  // const { data, isLoading, isError } = state;
+  // const { page, total_results, total_pages, results, dates = null } = data;
+
+  const [state, setUrl] = useMyDataApi(starterUrl, []);
+  const { data, isLoading, isError, allResults } = state;
+  const { total_results, total_pages, results, dates = null } = data; // useState for page
+  const [movies, setMovies] = useState([]);
 
   const dateString = (start, end) => {
     return `${moment(start).format("MMM DD YYYY")} to ${moment(end).format(
@@ -39,17 +45,84 @@ function TmdbList({ list }) {
     setUrl(starterUrl);
   }, [list, setUrl]);
 
+  useEffect(() => {
+    if (!dates) {
+      setMovies(allResults);
+    } else {
+      let sorted = {};
+      console.log("allResults");
+      console.log(allResults);
+      allResults.forEach(item => {
+        if (item) {
+          if (item.release_date in sorted) {
+            sorted[item.release_date].push(item);
+          } else {
+            sorted[item.release_date] = [];
+            sorted[item.release_date].push(item);
+          }
+        }
+      });
+      var orderedDates = {};
+      Object.keys(sorted)
+        .sort((a, b) => moment(a, "YYYYMMDD") - moment(b, "YYYYMMDD"))
+        .forEach(key => (orderedDates[key] = sorted[key]));
+      console.log("orderedDates");
+      console.log(orderedDates);
+      setMovies(orderedDates);
+    }
+  }, [allResults]);
+
+  // useEffect(() => {
+  //   setPage(1);
+  // }, [list, startDate]);
+
   return (
     <div>
-      <div>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center ",
+          padding: "5px 10px",
+          backgroundColor: "white"
+        }}
+      >
+        <p style={{ fontSize: "4vw", fontWeight: 700, padding: 0, margin: 0 }}>
+          {list.name}
+        </p>
+        <p style={{ fontSize: "4vw", padding: 0, margin: 0 }}>
+          #{allResults.length}
+        </p>
+      </div>
+
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center ",
+          padding: "5px 10px",
+          backgroundColor: "white"
+        }}
+      >
         {dates && (
-          <Row style={{ textAlign: "center" }}>
-            <h4>{dateString(dates.minimum, dates.maximum)}</h4>
-          </Row>
+          <p
+            style={{ fontSize: "4vw", fontWeight: 700, padding: 0, margin: 0 }}
+          >
+            {dateString(dates.minimum, dates.maximum)}
+          </p>
         )}
       </div>
 
-      {isLoading ? <p>Loading movies...</p> : <MovieList movies={results} />}
+      {/* {isLoading ? <p>Loading movies...</p> : <MovieList movies={results} />} */}
+      {/* {isLoading ? <p>Loading movies...</p> : <MovieList movies={movies} />} */}
+      {/* {isLoading ? (
+        <p>Loading movies...</p>
+      ) : (
+        <MovieSectionList movies={movies} />
+      )} */}
+      {isLoading && <p>Loading movies...</p>}
+      {!isLoading && !dates && <MovieList movies={allResults} />}
+      {!isLoading && dates && <MovieSectionList movies={movies} />}
     </div>
   );
 }

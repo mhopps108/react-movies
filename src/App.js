@@ -18,7 +18,7 @@ import "./styles.css";
 function App() {
   // const [filterVisible, setFilterVisible] = useState(false);
   const [listVisible, setListVisible] = useState(false);
-  const starterList = tmdbData.list.find(list => list.id === 13); // 22
+  const starterList = tmdbData.list.find(list => list.id === 22);
   const [list, setList] = useState(starterList);
 
   return (

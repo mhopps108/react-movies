@@ -2,6 +2,10 @@ import React, { useState, useEffect } from "react";
 import { Card, Row, Col, Typography } from "antd";
 import tmdbData from "./tmdb-data.js";
 import moment from "moment";
+
+import { useMovieDetails } from "./useMovieDetails";
+import { useImdbRating } from "./useImdbRating";
+
 const { Title, Paragraph, Text } = Typography;
 
 function MovieListItem({ movie }) {
@@ -19,7 +23,17 @@ function MovieListItem({ movie }) {
   const imgUrl = `https://image.tmdb.org/t/p/w92/${poster_path}`;
   const year = release_date.substring(0, 4) || "0000";
 
+  const [imdbRating, setImdbRating] = useState();
+
   const allGenres = tmdbData.genres;
+
+  const [data, isLoading, isError] = useMovieDetails(id);
+  const [
+    ratingData,
+    isRatingLoading,
+    isRatingError,
+    setImdbId
+  ] = useImdbRating();
 
   const genresToString = () => {
     const a = allGenres.filter(item => {
@@ -27,6 +41,19 @@ function MovieListItem({ movie }) {
     });
     return a.map(item => item.name).join(", ");
   };
+
+  useEffect(() => {
+    console.log(`MovieData: ${id} - ${title}`);
+    console.log(data);
+    if (data && data.imdb_id) {
+      setImdbId(data.imdb_id);
+    }
+  }, [data]);
+
+  useEffect(() => {
+    console.log();
+    console.log();
+  }, []);
 
   return (
     <Col
@@ -116,3 +143,23 @@ function MovieListItem({ movie }) {
 */
 
 export default MovieListItem;
+
+{
+  /*
+  <span class="imdbRatingPlugin" data-user="ur25742841" data-title="tt0371746" data-style="p3">
+  <a href="https://www.imdb.com/title/tt0371746/?ref_=plg_rt_1">
+  <img src="https://ia.media-imdb.com/images/G/01/imdb/plugins/rating/images/imdb_37x18.png" alt=" Iron Man (2008) on IMDb" />
+  
+</a>
+</span>
+<script>
+(function(d,s,id){var js,stags=d.getElementsByTagName(s)[0];
+  if(d.getElementById(id)){return;}
+  js=d.createElement(s);
+  js.id=id;
+  js.src="https://ia.media-imdb.com/images/G/01/imdb/plugins/rating/js/rating.js";
+  stags.parentNode.insertBefore(js,stags);})
+(document,"script","imdb-rating-api");
+</script> 
+*/
+}

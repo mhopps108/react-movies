@@ -28,12 +28,7 @@ function MovieListItem({ movie }) {
   const allGenres = tmdbData.genres;
 
   const [data, isLoading, isError] = useMovieDetails(id);
-  const [
-    ratingData,
-    isRatingLoading,
-    isRatingError,
-    setImdbId
-  ] = useImdbRating();
+  const [rating, isRatingLoading, isRatingError, setImdbId] = useImdbRating();
 
   const genresToString = () => {
     const a = allGenres.filter(item => {
@@ -51,9 +46,9 @@ function MovieListItem({ movie }) {
   }, [data]);
 
   useEffect(() => {
-    console.log();
-    console.log();
-  }, []);
+    console.log("movie - rating");
+    console.log(rating);
+  }, [rating]);
 
   return (
     <Col
@@ -108,8 +103,11 @@ function MovieListItem({ movie }) {
               {moment(release_date).format("MMM DD YYYY")}
             </p>
             <p style={{ margin: 0 }}>
-              {vote_average} / 10 ({vote_count} votes)
+              {vote_average} / 10 ({vote_count} votes) -- {rating}
             </p>
+            {/* <p style={{ margin: 0 }}>
+              {rating} / 10 ({vote_count} votes)
+            </p> */}
             <p style={{ margin: 0 }}>{genresToString()}</p>
           </div>
         </div>

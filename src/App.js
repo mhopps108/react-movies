@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom";
 
 import { Button, Drawer, Row, Col, Icon, DatePicker } from "antd";
-
 // import { MovieList } from "./MovieList";
 import { Filterer } from "./Filterer";
 import { MovieListDrawer } from "./MovieListDrawer";
@@ -34,10 +33,13 @@ function App() {
       >
         <p style={{ fontSize: "5vw", fontWeight: 500, padding: 0, margin: 0 }}>
           {/* {list.name} */}
-          {"TMDB Movies"}
+          {"A Movie Site"}
         </p>
 
-        <Button style={{ border: "none" }} onClick={() => setListVisible(true)}>
+        <Button
+          style={{ border: "none", padding: 0 }}
+          onClick={() => setListVisible(true)}
+        >
           <Icon type="menu" style={{ fontSize: "18px", color: "#666" }} />
         </Button>
 

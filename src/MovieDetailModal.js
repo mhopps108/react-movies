@@ -101,8 +101,9 @@ function MovieDetailModal({ movie, isOpen, setIsOpen }) {
             <p style={{ margin: 0 }}>{genresToString(genre_ids)}</p>
             <p style={{ margin: 0 }}>{data ? data.runtime : ""}</p>
             <p style={{ margin: 0 }}>{data?.revenue}</p>
-            <p style={{ margin: 0 }}>{}</p>
+
             <a href={`https://imdb.com/title/${data?.imdb_id}`}>IMDb</a>
+            <p style={{ margin: 0 }}>{data?.overview}</p>
           </div>
         </div>
       </div>

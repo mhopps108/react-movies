@@ -6,7 +6,7 @@ const baseParams =
 
 const useMovieDetails = () => {
   const [tmdbId, setTmdbId] = useState();
-  const [state, setUrl] = useDataApi("");
+  const [state, setUrl] = useDataApi();
   const { data, isLoading, isError } = state;
 
   useEffect(() => {
@@ -16,7 +16,7 @@ const useMovieDetails = () => {
     }
   }, [tmdbId, setUrl]);
 
-  return [data, isLoading, isError, setTmdbId];
+  return { data, isLoading, isError, setTmdbId };
 };
 
 {

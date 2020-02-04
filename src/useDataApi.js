@@ -42,8 +42,8 @@ const useDataApi = (initialUrl, initialData) => {
       try {
         const result = await axios(url);
         if (!didCancel) {
-          // console.log("result");
-          // console.log(result);
+          console.log("result");
+          console.log(result);
           dispatch({ type: "FETCH_SUCCESS", payload: result.data });
         }
       } catch (error) {
@@ -53,6 +53,7 @@ const useDataApi = (initialUrl, initialData) => {
       }
     };
     fetchData();
+
     console.log("state - useDataApi");
     console.log(state);
     console.log(`url: ${url}`);

@@ -25,8 +25,8 @@ function MovieDetailModal({ movie, isOpen, setIsOpen }) {
   } = movie;
   const imgUrl = `https://image.tmdb.org/t/p/w92/${poster_path}`;
 
-  const [data, isLoading, isError, setTmdbId] = useMovieDetails();
-  const [imdbRating, setImdbId] = useImdbRating();
+  const { data, isLoading, isError, setTmdbId } = useMovieDetails();
+  // const [imdbRating, setImdbId] = useImdbRating();
 
   useEffect(() => {
     if (isOpen) {
@@ -34,14 +34,15 @@ function MovieDetailModal({ movie, isOpen, setIsOpen }) {
     }
   }, [setTmdbId, isOpen, id]);
 
-  useEffect(() => {
-    console.log(`MovieData: ${id} - ${title}`);
-    console.log(data);
-
-    if (data && data.imdb_id) {
-      setImdbId(data.imdb_id);
-    }
-  }, [data, setImdbId]);
+  // useEffect(() => {
+  // console.log(`MovieData: ${id} - ${title}`);
+  // console.log(data);
+  // if (isOpen) {
+  //   if (data && data.imdb_id) {
+  //     setImdbId(data.imdb_id);
+  //   }
+  // }
+  // }, [data, setImdbId]);
 
   // useEffect(() => {
   //   console.log("movie - rating");
@@ -94,10 +95,14 @@ function MovieDetailModal({ movie, isOpen, setIsOpen }) {
             <p style={{ margin: 0 }}>
               {vote_average} / 10 ({vote_count} votes)
             </p>
-            <p style={{ margin: 0 }}>
+            {/* <p style={{ margin: 0 }}>
               IMDb: {imdbRating || "X"} / 10 ({""} votes)
-            </p>
+            </p> */}
             <p style={{ margin: 0 }}>{genresToString(genre_ids)}</p>
+            <p style={{ margin: 0 }}>{data ? data.runtime : ""}</p>
+            <p style={{ margin: 0 }}>{data?.revenue}</p>
+            <p style={{ margin: 0 }}>{}</p>
+            <a href={`https://imdb.com/title/${data?.imdb_id}`}>IMDb</a>
           </div>
         </div>
       </div>

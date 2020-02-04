@@ -8,14 +8,17 @@ const useImdbRating = () => {
   const { data, isLoading, isError } = state;
 
   useEffect(() => {
-    const imdbRatigtUrl = `https://p.media-imdb.com/static-content/documents/v1/title/${imdbId}/ratings%3Fjsonp=imdb.rating.run:imdb.api.title.ratings/data.json?u=ur25742841&s=p3`;
-    setUrl(imdbRatigtUrl);
+    if (imdbId) {
+      const imdbRatigtUrl = `https://p.media-imdb.com/static-content/documents/v1/title/${imdbId}/ratings%3Fjsonp=imdb.rating.run:imdb.api.title.ratings/data.json?u=ur25742841&s=p3`;
+      setUrl(imdbRatigtUrl);
+    }
   }, [imdbId, setUrl]);
 
   useEffect(() => {
-    if (data) {
+    if (data && imdbId) {
       console.log(`imdb - ratingData - ${imdbId}`);
       console.log(data);
+      console.log('this-shit')
       let rate = data.indexOf('"rating":');
       // console.log(`ratingIdx: ${rate}`);
       let r = data.substr(rate, 12);

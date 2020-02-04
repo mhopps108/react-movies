@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Card, Row, Col, Typography, Button } from "antd";
+import { Card, Row, Col, Typography, Button, Modal } from "antd";
 import tmdbData from "./tmdb-data.js";
 import moment from "moment";
 
@@ -8,7 +8,7 @@ import { useImdbRating } from "./useImdbRating";
 
 const { Title, Paragraph, Text } = Typography;
 
-function MovieDetailModal({ movie, isOpen }) {
+function MovieDetailModal({ movie, isOpen, setIsOpen }) {
   const {
     id,
     title,
@@ -30,41 +30,50 @@ function MovieDetailModal({ movie, isOpen }) {
   };
 
   return (
-    <Col
-      xs={{ span: 24 }}
-      sm={{ span: 12 }}
-      lg={{ span: 8 }}
-      style={{ paddingBottom: "0px" }}
+    <Modal
+      title="Basic Modal"
+      visible={isOpen}
+      onOk={setIsOpen(false)}
+      onCancel={setIsOpen(false)}
+      width={"100%"}
+      // bodyStyle={{ height: "90vh" }}
+      style={{ top: 10 }}
     >
-      <div
-        style={{
-          background: "white",
-          padding: "6px",
-          height: "150px",
-          // maxWidth: "300px",
-          display: "flex",
-          borderRadius: "5px",
-          border: "1px solid rgba(0,0,0,0.25)",
-          // boxShadow: "3px 3px 3px 0px rgba(0,0,0,0.25)"
-          boxShadow: "0 2px 4px 2px rgba(0,0,0,.25)"
-        }}
+      <Col
+        xs={{ span: 24 }}
+        sm={{ span: 12 }}
+        lg={{ span: 8 }}
+        style={{ paddingBottom: "0px" }}
       >
-        {/* <div style={{ overflow: "hidden", width: "92px", height: "auto" }}> */}
-        {/* <div style={{ width: "92px", height: "auto", alignSelf: "center" }}> */}
         <div
           style={{
-            minWidth: "92px",
-            height: "138px",
-            // height: "auto",
-            backgroundImage: `url(${imgUrl})`,
-            // objectFit: "contain"
-            backgroundPosition: "center",
-            backgroundSize: "cover",
-            backgroundRepeat: "no-repeat",
-            borderRadius: "5px"
+            background: "white",
+            padding: "6px",
+            height: "150px",
+            // maxWidth: "300px",
+            display: "flex",
+            borderRadius: "5px",
+            border: "1px solid rgba(0,0,0,0.25)",
+            // boxShadow: "3px 3px 3px 0px rgba(0,0,0,0.25)"
+            boxShadow: "0 2px 4px 2px rgba(0,0,0,.25)"
           }}
         >
-          {/* <img
+          {/* <div style={{ overflow: "hidden", width: "92px", height: "auto" }}> */}
+          {/* <div style={{ width: "92px", height: "auto", alignSelf: "center" }}> */}
+          <div
+            style={{
+              minWidth: "92px",
+              height: "138px",
+              // height: "auto",
+              backgroundImage: `url(${imgUrl})`,
+              // objectFit: "contain"
+              backgroundPosition: "center",
+              backgroundSize: "cover",
+              backgroundRepeat: "no-repeat",
+              borderRadius: "5px"
+            }}
+          >
+            {/* <img
             style={{
               width: "100%",
               height: "100%",
@@ -74,24 +83,25 @@ function MovieDetailModal({ movie, isOpen }) {
             src={imgUrl}
             alt={"no-poster"}
           /> */}
-        </div>
-        <div style={{ paddingLeft: "1rem", paddingTop: "0.5rem" }}>
-          <h4 style={{ fontSize: "1.1rem" }}>{title}</h4>
-          <div>
-            <p style={{ margin: 0 }}>
-              {moment(release_date).format("MMM DD YYYY")}
-            </p>
-            <p style={{ margin: 0 }}>
-              {vote_average} / 10 ({vote_count} votes)
-            </p>
-            {/* <p style={{ margin: 0 }}>
+          </div>
+          <div style={{ paddingLeft: "1rem", paddingTop: "0.5rem" }}>
+            <h4 style={{ fontSize: "1.1rem" }}>{title}</h4>
+            <div>
+              <p style={{ margin: 0 }}>
+                {moment(release_date).format("MMM DD YYYY")}
+              </p>
+              <p style={{ margin: 0 }}>
+                {vote_average} / 10 ({vote_count} votes)
+              </p>
+              {/* <p style={{ margin: 0 }}>
               {rating} / 10 ({vote_count} votes)
             </p> */}
-            <p style={{ margin: 0 }}>{genresToString()}</p>
+              <p style={{ margin: 0 }}>{genresToString()}</p>
+            </div>
           </div>
         </div>
-      </div>
-    </Col>
+      </Col>
+    </Modal>
   );
 }
 

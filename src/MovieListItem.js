@@ -31,6 +31,8 @@ function MovieListItem({ movie }) {
   const [data, isLoading, isError] = useMovieDetails(id);
   const [rating, setImdbId] = useImdbRating();
 
+  const [showDetails, setShowDetails] = useState(false);
+
   const genresToString = () => {
     const a = allGenres.filter(item => {
       return genre_ids.includes(item.id);
@@ -108,12 +110,17 @@ function MovieListItem({ movie }) {
               {vote_average} / 10 ({vote_count} votes) -- {rating}
             </p>
             <p style={{ margin: 0 }}>
-              <Button onClick={() => null}>Details</Button>
+              <Button onClick={() => setShowDetails(true)}>Details</Button>
             </p>
             <p style={{ margin: 0 }}>{genresToString()}</p>
           </div>
         </div>
       </div>
+      <MovieDetailModal
+        movie={movie}
+        isOpen={showDetails}
+        setIsOpen={setShowDetails}
+      />
     </Col>
   );
 }

@@ -4,14 +4,10 @@ import tmdbData from "./tmdb-data.js";
 import moment from "moment";
 import MovieDetailModal from "./MovieDetailModal";
 
-import { useMovieDetails } from "./useMovieDetails";
-import { useImdbRating } from "./useImdbRating";
-
-const { Title, Paragraph, Text } = Typography;
-
 function MovieListItem({ movie }) {
   // console.log("a movie");
   // console.log(movie);
+
   const {
     id,
     title,
@@ -22,15 +18,7 @@ function MovieListItem({ movie }) {
     vote_count
   } = movie;
   const imgUrl = `https://image.tmdb.org/t/p/w92/${poster_path}`;
-  const year = release_date.substring(0, 4) || "0000";
-
-  const [imdbRating, setImdbRating] = useState();
-
   const allGenres = tmdbData.genres;
-
-  const [data, isLoading, isError] = useMovieDetails(id);
-  const [rating, setImdbId] = useImdbRating();
-
   const [showDetails, setShowDetails] = useState(false);
 
   const genresToString = () => {
@@ -40,20 +28,6 @@ function MovieListItem({ movie }) {
     return a.map(item => item.name).join(", ");
   };
 
-  useEffect(() => {
-    console.log(`MovieData: ${id} - ${title}`);
-    console.log(data);
-
-    if (data && data.imdb_id) {
-      setImdbId(data.imdb_id);
-    }
-  }, [data]);
-
-  useEffect(() => {
-    console.log("movie - rating");
-    console.log(rating);
-  }, [rating]);
-
   return (
     <Col
       xs={{ span: 24 }}
@@ -62,6 +36,7 @@ function MovieListItem({ movie }) {
       style={{ paddingBottom: "0px" }}
     >
       <div
+        onClick={() => setShowDetails(true)}
         style={{
           background: "white",
           padding: "6px",
@@ -107,10 +82,7 @@ function MovieListItem({ movie }) {
               {moment(release_date).format("MMM DD YYYY")}
             </p>
             <p style={{ margin: 0 }}>
-              {vote_average} / 10 ({vote_count} votes) -- {rating}
-            </p>
-            <p style={{ margin: 0 }}>
-              <Button onClick={() => setShowDetails(true)}>Details</Button>
+              {vote_average} / 10 ({vote_count} votes)
             </p>
             <p style={{ margin: 0 }}>{genresToString()}</p>
           </div>

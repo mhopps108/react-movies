@@ -4,9 +4,6 @@ import MovieListItem from "./MovieListItem";
 import moment from "moment";
 
 function MovieSectionList({ movies }) {
-  // console.log("movie section list - movies");
-  // console.log(movies);
-
   return (
     <div className="movie-list-wrapper mx-auto">
       <div style={{ background: "", padding: "10px" }}>
@@ -32,8 +29,6 @@ function MovieSectionList({ movies }) {
 }
 
 function MovieList({ movies }) {
-  // console.log("movie list - movies");
-  // console.log(movies);
   return (
     <div className="movie-list-wrapper mx-auto">
       <div style={{ background: "", padding: "10px" }}>

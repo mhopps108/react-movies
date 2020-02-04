@@ -23,7 +23,7 @@ const filterReleaseDates = datesData => {
     <p key={release.type}>
       <span>({release.type})</span>
       {"  "}
-      {moment(release.release_date).format("MM DD YYYY")}
+      {moment(release.release_date).format("MMM DD YYYY")}
     </p>
   ));
   // return dates;

@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { Card, Row, Col, Typography } from "antd";
+import { Card, Row, Col, Typography, Button } from "antd";
 import tmdbData from "./tmdb-data.js";
 import moment from "moment";
+import MovieDetailModal from "./MovieDetailModal";
 
 import { useMovieDetails } from "./useMovieDetails";
 import { useImdbRating } from "./useImdbRating";
@@ -28,7 +29,7 @@ function MovieListItem({ movie }) {
   const allGenres = tmdbData.genres;
 
   const [data, isLoading, isError] = useMovieDetails(id);
-  const [rating, isRatingLoading, isRatingError, setImdbId] = useImdbRating();
+  const [rating, setImdbId] = useImdbRating();
 
   const genresToString = () => {
     const a = allGenres.filter(item => {
@@ -40,6 +41,7 @@ function MovieListItem({ movie }) {
   useEffect(() => {
     console.log(`MovieData: ${id} - ${title}`);
     console.log(data);
+
     if (data && data.imdb_id) {
       setImdbId(data.imdb_id);
     }
@@ -97,9 +99,7 @@ function MovieListItem({ movie }) {
           /> */}
         </div>
         <div style={{ paddingLeft: "1rem", paddingTop: "0.5rem" }}>
-          <h4 style={{ fontSize: "1.1rem", textOverflow: "ellipsis" }}>
-            {title}
-          </h4>
+          <h4 style={{ fontSize: "1.1rem" }}>{title}</h4>
           <div>
             <p style={{ margin: 0 }}>
               {moment(release_date).format("MMM DD YYYY")}
@@ -107,9 +107,9 @@ function MovieListItem({ movie }) {
             <p style={{ margin: 0 }}>
               {vote_average} / 10 ({vote_count} votes) -- {rating}
             </p>
-            {/* <p style={{ margin: 0 }}>
-              {rating} / 10 ({vote_count} votes)
-            </p> */}
+            <p style={{ margin: 0 }}>
+              <Button onClick={() => null}>Details</Button>
+            </p>
             <p style={{ margin: 0 }}>{genresToString()}</p>
           </div>
         </div>
@@ -117,49 +117,5 @@ function MovieListItem({ movie }) {
     </Col>
   );
 }
-/*
-function MovieListItem({ movie }) {
-  const { id, title, poster_path, release_date, vote_average } = movie;
-  const imgUrl = `https://image.tmdb.org/t/p/w92/${poster_path}`;
-  const year = release_date.substring(0, 4);
-
-  return (
-    <Col style={{ padding: "10px" }}>
-      <Card title={title}>
-        <Row>
-          <Col span={8}>
-            <img src={imgUrl} alt={title} />
-          </Col>
-          <Col span={16}>
-            <Col className="card-text w-25">Release: {release_date}</Col>
-            <Col className="card-text w-25">tmdbid: {id}</Col>
-            <Col className="card-text w-25">Vote: {vote_average}/10</Col>
-          </Col>
-        </Row>
-      </Card>
-    </Col>
-  );
-}
-*/
 
 export default MovieListItem;
-
-{
-  /*
-  <span class="imdbRatingPlugin" data-user="ur25742841" data-title="tt0371746" data-style="p3">
-  <a href="https://www.imdb.com/title/tt0371746/?ref_=plg_rt_1">
-  <img src="https://ia.media-imdb.com/images/G/01/imdb/plugins/rating/images/imdb_37x18.png" alt=" Iron Man (2008) on IMDb" />
-  
-</a>
-</span>
-<script>
-(function(d,s,id){var js,stags=d.getElementsByTagName(s)[0];
-  if(d.getElementById(id)){return;}
-  js=d.createElement(s);
-  js.id=id;
-  js.src="https://ia.media-imdb.com/images/G/01/imdb/plugins/rating/js/rating.js";
-  stags.parentNode.insertBefore(js,stags);})
-(document,"script","imdb-rating-api");
-</script> 
-*/
-}

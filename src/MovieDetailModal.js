@@ -13,6 +13,22 @@ const genresToString = genreIds => {
   return a.map(item => item.name).join(", ");
 };
 
+const filterReleaseDates = datesData => {
+  // release_dates?.results
+
+  const dates = datesData.find(item => item.iso_3166_1 === "US");
+  console.log("dates");
+  console.log(dates);
+  return dates.release_dates.map(release => (
+    <p key={release.type}>
+      <span>({release.type})</span>
+      {"  "}
+      {moment(release.release_date).format("MM DD YYYY")}
+    </p>
+  ));
+  // return dates;
+};
+
 function MovieDetailModal({ movie, isOpen, setIsOpen }) {
   const {
     id,
@@ -24,6 +40,7 @@ function MovieDetailModal({ movie, isOpen, setIsOpen }) {
     vote_count
   } = movie;
   const imgUrl = `https://image.tmdb.org/t/p/w92/${poster_path}`;
+  const [releaseDates, setReleaseDates] = useState([]);
 
   const { data, isLoading, isError, setTmdbId } = useMovieDetails();
   // const [imdbRating, setImdbId] = useImdbRating();
@@ -44,10 +61,13 @@ function MovieDetailModal({ movie, isOpen, setIsOpen }) {
   // }
   // }, [data, setImdbId]);
 
-  // useEffect(() => {
-  //   console.log("movie - rating");
-  //   console.log(rating);
-  // }, [rating]);
+  useEffect(() => {
+    if (data) {
+      const releaseDatesData =
+        data && data.release_dates && data.release_dates.results;
+      setReleaseDates(filterReleaseDates(releaseDatesData));
+    }
+  }, [data]);
 
   return (
     <Modal
@@ -104,6 +124,7 @@ function MovieDetailModal({ movie, isOpen, setIsOpen }) {
 
             <a href={`https://imdb.com/title/${data?.imdb_id}`}>IMDb</a>
             <p style={{ margin: 0 }}>{data?.overview}</p>
+            {releaseDates}
           </div>
         </div>
       </div>

@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react";
 import { useDataApi } from "./useDataApi";
 
-const baseParams =
-  "api_key=0d15450f36e2e4eaec96d1e905c43fad&language=en-US&region=US";
+const baseParams = `api_key=0d15450f36e2e4eaec96d1e905c43fad&language=en-US&region=US&include_image_language=en,null&append_to_response=videos,images,release_dates,credits,similar,recommendations`;
 
 const useMovieDetails = () => {
   const [tmdbId, setTmdbId] = useState();

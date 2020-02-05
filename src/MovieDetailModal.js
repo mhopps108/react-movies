@@ -13,19 +13,28 @@ const genresToString = genreIds => {
   return a.map(item => item.name).join(", ");
 };
 
-const filterReleaseDates = datesData => {
-  // release_dates?.results
-  const dates = datesData.find(item => item.iso_3166_1 === "US");
-  console.log("dates");
-  console.log(dates);
-  return dates.release_dates.map(release => (
+const ReleaseDates = ({ datesData }) => {
+  if (!datesData) return null;
+  const releaseTypes = {
+    1: "Premiere",
+    2: "Theatrical (Limited)",
+    3: "Theatrical",
+    4: "Digital",
+    5: "Physical",
+    6: "TV"
+  };
+  const usReleaseDates = datesData.find(item => item.iso_3166_1 === "US");
+  const releaseDates = usReleaseDates.release_dates.sort(
+    (a, b) => a.type - b.type
+  );
+
+  return releaseDates.map(release => (
     <p key={release.type}>
-      <span>({release.type})</span>
+      <span>({releaseTypes[release.type]})</span>
       {"  "}
       {moment(release.release_date).format("MMM DD YYYY")}
     </p>
   ));
-  // return dates;
 };
 
 function MovieDetailModal({ movie, isOpen, setIsOpen }) {
@@ -60,13 +69,13 @@ function MovieDetailModal({ movie, isOpen, setIsOpen }) {
   // }
   // }, [data, setImdbId]);
 
-  useEffect(() => {
-    if (data) {
-      const releaseDatesData =
-        data && data.release_dates && data.release_dates.results;
-      setReleaseDates(filterReleaseDates(releaseDatesData));
-    }
-  }, [data]);
+  // useEffect(() => {
+  //   if (data) {
+  //     const releaseDatesData =
+  //       data && data.release_dates && data.release_dates.results;
+  //     setReleaseDates(filterReleaseDates(releaseDatesData));
+  //   }
+  // }, [data]);
 
   return (
     <Modal
@@ -123,7 +132,7 @@ function MovieDetailModal({ movie, isOpen, setIsOpen }) {
 
             <a href={`https://imdb.com/title/${data?.imdb_id}`}>IMDb</a>
             <p style={{ margin: 0 }}>{data?.overview}</p>
-            {releaseDates}
+            <ReleaseDates datesData={data?.release_dates?.results} />
           </div>
         </div>
       </div>

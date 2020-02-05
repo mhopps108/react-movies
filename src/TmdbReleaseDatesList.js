@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useReducer } from "react";
 import ReactDOM from "react-dom";
 
-import { Button, Drawer, Row, Col, Icon, DatePicker } from "antd";
+import { Button, Drawer, Row, Col, Icon, DatePicker, Affix } from "antd";
 import { MovieList, MovieSectionList } from "./MovieList";
 // import { useDataApi } from "./useDataApi";
 import { useMyDataApi } from "./useMyDataApi";
@@ -78,7 +78,7 @@ function TmdbReleaseDatesList({ list }) {
         }
       }
     });
-    var orderedDates = {};
+    let orderedDates = {};
     Object.keys(sorted)
       .sort((a, b) => moment(a, "YYYYMMDD") - moment(b, "YYYYMMDD"))
       .forEach(key => (orderedDates[key] = sorted[key]));
@@ -92,61 +92,70 @@ function TmdbReleaseDatesList({ list }) {
   }, [list, startDate]);
 
   return (
-    <>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center ",
-          padding: "5px 10px",
-          backgroundColor: "white"
-        }}
-      >
-        <p style={{ fontSize: "4vw", fontWeight: 700, padding: 0, margin: 0 }}>
-          {list.name}
-        </p>
-        <p style={{ fontSize: "4vw", padding: 0, margin: 0 }}>
-          #{allResults.length}
-        </p>
-      </div>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center ",
-          padding: "5px 0px",
-          backgroundColor: "white",
-          borderBottom: "1px solid #ccc"
-        }}
-      >
-        <Button
-          style={{ border: "none" }}
-          onClick={() => setStartDate(moment(startDate).subtract(7, "d"))}
+    <div>
+      <Affix offsetTop={0}>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center ",
+            padding: "5px 10px",
+            backgroundColor: "white"
+          }}
         >
-          <Icon type="left" />
-        </Button>
-        <Button
-          style={{ border: "none", fontSize: "4vw", fontWeight: 500 }}
-          onClick={() => setStartDate(startOfWeek())}
+          <p
+            style={{
+              fontSize: "1.25rem",
+              fontWeight: 600,
+              padding: 0,
+              margin: 0
+            }}
+          >
+            {list.name}
+          </p>
+          <p style={{ fontSize: "1.2rem", padding: 0, margin: 0 }}>
+            #{allResults.length}
+          </p>
+        </div>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center ",
+            padding: "5px 0px",
+            backgroundColor: "white",
+            borderBottom: "1px solid #ccc"
+          }}
         >
-          <Icon type="calendar" />{" "}
-          {twixDateString(startOfWeek(startDate), endOfWeek(startDate))}
-        </Button>
-        <Button
-          style={{ border: "none" }}
-          size=""
-          onClick={() => setStartDate(moment(startDate).add(7, "d"))}
-        >
-          <Icon type="right" />
-        </Button>
-      </div>
+          <Button
+            style={{ border: "none" }}
+            onClick={() => setStartDate(moment(startDate).subtract(7, "d"))}
+          >
+            <Icon type="left" />
+          </Button>
+          <Button
+            style={{ border: "none", fontSize: "4vw", fontWeight: 500 }}
+            onClick={() => setStartDate(startOfWeek())}
+          >
+            <Icon type="calendar" />{" "}
+            {twixDateString(startOfWeek(startDate), endOfWeek(startDate))}
+          </Button>
+          <Button
+            style={{ border: "none" }}
+            size=""
+            onClick={() => setStartDate(moment(startDate).add(7, "d"))}
+          >
+            <Icon type="right" />
+          </Button>
+        </div>
+      </Affix>
       {isError && <p>Error</p>}
       {isLoading ? (
         <p>Loading movies...</p>
       ) : (
         <MovieSectionList movies={movies} />
       )}
-    </>
+    </div>
   );
 }
 

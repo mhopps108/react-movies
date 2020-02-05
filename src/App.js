@@ -31,7 +31,14 @@ function App() {
           borderBottom: "1px solid #ccc"
         }}
       >
-        <p style={{ fontSize: "5vw", fontWeight: 500, padding: 0, margin: 0 }}>
+        <p
+          style={{
+            fontSize: "1.25rem",
+            fontWeight: 600,
+            padding: 0,
+            margin: 0
+          }}
+        >
           {/* {list.name} */}
           {"A Movie Site"}
         </p>

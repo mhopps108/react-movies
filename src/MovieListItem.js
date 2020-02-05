@@ -88,11 +88,11 @@ function MovieListItem({ movie }) {
           </div>
         </div>
       </div>
-      {/* <MovieDetailModal
+      <MovieDetailModal
         movie={movie}
         isOpen={showDetails}
         setIsOpen={setShowDetails}
-      /> */}
+      />
     </Col>
   );
 }

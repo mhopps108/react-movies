@@ -18,11 +18,11 @@ function MovieListItem({ movie }) {
     vote_count
   } = movie;
   const imgUrl = `https://image.tmdb.org/t/p/w92/${poster_path}`;
-  const allGenres = tmdbData.genres;
+  // const allGenres = ;
   const [showDetails, setShowDetails] = useState(false);
 
   const genresToString = () => {
-    const a = allGenres.filter(item => {
+    const a = tmdbData.genres.filter(item => {
       return genre_ids.includes(item.id);
     });
     return a.map(item => item.name).join(", ");
@@ -88,11 +88,11 @@ function MovieListItem({ movie }) {
           </div>
         </div>
       </div>
-      <MovieDetailModal
+      {/* <MovieDetailModal
         movie={movie}
         isOpen={showDetails}
         setIsOpen={setShowDetails}
-      />
+      /> */}
     </Col>
   );
 }

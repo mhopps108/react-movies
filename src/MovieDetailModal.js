@@ -15,7 +15,6 @@ const genresToString = genreIds => {
 
 const filterReleaseDates = datesData => {
   // release_dates?.results
-
   const dates = datesData.find(item => item.iso_3166_1 === "US");
   console.log("dates");
   console.log(dates);

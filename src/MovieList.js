@@ -9,7 +9,7 @@ function MovieSectionList({ movies }) {
       <div style={{ background: "", padding: "10px" }}>
         <Row gutter={[16, 24]}>
           {Object.entries(movies).map(([date, list]) => (
-            <>
+            <div key={moment(date).format("YYYYMMDD")}>
               <h3
                 style={{
                   color: "#666",
@@ -20,7 +20,7 @@ function MovieSectionList({ movies }) {
                 {moment(date).format("ddd MMM Do")}
               </h3>
               <MovieList key={date} movies={list} />
-            </>
+            </div>
           ))}
         </Row>
       </div>

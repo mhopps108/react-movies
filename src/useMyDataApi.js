@@ -52,13 +52,18 @@ const useMyDataApi = (initialUrl, initialData, maxPages = 5) => {
       dispatch({ type: "FETCH_INIT" });
       try {
         const result = await axios(`${url}&page=${page}`);
-        // console.log("result");
-        // console.log(result);
+        console.log("result");
+        console.log(result);
+
         if (!didCancel) {
           dispatch({ type: "FETCH_SUCCESS", payload: result.data });
+          console.log("state - useMYDataApi");
+          console.log(state.allResults);
+          console.log(`Url: ${url}&page=${page}`);
           if (page < result.data.total_pages && page < maxPages) {
             page = page + 1;
             // console.log(`page: ${page} of ${state.data.total_pages}`);
+
             fetchData(page);
           }
         }
@@ -75,10 +80,11 @@ const useMyDataApi = (initialUrl, initialData, maxPages = 5) => {
     };
   }, [url]);
 
-  useEffect(() => {
-    console.log("state - useMYDataApi");
-    console.log(state);
-  }, [state]);
+  // useEffect(() => {
+  //   console.log("state - useMYDataApi");
+  //   console.log(state);
+  //   console.log(`Url: ${url}&page=${page}`);
+  // }, [state, url, page]);
 
   return [state, setUrl];
 };

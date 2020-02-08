@@ -100,7 +100,7 @@ function TmdbReleaseDatesList({ list }) {
             justifyContent: "space-between",
             alignItems: "center ",
             padding: "5px 10px",
-            backgroundColor: "white"
+            backgroundColor: "grey"
           }}
         >
           <p
@@ -123,8 +123,9 @@ function TmdbReleaseDatesList({ list }) {
             justifyContent: "space-between",
             alignItems: "center ",
             padding: "5px 0px",
-            backgroundColor: "white",
-            borderBottom: "1px solid #ccc"
+            backgroundColor: "grey",
+            borderBottom: "1px solid #ccc",
+            boxShadow: "0 2px 2px -2px #ccc"
           }}
         >
           <Button
@@ -134,7 +135,7 @@ function TmdbReleaseDatesList({ list }) {
             <Icon type="left" />
           </Button>
           <Button
-            style={{ border: "none", fontSize: "4vw", fontWeight: 500 }}
+            style={{ border: "none", fontSize: "1.1rem", fontWeight: 500 }}
             onClick={() => setStartDate(startOfWeek())}
           >
             <Icon type="calendar" />{" "}

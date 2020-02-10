@@ -100,7 +100,7 @@ function TmdbReleaseDatesList({ list }) {
             justifyContent: "space-between",
             alignItems: "center ",
             padding: "5px 10px",
-            backgroundColor: "grey"
+            backgroundColor: "white"
           }}
         >
           <p
@@ -123,7 +123,7 @@ function TmdbReleaseDatesList({ list }) {
             justifyContent: "space-between",
             alignItems: "center ",
             padding: "5px 0px",
-            backgroundColor: "grey",
+            backgroundColor: "white",
             borderBottom: "1px solid #ccc",
             boxShadow: "0 2px 2px -2px #ccc"
           }}

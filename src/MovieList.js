@@ -5,7 +5,15 @@ import moment from "moment";
 function MovieSectionList({ movies }) {
   return (
     <div className="movie-list-wrapper mx-auto">
-      <div style={{ background: "grey", padding: "10px" }}>
+      <div
+        style={{
+          background: "#3f4c6b",
+          // background: "linear-gradient(90deg, #4b6cb7 0%, #182848 100%)",
+          // background: "linear-gradient(to bottom, #606c88 0%,#3f4c6b 100%)",
+          // background: "linear-gradient(135deg, #eeeeee 0%,#cccccc 100%)",
+          padding: "10px"
+        }}
+      >
         <Row gutter={[16, 24]}>
           {Object.entries(movies).map(([date, list]) => (
             <div key={moment(date).format("YYYYMMDD")}>
@@ -30,7 +38,7 @@ function MovieSectionList({ movies }) {
 function MovieList({ movies }) {
   return (
     <div className="movie-list-wrapper mx-auto">
-      <div style={{ background: "", padding: "10px" }}>
+      <div style={{ background: "", padding: "10px 10px 40px 10px" }}>
         <Row gutter={[16, 24]}>
           {(movies || []).map(movie => (
             <MovieListItem key={movie.id} movie={movie} />

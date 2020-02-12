@@ -26,14 +26,16 @@ function App() {
         style={{
           display: "flex",
           justifyContent: "space-between",
-          alignItems: "center ",
+          // alignItems: "center ",
           padding: "5px 10px",
-          borderBottom: "1px solid #ccc"
+          borderBottom: "1px solid #ccc",
+          background: "#3f4c6b",
+          color: "#ddd"
         }}
       >
         <p
           style={{
-            fontSize: "1.25rem",
+            fontSize: "1.2rem",
             fontWeight: 600,
             padding: 0,
             margin: 0
@@ -44,10 +46,16 @@ function App() {
         </p>
 
         <Button
-          style={{ border: "none", padding: 0 }}
+          style={{ border: "none", padding: "8px", background: "none" }}
           onClick={() => setListVisible(true)}
         >
-          <Icon type="menu" style={{ fontSize: "18px", color: "#666" }} />
+          <Icon
+            type="menu"
+            style={{
+              fontSize: "1rem",
+              color: "#eee"
+            }}
+          />
         </Button>
 
         {/* <Col span={4}>

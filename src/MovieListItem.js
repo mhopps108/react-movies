@@ -75,8 +75,8 @@ function MovieListItem({ movie }) {
             alt={"no-poster"}
           /> */}
         </div>
-        <div style={{ paddingLeft: "1rem", paddingTop: "0.5rem" }}>
-          <h4 style={{ fontSize: "1.1rem" }}>{title}</h4>
+        <div style={{ paddingLeft: "1rem", paddingTop: "0.25rem" }}>
+          <h5 style={{ fontSize: "1rem" }}>{title}</h5>
           <div>
             <p style={{ margin: 0 }}>
               {moment(release_date).format("MMM DD YYYY")}

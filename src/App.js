@@ -29,8 +29,9 @@ function App() {
           // alignItems: "center ",
           padding: "5px 10px",
           borderBottom: "1px solid #ccc",
-          background: "#3f4c6b",
-          color: "#ddd"
+          background: "#3f4c6b"
+          // background: "#778899"
+          // color: "#ddd"
         }}
       >
         <p
@@ -38,7 +39,8 @@ function App() {
             fontSize: "1.2rem",
             fontWeight: 600,
             padding: 0,
-            margin: 0
+            margin: 0,
+            color: "rgba(255, 255, 255, 0.75)"
           }}
         >
           {/* {list.name} */}

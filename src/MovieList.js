@@ -8,6 +8,7 @@ function MovieSectionList({ movies }) {
       <div
         style={{
           background: "#3f4c6b",
+          // background: "#778899",
           // background: "linear-gradient(90deg, #4b6cb7 0%, #182848 100%)",
           // background: "linear-gradient(to bottom, #606c88 0%,#3f4c6b 100%)",
           // background: "linear-gradient(135deg, #eeeeee 0%,#cccccc 100%)",

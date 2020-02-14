@@ -127,8 +127,23 @@ function MovieDetailModal({ movie, isOpen, setIsOpen }) {
               IMDb: {imdbRating || "X"} / 10 ({""} votes)
             </p> */}
             <p style={{ margin: 0 }}>{genresToString(genre_ids)}</p>
-            <p style={{ margin: 0 }}>{data ? data.runtime : ""}</p>
-            <p style={{ margin: 0 }}>{data?.revenue}</p>
+            <p style={{ margin: 0 }}>{data ? data.runtime : ""} mins</p>
+            <p style={{ margin: 0 }}>
+              {data?.budget.toLocaleString("en-US", {
+                style: "currency",
+                currency: "USD",
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 0
+              })}
+            </p>
+            <p style={{ margin: 0 }}>
+              {data?.revenue.toLocaleString("en-US", {
+                style: "currency",
+                currency: "USD",
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 0
+              })}
+            </p>
 
             <a href={`https://imdb.com/title/${data?.imdb_id}`}>IMDb</a>
             <p style={{ margin: 0 }}>{data?.overview}</p>
@@ -141,3 +156,40 @@ function MovieDetailModal({ movie, isOpen, setIsOpen }) {
 }
 
 export default MovieDetailModal;
+
+// id: 453405
+// imdb_id: "tt1025100"
+
+// title: "Gemini Man"
+// release_date: "2019-10-02"
+// runtime: 117
+// genres: Array[2]
+// budget: 138000000
+// revenue: 173469516
+// vote_average: 5.8
+// vote_count: 1382
+// popularity: 57.957
+// overview: "Ageing assassin, Henry Brogen tries to..."
+
+// backdrop_path: "/sfW7GcOuwZFuCxVoU5ULlkiDJ7Q.jpg"
+// poster_path: "/uTALxjQU8e1lhmNjP9nnJ3t2pRU.jpg"
+
+// status: "Released"
+// tagline: "Who will save you from yourself?"
+// homepage: "http://skydance.com/film/gemini-man/"
+
+// spoken_languages: Array[1]
+
+// videos: Object
+// images: Object
+// release_dates: Object
+// credits: Object
+// similar: Object
+// recommendations: Object
+
+// original_title: "Gemini Man"
+// original_language: "en"
+// adult: false
+// belongs_to_collection: null
+// production_companies: Array[4]
+// production_countries: Array[2]

@@ -47,11 +47,12 @@ function MovieDetailModal({ movie, isOpen, setIsOpen }) {
     genre_ids,
     vote_count
   } = movie;
-  const imgUrl = `https://image.tmdb.org/t/p/w92/${poster_path}`;
+  // const imgUrl = `https://image.tmdb.org/t/p/w92/${poster_path}`;
+  const imgUrl = `https://image.tmdb.org/t/p/w154/${poster_path}`;
   const [releaseDates, setReleaseDates] = useState([]);
 
   const { data, isLoading, isError, setTmdbId } = useMovieDetails();
-  // const [imdbRating, setImdbId] = useImdbRating();
+  const [imdbRating, setImdbId] = useImdbRating();
 
   useEffect(() => {
     if (isOpen) {
@@ -59,23 +60,19 @@ function MovieDetailModal({ movie, isOpen, setIsOpen }) {
     }
   }, [setTmdbId, isOpen, id]);
 
-  // useEffect(() => {
-  // console.log(`MovieData: ${id} - ${title}`);
-  // console.log(data);
-  // if (isOpen) {
-  //   if (data && data.imdb_id) {
-  //     setImdbId(data.imdb_id);
-  //   }
-  // }
-  // }, [data, setImdbId]);
-
-  // useEffect(() => {
-  //   if (data) {
-  //     const releaseDatesData =
-  //       data && data.release_dates && data.release_dates.results;
-  //     setReleaseDates(filterReleaseDates(releaseDatesData));
-  //   }
-  // }, [data]);
+  useEffect(() => {
+    console.log("run effect - setting imdb id");
+    // console.log(data);
+    // if (isOpen) {
+    // if (data && data.imdb_id) {
+    if (data) {
+      console.log(`MovieData: ${id} - ${title}`);
+      console.log(data);
+      console.log(`setting imdb id: ${data.imdb_id}`);
+      setImdbId(data.imdb_id);
+    }
+    // }
+  }, [data, setImdbId, isOpen, id, title]);
 
   return (
     <Modal
@@ -104,9 +101,9 @@ function MovieDetailModal({ movie, isOpen, setIsOpen }) {
         {/* <div style={{ width: "92px", height: "auto", alignSelf: "center" }}> */}
         <div
           style={{
-            minWidth: "92px",
-            height: "138px",
-            // height: "auto",
+            minWidth: "154px",
+            height: "231px",
+            // height: "100%",
             backgroundImage: `url(${imgUrl})`,
             // objectFit: "contain"
             backgroundPosition: "center",
@@ -123,9 +120,9 @@ function MovieDetailModal({ movie, isOpen, setIsOpen }) {
             <p style={{ margin: 0 }}>
               {vote_average} / 10 ({vote_count} votes)
             </p>
-            {/* <p style={{ margin: 0 }}>
+            <p style={{ margin: 0 }}>
               IMDb: {imdbRating || "X"} / 10 ({""} votes)
-            </p> */}
+            </p>
             <p style={{ margin: 0 }}>{genresToString(genre_ids)}</p>
             <p style={{ margin: 0 }}>{data ? data.runtime : ""} mins</p>
             <p style={{ margin: 0 }}>
@@ -146,7 +143,7 @@ function MovieDetailModal({ movie, isOpen, setIsOpen }) {
             </p>
 
             <a href={`https://imdb.com/title/${data?.imdb_id}`}>IMDb</a>
-            <p style={{ margin: 0 }}>{data?.overview}</p>
+            {/* <p style={{ margin: 0 }}>{data?.overview}</p> */}
             <ReleaseDates datesData={data?.release_dates?.results} />
           </div>
         </div>

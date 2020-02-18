@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useDataApi } from "./useDataApi";
+import { useImdbRating } from "./useImdbRating";
 
 const baseParams = `api_key=0d15450f36e2e4eaec96d1e905c43fad&language=en-US&region=US&include_image_language=en,null&append_to_response=videos,images,release_dates,credits,similar,recommendations`;
 
@@ -7,6 +8,7 @@ const useMovieDetails = () => {
   const [tmdbId, setTmdbId] = useState();
   const [state, setUrl] = useDataApi();
   const { data, isLoading, isError } = state;
+  const { imdbState, setImdbId } = useImdbRating();
 
   useEffect(() => {
     if (tmdbId) {
@@ -14,6 +16,12 @@ const useMovieDetails = () => {
       setUrl(newUrl);
     }
   }, [tmdbId, setUrl]);
+
+  useEffect(() => {
+    if (tmdbId && data && data.imdb_id) {
+      setImdbId(data.imdb_id);
+    }
+  }, [state]);
 
   return { data, isLoading, isError, setTmdbId };
 };
@@ -30,7 +38,7 @@ id: 535292
 imdb_id: "tt8688634"
 original_language: "en"
 original_title: "21 Bridges"
-overview: "An embattled NYPD detective, is thrust into a citywide manhunt for a pair of cop killers after uncovering a massive and unexpected conspiracy. As the night unfolds, lines become blurred on who he is pursuing, and who is in pursuit of him."
+overview: "An embattled NYPD detective, is thrust into a citywide manhunt ..."
 popularity: 28.546
 poster_path: "/bSN9SysoRBMwJKNkfOlQlCw2YQO.jpg"
 production_companies: Array[3]

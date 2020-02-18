@@ -49,10 +49,12 @@ function MovieDetailModal({ movie, isOpen, setIsOpen }) {
   } = movie;
   // const imgUrl = `https://image.tmdb.org/t/p/w92/${poster_path}`;
   const imgUrl = `https://image.tmdb.org/t/p/w154/${poster_path}`;
-  const [releaseDates, setReleaseDates] = useState([]);
+  // const [releaseDates, setReleaseDates] = useState([]);
 
   const { data, isLoading, isError, setTmdbId } = useMovieDetails();
-  const [imdbRating, setImdbId] = useImdbRating();
+  // const [imdbRating, setImdbId] = useImdbRating();
+  // const { imdbData, imdbisLoading, imdbisError, setImdbId } = useImdbRating();
+  // const [state, rating, setImdbId] = useImdbRating();
 
   useEffect(() => {
     if (isOpen) {
@@ -60,19 +62,19 @@ function MovieDetailModal({ movie, isOpen, setIsOpen }) {
     }
   }, [setTmdbId, isOpen, id]);
 
-  useEffect(() => {
-    console.log("run effect - setting imdb id");
-    // console.log(data);
-    // if (isOpen) {
-    // if (data && data.imdb_id) {
-    if (data) {
-      console.log(`MovieData: ${id} - ${title}`);
-      console.log(data);
-      console.log(`setting imdb id: ${data.imdb_id}`);
-      setImdbId(data.imdb_id);
-    }
-    // }
-  }, [data, setImdbId, isOpen, id, title]);
+  // useEffect(() => {
+  // console.log("run effect - setting imdb id");
+  // console.log(data);
+  // if (isOpen) {
+  // if (data && data.imdb_id) {
+  // if (data) {
+  // console.log(`MovieData: ${id} - ${title}`);
+  // console.log(data);
+  // console.log(`setting imdb id: ${data.imdb_id}`);
+  // setImdbId(data.imdb_id);
+  // }
+  // }
+  // }, [data, setImdbId, isOpen, id, title]);
 
   return (
     <Modal
@@ -120,9 +122,9 @@ function MovieDetailModal({ movie, isOpen, setIsOpen }) {
             <p style={{ margin: 0 }}>
               {vote_average} / 10 ({vote_count} votes)
             </p>
-            <p style={{ margin: 0 }}>
+            {/* <p style={{ margin: 0 }}>
               IMDb: {imdbRating || "X"} / 10 ({""} votes)
-            </p>
+            </p> */}
             <p style={{ margin: 0 }}>{genresToString(genre_ids)}</p>
             <p style={{ margin: 0 }}>{data ? data.runtime : ""} mins</p>
             <p style={{ margin: 0 }}>

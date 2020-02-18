@@ -19,6 +19,8 @@ const dataFetchReducer = (state, action) => {
         data: action.payload
       };
     case "FETCH_FAILURE":
+      console.log("FETCH_FAILURE");
+      // console.log(action.payload);
       return {
         ...state,
         isLoading: false,
@@ -31,7 +33,7 @@ const dataFetchReducer = (state, action) => {
 
 const useImdbRating = () => {
   const [imdbId, setImdbId] = useState();
-  const [rating, setRating] = useState();
+  const [imdbRating, setImdbRating] = useState({ rating: 0, ratingCount: 0 });
   // const [state, setUrl] = useDataApi(); // const { data, isLoading, isError } = state;
   const [url, setUrl] = useState();
   const [state, dispatch] = useReducer(dataFetchReducer, {
@@ -54,23 +56,26 @@ const useImdbRating = () => {
     const fetchData = async () => {
       dispatch({ type: "FETCH_INIT" });
       try {
-        const result = await axios(url);
-        console.log("right after await axios");
-        console.log(result);
+        const result = await axios(url, {
+          "Access-Control-Allow-Origin": "*"
+        });
+        // console.log("right after await axios");
+        // console.log(result);
         if (!didCancel) {
           dispatch({ type: "FETCH_SUCCESS", payload: result.data });
         }
       } catch (error) {
+        console.log("error");
+        console.log(error);
         if (!didCancel) {
           dispatch({ type: "FETCH_FAILURE" });
         }
       }
     };
-    fetchData();
 
-    // console.log("state - useDataApi");
-    // console.log(state);
-    // console.log(`url: ${url}`);
+    if (url && imdbId) {
+      fetchData();
+    }
 
     return () => {
       didCancel = true;
@@ -78,25 +83,29 @@ const useImdbRating = () => {
   }, [url]);
 
   useEffect(() => {
-    // if (data && imdbId) {
-    // if (data) {
-    console.log(`imdb - ratingData - ${imdbId}`);
-    console.log("state");
-    console.log(state);
+    if (state.data) {
+      let ratingdata = state.data;
+      console.log(`imdb - ratingData - ${imdbId}`);
 
-    // let rate = data.indexOf('"rating":');
-    // console.log(`ratingIdx: ${rate}`);
-    // let r = data.substr(rate, 12);
-    // console.log(`r-sub: ${r}`);
-    // let rr = r.substring(9, 12);
-    // console.log(`RATING: ${rr}`);
-    // setRating(rr);
-    // }
+      if (ratingdata.startsWith("imdb.rating.run(")) {
+        ratingdata = ratingdata.slice(16, -1);
+        let ratingjson = JSON.parse(ratingdata);
+        console.log("ratingjson");
+        console.log(ratingjson);
+        setImdbRating({
+          rating: ratingjson.resource.rating,
+          ratingCount: ratingjson.resource.ratingCount
+        });
+      }
+    }
   }, [state]);
 
-  // return [rating, setImdbId];
-  // return { data, isLoading, isError, setImdbId };
-  return { state, setImdbId };
+  useEffect(() => {
+    console.log("imdbRating - useImdbRating");
+    console.log(imdbRating);
+  }, [imdbRating]);
+
+  return { imdbRating, setImdbId };
 };
 
 export { useImdbRating };

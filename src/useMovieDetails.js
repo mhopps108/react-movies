@@ -8,7 +8,7 @@ const useMovieDetails = () => {
   const [tmdbId, setTmdbId] = useState();
   const [state, setUrl] = useDataApi();
   const { data, isLoading, isError } = state;
-  const { imdbState, setImdbId } = useImdbRating();
+  // const { imdbRating, setImdbId } = useImdbRating();
 
   useEffect(() => {
     if (tmdbId) {
@@ -17,11 +17,11 @@ const useMovieDetails = () => {
     }
   }, [tmdbId, setUrl]);
 
-  useEffect(() => {
-    if (tmdbId && data && data.imdb_id) {
-      setImdbId(data.imdb_id);
-    }
-  }, [state]);
+  // useEffect(() => {
+  //   if (tmdbId && data && data.imdb_id) {
+  //     setImdbId(data.imdb_id);
+  //   }
+  // }, [state]);
 
   return { data, isLoading, isError, setTmdbId };
 };

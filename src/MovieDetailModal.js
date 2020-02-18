@@ -52,7 +52,8 @@ function MovieDetailModal({ movie, isOpen, setIsOpen }) {
   // const [releaseDates, setReleaseDates] = useState([]);
 
   const { data, isLoading, isError, setTmdbId } = useMovieDetails();
-  // const [imdbRating, setImdbId] = useImdbRating();
+
+  const { imdbRating, setImdbId } = useImdbRating();
   // const { imdbData, imdbisLoading, imdbisError, setImdbId } = useImdbRating();
   // const [state, rating, setImdbId] = useImdbRating();
 
@@ -61,6 +62,19 @@ function MovieDetailModal({ movie, isOpen, setIsOpen }) {
       setTmdbId(id);
     }
   }, [setTmdbId, isOpen, id]);
+
+  useEffect(() => {
+    console.log("imdbRating");
+    console.log(imdbRating);
+    if (isOpen) {
+      if (data && data.imdb_id) {
+        console.log(`MovieData: ${id} - ${title}`);
+        console.log(data);
+        console.log(`setting imdb id: ${data.imdb_id}`);
+        setImdbId(data.imdb_id);
+      }
+    }
+  }, [imdbRating, isOpen, data]);
 
   // useEffect(() => {
   // console.log("run effect - setting imdb id");
@@ -122,9 +136,9 @@ function MovieDetailModal({ movie, isOpen, setIsOpen }) {
             <p style={{ margin: 0 }}>
               {vote_average} / 10 ({vote_count} votes)
             </p>
-            {/* <p style={{ margin: 0 }}>
-              IMDb: {imdbRating || "X"} / 10 ({""} votes)
-            </p> */}
+            <p style={{ margin: 0 }}>
+              IMDb: {imdbRating?.rating} / 10 ({imdbRating?.ratingCount} votes)
+            </p>
             <p style={{ margin: 0 }}>{genresToString(genre_ids)}</p>
             <p style={{ margin: 0 }}>{data ? data.runtime : ""} mins</p>
             <p style={{ margin: 0 }}>

@@ -81,8 +81,8 @@ const useImdbRating = () => {
     // if (data && imdbId) {
     // if (data) {
     console.log(`imdb - ratingData - ${imdbId}`);
+    console.log("state");
     console.log(state);
-    console.log("this-shit");
 
     // let rate = data.indexOf('"rating":');
     // console.log(`ratingIdx: ${rate}`);

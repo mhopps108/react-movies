@@ -59,8 +59,8 @@ const useImdbRating = () => {
         const result = await axios(url, {
           "Access-Control-Allow-Origin": "*"
         });
-        // console.log("right after await axios");
-        // console.log(result);
+        console.log("right after await axios");
+        console.log(result);
         if (!didCancel) {
           dispatch({ type: "FETCH_SUCCESS", payload: result.data });
         }

@@ -136,6 +136,7 @@ function MovieDetailModal({ movie, isOpen, setIsOpen }) {
             <p style={{ margin: 0 }}>
               {vote_average} / 10 ({vote_count} votes)
             </p>
+            <p style={{ margin: 0 }}>IMDbId: {data?.imdb_id}</p>
             <p style={{ margin: 0 }}>
               IMDb: {imdbRating?.rating} / 10 ({imdbRating?.ratingCount} votes)
             </p>

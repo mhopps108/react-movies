@@ -64,8 +64,8 @@ function MovieDetailModal({ movie, isOpen, setIsOpen }) {
   }, [setTmdbId, isOpen, id]);
 
   useEffect(() => {
-    console.log("imdbRating");
-    console.log(imdbRating);
+    // console.log("imdbRating");
+    // console.log(imdbRating);
     if (isOpen) {
       if (data && data.imdb_id) {
         console.log(`MovieData: ${id} - ${title}`);

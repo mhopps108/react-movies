@@ -100,10 +100,10 @@ const useImdbRating = () => {
     }
   }, [state]);
 
-  useEffect(() => {
-    console.log("imdbRating - useImdbRating");
-    console.log(imdbRating);
-  }, [imdbRating]);
+  // useEffect(() => {
+  //   console.log("imdbRating - useImdbRating");
+  //   console.log(imdbRating);
+  // }, [imdbRating]);
 
   return { imdbRating, setImdbId };
 };

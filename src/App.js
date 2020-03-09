@@ -9,6 +9,7 @@ import { MovieListDrawer } from "./MovieListDrawer";
 import tmdbData from "./tmdb-data";
 import { TmdbList } from "./TmdbList";
 import { TmdbReleaseDatesList } from "./TmdbReleaseDatesList";
+import axios from "axios";
 
 import moment from "moment";
 import "antd/dist/antd.css";
@@ -19,6 +20,32 @@ function App() {
   const [listVisible, setListVisible] = useState(false);
   const starterList = tmdbData.list.find(list => list.id === 22);
   const [list, setList] = useState(starterList);
+
+  useEffect(() => {
+    const url = "http://matthewhopps.com/api/list/me-my-list/";
+    let config = {
+      headers: {
+        "Access-Control-Allow-Origin": "*"
+      }
+    };
+
+    axios.get(url, config).then(data => console.log(data));
+    // const getdata = async () => {
+    //   try {
+    //     console.log("url");
+    //     console.log(url);
+    //     // headers = {headers: {'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'}
+    //     const result = await axios.get(url);
+    //     // const result = await fetch(url);
+    //     console.log("result");
+    //     console.log(result);
+    //   } catch (error) {
+    //     console.log("error");
+    //     console.log(error);
+    //   }
+    // };
+    // getdata();
+  }, []);
 
   return (
     <div className="App" style={{ maxWidth: "1000px" }}>

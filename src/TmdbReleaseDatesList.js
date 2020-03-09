@@ -45,6 +45,7 @@ function TmdbReleaseDatesList({ list }) {
     with_release_type: `${releaseType}`
   };
   const starterUrl = `${baseUrl}${list.path}?${queryString(params)}`;
+  // const starterUrl = "https://www.matthewhopps.com/api/list/me-my-list/";
 
   const [state, setUrl] = useMyDataApi(starterUrl, []);
   const { data, isLoading, isError, allResults } = state;

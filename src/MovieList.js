@@ -2,6 +2,7 @@ import React from "react";
 import { Row, Icon } from "antd";
 import MovieListItem from "./MovieListItem";
 import moment from "moment";
+
 function MovieSectionList({ movies }) {
   return (
     <div className="movie-list-wrapper mx-auto">
